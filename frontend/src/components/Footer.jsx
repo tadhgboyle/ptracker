@@ -2,9 +2,14 @@ import React from "react";
 
 function Footer() {
     return (
-        <h1 className="text-3xl font-bold underline">
-            Hello world!
-        </h1>
+        <>
+            <div className="h-auto text-center fixed bottom-0 w-full">
+                <hr/>
+                <footer className="py-3">
+                    Nurse Joy made with ❤️ by ISSP students
+                </footer>
+            </div>
+        </>
     )
 }
 
