@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from "react";
 
-import { Wrapper, Content } from "./Header.styles";
-
 function Header() {
 
     const [message, setMessage] = useState();
@@ -19,11 +17,7 @@ function Header() {
     }, [])
 
     return (
-        <Wrapper>
-            <Content>
-                <h1>Ptracker {message}</h1>
-            </Content>
-        </Wrapper>
+        <h1>Ptracker {message}</h1>
     )
 }
 

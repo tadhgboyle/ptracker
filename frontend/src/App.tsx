@@ -1,19 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-//Components
 import Header from './components/Header'
-
-//Styles
-import { GlobalStyle } from './GlobalStyle';
+import Footer from './components/Footer'
 
 const App = () =>  {
   return (
-    <div className='App'>
-      <Header />
-      <GlobalStyle />
-    </div>
+      <div className='App'>
+        <Header />
+        <Footer />
+      </div>
   );
 };
 
