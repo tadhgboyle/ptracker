@@ -36,13 +36,12 @@ function Navbar() {
                         </div>
                         <div className="flex items-center">
                             <div className="ml-10 flex items-baseline space-x-1">
-                            <span className="bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
-                                🚨 0
-                            </span>
-
+                                <span className="bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                                    🚨 0
+                                </span>
                                 <span className="px-3 py-2 text-indigo-500 underline">
-                                Tadhg Boyle
-                            </span>
+                                    Tadhg Boyle
+                                </span>
                             </div>
                         </div>
                     </div>

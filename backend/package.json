@@ -6,12 +6,18 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@prisma/client": "^3.8.1",
     "cookie-parser": "~1.4.4",
+    "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "express": "~4.17.2",
+    "express-session": "^1.17.2",
+    "http-errors": "^2.0.0",
+    "morgan": "~1.9.1",
+    "passport": "^0.5.2",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^3.8.1"
   }
 }
