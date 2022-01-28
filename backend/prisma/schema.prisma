@@ -6,14 +6,55 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url      = "mysql://root@127.0.0.1:3306/nurse_joy"
 }
 
 model User {
-  id          Int @id @default(autoincrement())
-  name        String
-  email       String @unique
-  picture     String
-  googleId    String @unique
+  id                 Int       @id @default(autoincrement())
+  name               String
+  email              String    @unique
+  picture            String?
+  googleId           String    @unique
+  role               Role      @default(STUDENT)
+  section            Section   @relation(fields: [sectionId], references: [id])
+  sectionId          Int
+  shifts             Shift[]
+  emailNotifications Boolean   @default(true)
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}
+
+model Section {
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  instructorId Int    @unique
+  users        User[]
+}
+
+model Site {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Shift Shift[]
+}
+
+model Shift {
+  id     Int       @id @default(autoincrement())
+  user   User      @relation(fields: [userId], references: [id])
+  userId Int
+  site   Site      @relation(fields: [siteId], references: [id])
+  siteId Int
+  date   DateTime
+  type   ShiftType
+}
+
+enum ShiftType {
+  DAY
+  NIGHT
+  EVENING
+  SICK
 }

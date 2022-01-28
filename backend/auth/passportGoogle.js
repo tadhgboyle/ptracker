@@ -2,6 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const User = require('../models/user');
 
 const GOOGLE_CALLBACK_URL = 'http://localhost:9000/auth/google/callback';
 
@@ -20,6 +21,7 @@ passport.use(new GoogleStrategy({
                 picture: profile.photos[0].value,
                 email: profile.emails[0].value,
                 googleId: profile.id,
+                sectionId: 1,
             },
             update: {
                 name: profile.displayName,
@@ -37,8 +39,5 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    const user = await prisma.user.findUnique({
-        where: { id },
-    });
-    done(null, user);
+    done(null, await User.find(id));
 });

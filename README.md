@@ -9,6 +9,9 @@
 
 ## Developing
 
+- You need MySQL installed and running on your machine
+  - You should then seed the database with `npx primsa migrate reset` (from the `backend` folder)
+
 - Backend runs on port `9000`
   - Start with `npm run start` in a terminal window
 
