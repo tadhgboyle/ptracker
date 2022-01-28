@@ -15,10 +15,10 @@ model User {
   name               String
   email              String    @unique
   picture            String?
-  googleId           Int    @unique
+  googleId           String    @unique
   role               Role      @default(STUDENT)
-  section            Section?  @relation(fields: [sectionId], references: [id])
-  sectionId          Int?
+  section            Section   @relation(fields: [sectionId], references: [id])
+  sectionId          Int
   shifts             Shift[]
   emailNotifications Boolean   @default(true)
 }

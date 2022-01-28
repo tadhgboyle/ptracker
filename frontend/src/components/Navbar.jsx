@@ -22,7 +22,7 @@ function Navbar() {
                                 </a>
 
                                 <a href="#" className="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
-                                    👥 Team
+                                    👥 Section
                                 </a>
 
                                 <a href="#" className="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">

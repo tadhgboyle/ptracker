@@ -1,16 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 function LoginSuccess() {
-    useEffect(() => {
-        setTimeout(() => {
-            window.close();
-        }, 1000);
-    }, []);
-
     return (
         <div>
             <h1>Login Success</h1>
-            <p>Welcome</p>
+            <p>You can close this window now...</p>
         </div>
     );
 }
