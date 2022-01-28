@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const { faker } = require('@faker-js/faker');
+const Role = require('../models/Role');
 
 async function main() {
     const sections = [];
@@ -26,8 +27,12 @@ async function main() {
             id: i,
             name: faker.name.firstName() + ' ' + faker.name.lastName(),
             email: faker.internet.email(),
-            googleId: faker.datatype.number(),
-            role: i <= 4 ? 'INSTRUCTOR' : faker.random.arrayElement(['STUDENT', 'INSTRUCTOR', 'ADMIN']),
+            googleId: faker.datatype.number({ min: 1000000, max: 9999999 }),
+            role: i <= 4 ? Role.INSTRUCTOR : faker.random.arrayElement([
+                Role.STUDENT,
+                Role.INSTRUCTOR,
+                Role.ADMIN
+            ]),
             sectionId: faker.random.arrayElement(sections.map(s => s.id)),
             emailNotifications: faker.datatype.boolean(),
         });

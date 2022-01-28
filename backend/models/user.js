@@ -9,17 +9,26 @@ module.exports = class User {
 
     static find = async (id) => {
         return await User.prisma.user.findUnique({
-            where: { id }
+            where: { id: parseInt(id) },
+            include: {
+                section: true,
+                shifts: true,
+            },
         });
     }
 
     static all = async () => {
-        return await User.prisma.user.findMany();
+        return await User.prisma.user.findMany({
+            include: {
+                section: true,
+                shifts: true,
+            },
+        });
     }
 
-    update = async (data) => {
+    static update = async (id, data) => {
         return await User.prisma.user.update({
-            where: { id: data.id },
+            where: { id: parseInt(id) },
             data: {
                 name: data.name,
                 email: data.email,
