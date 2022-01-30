@@ -10,6 +10,7 @@
 ## Developing
 
 - You need MySQL installed and running on your machine
+  - By default it assumes uer `root` and no password. You can change this by editing the `/backend/prisma/schema.prisma` file on line 10
   - You should then seed the database with `npx primsa migrate reset` (from the `backend` folder)
 
 - Backend runs on port `9000`
