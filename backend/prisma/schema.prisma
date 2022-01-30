@@ -1,60 +1,62 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root@127.0.0.1:3306/nurse_joy"
+  url      = env("DATABASE_URL")
 }
 
-model User {
-  id                 Int       @id @default(autoincrement())
-  name               String
-  email              String    @unique
-  picture            String?
-  googleId           String    @unique
-  role               Role      @default(STUDENT)
-  section            Section   @relation(fields: [sectionId], references: [id])
-  sectionId          Int
-  shifts             Shift[]
-  emailNotifications Boolean   @default(true)
-}
-
-enum Role {
-  STUDENT
-  INSTRUCTOR
-  ADMIN
-}
-
-model Section {
+model section {
   id           Int    @id @default(autoincrement())
-  name         String @unique
-  instructorId Int    @unique
-  users        User[]
+  name         String @unique(map: "Section_name_key")
+  instructorId Int    @unique(map: "Section_instructorId_key")
+  user         user[]
 }
 
-model Site {
-  id    Int     @id @default(autoincrement())
-  name  String
-  Shift Shift[]
-}
-
-model Shift {
-  id     Int       @id @default(autoincrement())
-  user   User      @relation(fields: [userId], references: [id])
+model shift {
+  id     Int        @id @default(autoincrement())
   userId Int
-  site   Site      @relation(fields: [siteId], references: [id])
   siteId Int
   date   DateTime
-  type   ShiftType
+  type   shift_type
+  site   site       @relation(fields: [siteId], references: [id], map: "Shift_siteId_fkey")
+  user   user       @relation(fields: [userId], references: [id], map: "Shift_userId_fkey")
+
+  @@index([siteId], map: "Shift_siteId_fkey")
+  @@index([userId], map: "Shift_userId_fkey")
 }
 
-enum ShiftType {
+model site {
+  id    Int     @id @default(autoincrement())
+  name  String
+  shift shift[]
+}
+
+model user {
+  id                 Int       @id @default(autoincrement())
+  name               String
+  email              String    @unique(map: "User_email_key")
+  picture            String?
+  googleId           String    @unique(map: "User_googleId_key")
+  role               user_role @default(STUDENT)
+  sectionId          Int
+  emailNotifications Boolean   @default(true)
+  section            section   @relation(fields: [sectionId], references: [id], map: "User_sectionId_fkey")
+  shift              shift[]
+
+  @@index([sectionId], map: "User_sectionId_fkey")
+}
+
+enum shift_type {
   DAY
   NIGHT
   EVENING
   SICK
+}
+
+enum user_role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
 }
