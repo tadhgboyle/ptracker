@@ -20,7 +20,7 @@
   - If you see an error about google client id, follow this tutorial to create a google client id: https://www.balbooa.com/gridbox-documentation/how-to-get-google-client-id-and-client-secret
     -  add these urls once you are at the last page for signing up for a google client id
     -  ![Screenshot 2022-01-29 213601](https://user-images.githubusercontent.com/77702776/151688058-0192fa9c-9c0e-48da-a177-d9cec520a9cf.png)
-    - then add your client id, client secret to the .env file you created earlier (you can get the format of the line from the .env.sample file (also put the COOKIE_KEY inside the .env file))
+    - then add your client id, client secret to the .env file you created earlier (you can get the format of what u need to put from the .env.sample file (also put the COOKIE_KEY line inside the .env file))
   - If you get this error,
   - ![Screenshot 2022-01-29 205601 (2)](https://user-images.githubusercontent.com/77702776/151693097-b9dc098e-88be-4c22-89b7-ece91616aad3.png)
     - Run the command "npm i -g nodemon"  
