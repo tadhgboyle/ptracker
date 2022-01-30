@@ -12,7 +12,7 @@ module.exports = class User {
             where: { id: parseInt(id) },
             include: {
                 section: true,
-                shifts: true,
+                shift: true,
             },
         });
     }
@@ -21,7 +21,7 @@ module.exports = class User {
         return await User.prisma.user.findMany({
             include: {
                 section: true,
-                shifts: true,
+                shift: true,
             },
         });
     }

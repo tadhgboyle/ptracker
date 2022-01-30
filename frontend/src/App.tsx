@@ -1,8 +1,7 @@
 import React from 'react';
-import {Routes, Route, Link} from 'react-router-dom';
+import {Routes, Route, Link, Navigate} from 'react-router-dom';
 
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import Homepage from "./components/Homepage"
 import GoogleButton from "react-google-button";
 
 import LoginSuccess from "./app/containers/LoginSuccess";
@@ -40,7 +39,6 @@ function App() {
 
     return (
         <div className="App">
-            <Navbar />
 
             <Routes>
                 <Route path="/" element={
@@ -54,10 +52,12 @@ function App() {
                 <Route path="/login/error" element={
                     <p>error logging in!</p>
                 }/>
-                <Route path="/login/success" element={LoginSuccess()}/>
+                <Route path="/login/success" element={<Homepage />}/>
+                <Route path="/logout" element={
+                    <Navigate to={"/"} />
+                }/>
             </Routes>
 
-            <Footer />
         </div>
     );
 }
