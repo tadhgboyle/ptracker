@@ -11,7 +11,9 @@
 
 - You need MySQL installed and running on your machine
   -  https://dev.mysql.com/downloads/installer/ (download the second option/the file thats bigger)
-  -  create a .env file in the "prisma" folder and add your password after "root"
+  -  create a .env file in the "./prisma" folder
+    -   ![Screenshot 2022-01-29 211712](https://user-images.githubusercontent.com/77702776/151687680-267e03e0-e118-498e-91a5-fa4bb64c5506.png)
+    -  and add your password after "root"
   -  ![Screenshot 2022-01-29 211150](https://user-images.githubusercontent.com/77702776/151687551-8560152e-aedc-4d8e-a3dc-5c9becf17037.png)
     -  By default it assumes that the user `root` has no password.
   - You should then seed the database with `npx primsa migrate reset` (from the `backend` folder)
