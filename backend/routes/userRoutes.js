@@ -87,9 +87,11 @@
  */
 
 const express = require('express');
-const { isAuthenticated } = require("../middleware/isAuthenticated");
+const { isAuthenticated } = require("../middleware/checkAuth");
 const { isInstructor } = require("../middleware/isInstructor");
 const User = require('../models/User');
+const URL = 'http://localhost:3000';
+
 
 const router = express.Router();
 

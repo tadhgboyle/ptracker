@@ -8,16 +8,16 @@ function Navbar() {
                     <div className="flex items-center h-16">
                         <div className="flex flex-1 items-center">
                             <div className="flex-shrink-0">
-                                <span title="add a logo here soon pls">
+                                <a href="/" title="add a logo here soon pls">
                                     Nurse Joy
-                                </span>
+                                </a>
                             </div>
                             <div className="ml-10 items-baseline space-x-4">
                                 <a href="#" className="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
                                     🏡 Dashboard
                                 </a>
 
-                                <a href="#" className="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                                <a href="/calendar" className="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
                                     🗓️ Calendar
                                 </a>
 
@@ -42,7 +42,7 @@ function Navbar() {
                                 <span className="px-3 py-2 text-indigo-500 underline">
                                     Tadhg Boyle
                                 </span>
-                                <a href="/logout" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                <a href="http://localhost:9000/auth/logout" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                     Logout
                                 </a>
                             </div>

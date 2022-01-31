@@ -1,6 +1,7 @@
 import React from 'react';
 import {Routes, Route, Link, Navigate} from 'react-router-dom';
 
+import Login from './components/Login/Login';
 import Homepage from "./components/Homepage"
 import GoogleButton from "react-google-button";
 
@@ -41,20 +42,21 @@ function App() {
         <div className="App">
 
             <Routes>
-                <Route path="/" element={
-                    <Link to={'/login'}>
-                        <h1>Login!</h1>
-                    </Link>
-                }/>
+                <Route path="/" element={<Homepage />}/>
                 <Route path="/login" element={
                     <GoogleButton onClick={redirectToGoogleSSO}/>
                 }/>
                 <Route path="/login/error" element={
                     <p>error logging in!</p>
                 }/>
-                <Route path="/login/success" element={<Homepage />}/>
-                <Route path="/logout" element={
+                <Route path="/login/success" element={
                     <Navigate to={"/"} />
+                }/>
+                <Route path="/logout" element={
+                    <Navigate to={"/login"} />
+                }/>
+                <Route path="/calendar" element={
+                    <h1>Hi there</h1>
                 }/>
             </Routes>
 
