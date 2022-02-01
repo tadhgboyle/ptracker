@@ -11,6 +11,7 @@ const ejsLayouts = require('express-ejs-layouts');
 const passport = require('./auth/passport');
 const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
+const indexRoute = require('./routes/indexRoutes')
 
 //Loggers, cors, and swagger
 const logger = require('morgan');
@@ -22,16 +23,21 @@ const app = express();
 
 require('./auth/passport');
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(logger('dev'));
+
 app.use(ejsLayouts)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.set('view engine', 'ejs');
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY],
 }));
-app.set('view engine', 'ejs');
+
 app.use(cors());
+
 app.use(session({
     secret: 'melody hensley is my spirit animal',
     resave: false,
@@ -42,6 +48,7 @@ app.use(session({
         maxAge: 24 * 60 * 60 * 1000
     }}
 ));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -64,9 +71,7 @@ app.use(
     swaggerUi.serve,
     swaggerUi.setup(openapiSpecification)
 );
-app.get('/', (req, res) => {
-    res.render('index');
-});
+app.use('/', indexRoute)
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 

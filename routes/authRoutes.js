@@ -1,8 +1,6 @@
 const express = require('express');
 const passport = require('passport');
 
-const {ensureAuthentication} = require('../middleware/checkAuth')
-
 const router = express.Router();
 
 // port 3000 is our React app
@@ -12,7 +10,7 @@ const URL = 'http://localhost:3000';
 
 router.get('/logout', (req,res) => {
     req.logout();
-    res.redirect(`${URL}/login`)
+    res.redirect('/login')
 })
 
 router.get('/google', passport.authenticate('google', {
