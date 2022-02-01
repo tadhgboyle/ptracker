@@ -7,41 +7,48 @@
                         Nurse Joy
                     </a>
                 </div>
-                <div class="ml-10 items-baseline space-x-4">
-                    <a href="#" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
-                        🏡 Dashboard
-                    </a>
+                <% if (user) { %>
+                    <div class="ml-10 items-baseline space-x-4">
+                        <a href="#" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                            🏡 Dashboard
+                        </a>
 
-                    <a href="/calendar" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
-                        🗓️ Calendar
-                    </a>
+                        <a href="/calendar" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                            🗓️ Calendar
+                        </a>
 
-                    <a href="#" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
-                        👥 Section
-                    </a>
+                        <% if (user.isInstructor) { %>
+                            <a href="#" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                                👥 Section
+                            </a>
 
-                    <a href="#" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
-                        📝 Reports
-                    </a>
+                            <a href="#" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                                📝 Reports
+                            </a>
 
-                    <a href="#" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
-                        👮 Adminland
-                    </a>
-                </div>
+                            <% if (user.isAdmin) { %>
+                                <a href="#" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                                    👮 Adminland
+                                </a>
+                            <% } %>
+
+                        <% } %>
+                    </div>
             </div>
             <div class="flex items-center">
                 <div class="ml-10 flex items-baseline space-x-1">
-                    <span class="bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
-                        🚨 0
-                    </span>
+                        <span class="bg-<%= user.notificationsColour %>-100 px-3 py-2 rounded-md text-sm font-medium">
+                            🚨 <%= user.notifications.length %>
+                        </span>
                     <span class="px-3 py-2 text-indigo-500 underline">
-                        Tadhg Boyle
-                    </span>
-                    <a href="http://localhost:9000/auth/logout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                            <%= user.name %>
+                        </span>
+                    <a href="/auth/logout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                         Logout
                     </a>
                 </div>
             </div>
+            <% } %>
         </div>
     </div>
 </nav>
