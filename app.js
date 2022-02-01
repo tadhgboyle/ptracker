@@ -32,7 +32,7 @@ app.use(cookieSession({
 }));
 app.set('view engine', 'ejs');
 app.use(cors());
-app.use(session({ 
+app.use(session({
     secret: 'melody hensley is my spirit animal',
     resave: false,
     saveUninitialized: false,
@@ -64,7 +64,9 @@ app.use(
     swaggerUi.serve,
     swaggerUi.setup(openapiSpecification)
 );
-
+app.get('/', (req, res) => {
+    res.render('index');
+});
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 
