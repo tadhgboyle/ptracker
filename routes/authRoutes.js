@@ -3,7 +3,8 @@ const passport = require('passport');
 
 const router = express.Router();
 
-const SUCCESS_LOGIN_URL = 'http://localhost:3000/';
+const {ensureAuthenticated, forwardAuthenticated} = require('../middleware/checkAuth')
+
 const FAILURE_LOGIN_URL = 'http://localhost:3000/auth/login/error';
 
 router.get('/logout', (req,res) => {
@@ -11,7 +12,9 @@ router.get('/logout', (req,res) => {
     res.redirect('/auth/login');
 })
 
-router.get('/login', passport.authenticate('google', {
+router.get('/login', forwardAuthenticated, (req,res) => res.render('auth/login'));
+
+router.get('/google', passport.authenticate('google', {
     scope: [
         'profile',
         'email',
@@ -23,7 +26,7 @@ router.get('/login/error', (req,res) => {
 })
 
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: FAILURE_LOGIN_URL }), (req, res) => {
-    return res.redirect(SUCCESS_LOGIN_URL);
+    return res.redirect('/homepage');
 });
 
 module.exports = router;
