@@ -1,3 +1,5 @@
+const Role = require('../models/role');
+
 module.exports = {
   isAuthenticated: (req, res, next) => {
     if (req.user) {
@@ -6,6 +8,16 @@ module.exports = {
 
     return res.status(401).json({
         message: 'You are not authenticated'
+      });
+  },
+
+  isInstructor: (req, res, next) => {
+    if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
+        return next();
+    }
+
+    return res.status(401).json({
+        message: 'You are not authorized to perform this action'
       });
   },
 
