@@ -1,4 +1,5 @@
 const createError = require('http-errors');
+const path = require('path') // used to make a dynamic route for the 'public' folder
 
 // Express server
 const express = require('express');
@@ -8,7 +9,9 @@ const ejsLayouts = require('express-ejs-layouts');
 
 // middleware and routes
 const passport = require('./auth/passport');
+const passUser = require('./middleware/passUser')
 const authRouter = require('./routes/authRoutes');
+const indexRouter = require('./routes/indexRoutes')
 
 // Loggers and cors
 const logger = require('morgan');
@@ -46,17 +49,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passUser);
 
-app.get('/', (req, res) => {
-    res.render('index', {
-        user: req.user
-    });
-});
-app.get('/calendar', (req, res) => {
-    res.render('calendar', {
-        user: req.user
-    });
-});
+app.use('/', indexRouter);
 app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
