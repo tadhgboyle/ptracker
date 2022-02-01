@@ -1,5 +1,3 @@
-const URL = 'http://localhost:3000';
-
 module.exports = {
   isAuthenticated: (req, res, next) => {
     if (req.user) {
@@ -14,13 +12,12 @@ module.exports = {
   ensureAuthenticated: (req, res, next) => {
     return req.isAuthenticated()
         ? next()
-        : res.redirect(`${URL}/login`);
+        : res.redirect('/auth/login');
   },
 
   forwardAuthenticated: (req, res, next) => {
     return !req.isAuthenticated()
         ? next()
-        : res.redirect('/reminders');
-},
-
+        : res.redirect('/homepage');
+  },
 };

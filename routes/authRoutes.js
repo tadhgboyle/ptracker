@@ -8,7 +8,7 @@ const FAILURE_LOGIN_URL = 'http://localhost:3000/auth/login/error';
 
 router.get('/logout', (req,res) => {
     req.logout();
-    res.redirect(`http://localhost:3000/auth/login`)
+    res.redirect('/auth/login');
 })
 
 router.get('/login', passport.authenticate('google', {
