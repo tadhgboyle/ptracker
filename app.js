@@ -9,7 +9,6 @@ const ejsLayouts = require('express-ejs-layouts');
 // middleware and routes
 const passport = require('./auth/passport');
 const authRouter = require('./routes/authRoutes');
-const userRouter = require('./routes/userRoutes');
 
 // Loggers and cors
 const logger = require('morgan');
@@ -44,19 +43,15 @@ app.use(passport.session());
 
 app.get('/', (req, res) => {
     res.render('index', {
-        user: {
-            name: 'Tadhg Boyle',
-            notifications: [
-                1, 2, 3
-            ],
-            notificationsColour: 'orange',
-            isInstructor: true,
-            isAdmin: false,
-        }
+        user: req.user
+    });
+});
+app.get('/calendar', (req, res) => {
+    res.render('calendar', {
+        user: req.user
     });
 });
 app.use('/auth', authRouter);
-app.use('/user', userRouter);
 
 app.use((req, res, next) => {
     next(createError(404));
