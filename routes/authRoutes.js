@@ -3,22 +3,24 @@ const passport = require('passport');
 
 const router = express.Router();
 
-// port 3000 is our React app
-const SUCCESS_LOGIN_URL = 'http://localhost:3000/login/success';
-const FAILURE_LOGIN_URL = 'http://localhost:3000/login/error';
-const URL = 'http://localhost:3000';
+const SUCCESS_LOGIN_URL = 'http://localhost:3000/';
+const FAILURE_LOGIN_URL = 'http://localhost:3000/auth/login/error';
 
 router.get('/logout', (req,res) => {
     req.logout();
-    res.redirect('/login')
+    res.redirect('/auth/login');
 })
 
-router.get('/google', passport.authenticate('google', {
+router.get('/login', passport.authenticate('google', {
     scope: [
         'profile',
         'email',
     ]
 }));
+
+router.get('/login/error', (req,res) => {
+    res.send('Error logging in');
+})
 
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: FAILURE_LOGIN_URL }), (req, res) => {
     return res.redirect(SUCCESS_LOGIN_URL);
