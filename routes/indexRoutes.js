@@ -3,14 +3,33 @@ const express = require('express');
 let dt = new Date();
 let currentMonth = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
 
-const {ensureAuthenticated, forwardAuthenticated, isInstructor} = require('../middleware/checkAuth')
+const {ensureAuthenticated, isInstructor, isAdmin} = require('../middleware/checkAuth')
 
 const router = express.Router();
 
-router.get('/homepage', ensureAuthenticated, (req,res) => res.render('homepage/homepage'))
+router.get('/dashboard', ensureAuthenticated, (req,res) => {
+    res.render('dashboard/dashboard', {
+        page: 'dashboard',
+    });
+});
 
-router.get('/calendar', ensureAuthenticated, (req,res) => res.render('calendar/calendar', {date: currentMonth}))
+router.get('/calendar', ensureAuthenticated, (req,res) => {
+    res.render('calendar/calendar', {
+        page: 'calendar',
+        date: currentMonth
+    });
+});
 
-router.get('/section', isInstructor, (req,res) => res.render('section/overview'));
+router.get('/section', isInstructor, (req,res) => {
+    res.render('section/overview', {
+        page: 'section',
+    });
+});
+
+router.get('/admin', isAdmin, (req,res) => {
+    res.render('admin/overview', {
+        page: 'admin',
+    });
+});
 
 module.exports = router;

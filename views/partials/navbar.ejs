@@ -3,22 +3,20 @@
         <div class="flex items-center h-16">
             <div class="flex flex-1 items-center">
                 <div class="flex-shrink-0">
-                    <span>
-                        Ptracker
-                    </span>
+                    PTracker
                 </div>
                 <% if (user) { %>
                     <div class="ml-10 space-x-4">
-                        <a href="/homepage" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="/dashboard" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'dashboard') { %> border <% } %>">
                             🏡 Dashboard
                         </a>
 
-                        <a href="/calendar" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="/calendar" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
                             🗓️ Calendar
                         </a>
 
                         <% if (user.isInstructor()) { %>
-                            <a href="/section" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="/section" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'section') { %> border <% } %>">
                                 👥 Section
                             </a>
 
@@ -29,7 +27,7 @@
                             -->
 
                             <% if (user.isAdmin()) { %>
-                                <a href="/admin" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                                <a href="/admin" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'admin') { %> border <% } %>">
                                     👮 Adminland
                                 </a>
                             <% } %>
@@ -44,9 +42,7 @@
                         <span class="px-3 py-2 text-indigo-500 underline">
                             <%= user.name %>
                         </span>
-                        <% if (user.picture) { %>
-                            <img src="<%= user.picture %>" class="h-8 rounded-full mt-1" alt="">
-                        <% } %>
+                        <img src="<%= user.picture %>" class="h-8 rounded-full mt-1" alt="">
                         <a href="/auth/logout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                             Logout
                         </a>
