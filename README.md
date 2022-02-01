@@ -4,8 +4,8 @@
 
 - You need MySQL installed and running on your machine
   - https://dev.mysql.com/downloads/installer/ (download the second option/the file thats bigger)
-  - create a .env file in the "./prisma" folder
-  - ![Screenshot 2022-01-29 211712](https://user-images.githubusercontent.com/77702776/151687680-267e03e0-e118-498e-91a5-fa4bb64c5506.png)
+  - create a .env file into the main "ptracker" directory
+  - ![Screenshot 2022-01-31 231534](https://user-images.githubusercontent.com/77702776/151927088-a84384fb-cc0f-49e6-9d5c-21ac3fd64078.png)
   - and add your password after "root"
   - ![Screenshot 2022-01-29 211150](https://user-images.githubusercontent.com/77702776/151687551-8560152e-aedc-4d8e-a3dc-5c9becf17037.png)
       -  By default it assumes that the user `root` has no password.
