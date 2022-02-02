@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const path = require('path') // used to make a dynamic route for the 'public' folder
 
