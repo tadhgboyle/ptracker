@@ -1,12 +1,11 @@
-let themeToggleBtn = document.getElementById('theme-toggle');
+const themeToggleBtn = document.getElementById('theme-toggle');
 
-themeToggleBtn.addEventListener('click', function() {
+themeToggleBtn.addEventListener('click', () => {
     if (document.documentElement.classList.contains('dark')) {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('color-theme', 'light')
-    }
-    else {
+    } else {
         document.documentElement.classList.add('dark');
         localStorage.setItem('color-theme', 'dark');
     }
-    })
+});
