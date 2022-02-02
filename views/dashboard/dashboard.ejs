@@ -1,1 +1,18 @@
-Hello, this is the ejs page where the month-long view of the calendar will be coded into (views/homepage/homepage.ejs)
+<div>
+    <table class="w-full">
+        <h1 class="font-bold text-3xl p-5"> <%= monthYear %> </h1>
+        <tr>
+            <th class="p-4 w-full text-left">Name</th>
+            <% for (day = 1; day <= days; day++) { %>
+            <td class="p-4 text-left"><%= day %></td>
+            <% } %>
+        </tr>
+    </table>
+</div>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
