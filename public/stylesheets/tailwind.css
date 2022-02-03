@@ -1121,6 +1121,11 @@ select {
   transition-duration: 200ms;
 }
 
+/* This file only serves as custom input for stylesheets/tailwind.css
+   There is no reason to keep it in /public since tailwind.css has its contents
+   - Martin
+ */
+
 .deleteForm {
   display: inline-block
 }
