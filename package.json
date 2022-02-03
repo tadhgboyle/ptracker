@@ -10,6 +10,7 @@
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
+    "@fullcalendar/daygrid": "^5.10.1",
     "@prisma/client": "^3.8.1",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
