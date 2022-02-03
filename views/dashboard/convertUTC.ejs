@@ -1,0 +1,63 @@
+<!--This file is used to convert UTC dates into local dates-->
+<%
+returnDay = function(date) {
+    const day = new Date(date);
+    const convertedDay = day.getDate();
+
+    return convertedDay;
+}
+
+anotherDate = function(UTCmonth) {
+    const monthUTC = new Date(UTCmonth);
+    const convertedMonth = monthUTC.getMonth();
+
+    if (convertedMonth == 0) {
+        return "January"
+    }
+    else if (convertedMonth == 1) {
+        return "February"
+    }
+    else if (convertedMonth == 2) {
+        return "March"
+    }
+    else if (convertedMonth == 3) {
+        return "April"
+    }
+    else if (convertedMonth == 4) {
+        return "May"
+    }
+    else if (convertedMonth == 5) {
+        return "June"
+    }
+    else if (convertedMonth == 6) {
+        return "July"
+    }
+    else if (convertedMonth == 7) {
+        return "August"
+    }
+    else if (convertedMonth == 8) {
+        return "September"
+    }
+    else if (convertedMonth == 9) {
+        return "October"
+    }
+    else if (convertedMonth == 10) {
+        return "November"
+    }
+    else if (convertedMonth == 11) {
+        return "December"
+    }
+}
+
+getYear = function(yearUTC) {
+    const year = new Date(yearUTC)
+    const convertedYear = year.getUTCFullYear()
+
+    return convertedYear
+}
+
+getFullDate = function(timeUTC) {
+    return `${anotherDate(timeUTC)} ${returnDay(timeUTC)} ${getYear((timeUTC))}`
+}
+
+%>

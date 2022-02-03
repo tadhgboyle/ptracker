@@ -12,7 +12,8 @@ router.get('/dashboard', ensureAuthenticated, (req,res) => {
         page: 'dashboard',
         days: currentDays,
         monthYear: `${dt.toLocaleString('default', { month: 'long' })}, ${dt.getFullYear()}`,
-        date: dt,
+        year: dt.getFullYear(),
+        date: dt
     });
 });
 

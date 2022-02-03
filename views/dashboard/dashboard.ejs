@@ -1,11 +1,33 @@
+<% include ('./convertUTC') %>
+
 <div>
     <table class="w-full">
-        <h1 class="font-bold text-3xl p-5"> <%= monthYear %> </h1>
+        <h1 class="font-bold text-3xl p-1"> <%= monthYear %> </h1>
+        <% if (user) { %>
         <tr>
             <th class="p-4 w-full text-left">Name</th>
             <% for (day = 1; day <= days; day++) { %>
             <td class="p-4 text-left"><%= day %></td>
             <% } %>
+        </tr>
+        <% } %>
+
+        <tr>
+            <th class="p-4 text-left"><%= user.name %></th>
+            <% for (day = 1; day <= days; day++) { %>
+                <% for (const shift of user.shifts) { %>
+                    <% if (getFullDate(shift.date) === `${date.toLocaleString('default', { month: 'long' })} ${day} ${year}`) { %>
+                        <td class="font-bold text-center"> X </td>
+                        <% dateMarked = true %>
+                    <% } %>
+                <% } %>
+                <% if (dateMarked == false) { %>
+                    <td></td>
+                <% } else { %>
+                    <% dateMarked = false %>
+                <% } %>
+            <% } %>
+
         </tr>
     </table>
 </div>
@@ -16,3 +38,7 @@
         border-collapse: collapse;
     }
 </style>
+
+<script>
+    let dateMarked = null;
+</script>
