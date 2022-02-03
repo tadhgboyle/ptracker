@@ -3,17 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>PTracker</title>
-        <link href="./stylesheets/tailwind.css" rel="stylesheet" type="text/css">
+        <link href="../stylesheets/tailwind.css" rel="stylesheet" type="text/css">
         <link rel="icon" href="../favicon.ico">
-        <script src="calendar.js" defer></script>    
-        <link href='fullcalendar/main.css' rel='stylesheet' />
-        <script src='fullcalendar/main.js'></script>
+        <% if (locals.page) { %>
+            <% if (page === 'calendar') { %>
+                <script src="calendar.js" defer></script>    
+                <link href='fullcalendar/main.css' rel='stylesheet' />
+                <script src='fullcalendar/main.js'></script>
+                <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+                <% } %>
+        <% } %>
     </head>
     <body>
         <%- include("./partials/navbar") %>
         <div class="container mx-auto pt-8">
             <%- body %>
         </div>
-        <%- include("./partials/footer") %>
+        <!-- <%- include("./partials/footer") %> -->
     </body>
 </html>

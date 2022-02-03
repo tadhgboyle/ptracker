@@ -6,7 +6,7 @@
                     PTracker
                 </div>
                 <% if (user) { %>
-                    <div class="ml-10 flex items-baseline space-x-4">
+                    <div class="ml-10 flex items-center space-x-4">
                         <a href="/dashboard" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'dashboard') { %> border <% } %>">
                             🏡 Dashboard
                         </a>
@@ -32,11 +32,22 @@
                                 </a>
                             <% } %>
                         <% } %>
-                        <label class="relative flex justify-between items-center px-3 py-2 rounded-md text-sm font-medium">
-                            Dark Mode
-                            <input type="checkbox" class="absolute left-0 top-0 w-full h-full appearance-none peer rounded-md" />
-                            <span class="w-10 h-5 flex items-center flex-shrink-0 ml-4 p-1 bg-gray-300 rounded-full duration-300 ease-in-out peer-checked:bg-green-400 after:w-5 after:h-4 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-3 group-hover:after:translate-x-1"></span>
-                        </label>
+                        <div class="flex items-center justify-center">
+                            <label for="darkMode" class="flex items-center cursor-pointer">
+                              <!-- toggle -->
+                              <div class="relative">
+                                <input type="checkbox" id="darkMode" class="sr-only">
+                                <!-- line -->
+                                <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                                <!-- dot -->
+                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                              </div>
+                              <!-- label -->
+                              <div class="ml-3 text-gray-700 font-medium">
+                                Dark Mode
+                              </div>
+                            </label>    
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center">

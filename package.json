@@ -12,6 +12,7 @@
   "dependencies": {
     "@fullcalendar/daygrid": "^5.10.1",
     "@prisma/client": "^3.8.1",
+    "@tailwindcss/forms": "^0.4.0",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
     "core-util-is": "^1.0.3",
