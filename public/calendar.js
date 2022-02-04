@@ -29,10 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
     businessHours: true,
     dayMaxEvents: true, // allow "more" button when too many shifts
     
+    
     // Callback for when you click a date
     dateClick: function(info) {
       openModal('addShiftModal')
       document.getElementById('shiftDatePicker').value = info.dateStr
+    },
+
+    // Callback for when you click an event
+    eventClick: function(info) {
+
     },
     // Static shifts
     events: [
@@ -40,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         title: 'Example Shift (D)',
         start: '2022-02-04',
         color: '#ECA446',
+        extendedProps: {}
        
       },
       {
@@ -72,11 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         start: '2022-02-07',
         end: '2022-02-10',
         color: '#577590'
-      },
-      {
-        title: 'Shift with Time',
-        start: '2022-02-12T07:30:00',
-        end: '2022-02-12T12:30:00'
       },
     ]
   });
