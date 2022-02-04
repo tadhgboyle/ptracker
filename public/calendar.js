@@ -1,3 +1,6 @@
+
+// Functions for open/closing modals
+// Pass DOM element id as argument
 function openModal(key) {
   document.getElementById(key).showModal(); 
   document.getElementById(key).children[0].scrollTop = 0; 
@@ -13,6 +16,21 @@ function modalClose(key) {
       document.body.removeAttribute('style');
   }, 100);
 }
+
+
+// Dark Mode Toggle
+const themeToggleBtn = document.getElementById('darkMode');
+
+themeToggleBtn.addEventListener('click', () => {
+    if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light')
+    } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+    }
+});
+
 
 document.addEventListener('DOMContentLoaded', function() {
   let startDate = new Date()
