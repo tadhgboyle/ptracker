@@ -1,40 +1,31 @@
 <% include ('./convertUTC') %>
 <% let dateMarked = null; %>
+
 <div>
-    <table class="table-auto w-auto">
-        <h1 class="font-bold text-3xl p-1 text-center"> <%= monthYear %> </h1>
-        <% if (user) { %>
+    <table class="table-auto w-auto border border-solid border-black border-collapse">
+        <h1 class="font-bold text-3xl text-center"> <%= monthYear %> </h1>
         <tr>
-            <th class="text-left">Name</th>
+            <th class="text-left w-auto border-collapse">Student</th>
             <% for (day = 1; day <= 31; day++) { %>
-            <td class="text-left"><%= day %></td>
+                <td class="text-center w-12 border border-solid border-black border-collapse"><%= day %></td>
             <% } %>
         </tr>
-        <% } %>
 
         <tr>
-            <th class="text-left"><%= user.name %></th>
-            <% for (day = 1; day <= days; day++) { %>
+            <th class="text-left w-52 border border-solid border-black border-collapse"><%= user.name %></th>
+            <% for (day = 1; day <= 31; day++) { %>
                 <% for (const shift of user.shifts) { %>
                     <% if (getFullDate(shift.date) === `${date.toLocaleString('default', { month: 'long' })} ${day} ${year}`) { %>
-                        <td class="font-bold text-center"> X </td>
-                        <% dateMarked = true %>
+                        <td class="font-bold text-center border border-solid border-black border-collapse"> X </td>
+                            <% dateMarked = true %>
+                        <% } %>
                     <% } %>
-                <% } %>
-                <% if (dateMarked == false) { %>
-                    <td></td>
-                <% } else { %>
-                    <% dateMarked = false %>
-                <% } %>
+                    <% if (dateMarked == false) { %>
+                        <td class="border border-solid border-black border-collapse"></td>
+                    <% } else { %>
+                        <% dateMarked = false %>
+                    <% } %>
             <% } %>
-
         </tr>
     </table>
 </div>
-
-<style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-</style>
