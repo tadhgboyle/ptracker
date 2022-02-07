@@ -1,6 +1,6 @@
 /*!
-FullCalendar v5.10.1
-Docs & License: https://fullcalendar.io/
+FullCalendar Scheduler v5.10.1
+Docs & License: https://fullcalendar.io/scheduler
 (c) 2021 Adam Shaw
 */
 var FullCalendar = (function (exports) {
@@ -644,7 +644,7 @@ var FullCalendar = (function (exports) {
         return new Date(Date.UTC.apply(Date, a));
     }
     // Other Utils
-    function isValidDate(m) {
+    function isValidDate$1(m) {
         return !isNaN(m.valueOf());
     }
     function timeAsMs(m) {
@@ -2068,7 +2068,7 @@ var FullCalendar = (function (exports) {
         date: identity,
         allDay: Boolean,
     };
-    var EVENT_REFINERS = __assign(__assign(__assign({}, EVENT_NON_DATE_REFINERS), EVENT_DATE_REFINERS), { extendedProps: identity });
+    var EVENT_REFINERS$1 = __assign(__assign(__assign({}, EVENT_NON_DATE_REFINERS), EVENT_DATE_REFINERS), { extendedProps: identity });
     function parseEvent(raw, eventSource, context, allowOpenRange, refiners) {
         if (refiners === void 0) { refiners = buildEventRefiners(context); }
         var _a = refineEventDef(raw, context, refiners), refined = _a.refined, extra = _a.extra;
@@ -2096,7 +2096,7 @@ var FullCalendar = (function (exports) {
         return refineProps(raw, refiners);
     }
     function buildEventRefiners(context) {
-        return __assign(__assign(__assign({}, EVENT_UI_REFINERS), EVENT_REFINERS), context.pluginHooks.eventRefiners);
+        return __assign(__assign(__assign({}, EVENT_UI_REFINERS), EVENT_REFINERS$1), context.pluginHooks.eventRefiners);
     }
     /*
     Will NOT populate extendedProps with the leftover properties.
@@ -3840,7 +3840,7 @@ var FullCalendar = (function (exports) {
         var m = ISO_RE.exec(str);
         if (m) {
             var marker = new Date(Date.UTC(Number(m[1]), m[3] ? Number(m[3]) - 1 : 0, Number(m[5] || 1), Number(m[7] || 0), Number(m[8] || 0), Number(m[10] || 0), m[12] ? Number("0." + m[12]) * 1000 : 0));
-            if (isValidDate(marker)) {
+            if (isValidDate$1(marker)) {
                 var timeZoneOffset = null;
                 if (m[13]) {
                     timeZoneOffset = (m[15] === '-' ? -1 : 1) * (Number(m[16] || 0) * 60 +
@@ -3916,7 +3916,7 @@ var FullCalendar = (function (exports) {
             else if (Array.isArray(input)) {
                 marker = arrayToUtcDate(input);
             }
-            if (marker === null || !isValidDate(marker)) {
+            if (marker === null || !isValidDate$1(marker)) {
                 return null;
             }
             return { marker: marker, isTimeUnspecified: false, forcedTzo: null };
@@ -6174,7 +6174,7 @@ var FullCalendar = (function (exports) {
                     excludeStaticSources(eventSources, context), activeRange, action.isRefetch || false, context);
             case 'RECEIVE_EVENTS':
             case 'RECEIVE_EVENT_ERROR':
-                return receiveResponse(eventSources, action.sourceId, action.fetchId, action.fetchRange);
+                return receiveResponse$1(eventSources, action.sourceId, action.fetchId, action.fetchRange);
             case 'REMOVE_ALL_EVENT_SOURCES':
                 return {};
             default:
@@ -6225,7 +6225,7 @@ var FullCalendar = (function (exports) {
         for (var sourceId in prevSources) {
             var source = prevSources[sourceId];
             if (sourceIdHash[sourceId]) {
-                nextSources[sourceId] = fetchSource(source, fetchRange, isRefetch, context);
+                nextSources[sourceId] = fetchSource$1(source, fetchRange, isRefetch, context);
             }
             else {
                 nextSources[sourceId] = source;
@@ -6233,7 +6233,7 @@ var FullCalendar = (function (exports) {
         }
         return nextSources;
     }
-    function fetchSource(eventSource, fetchRange, isRefetch, context) {
+    function fetchSource$1(eventSource, fetchRange, isRefetch, context) {
         var options = context.options, calendarApi = context.calendarApi;
         var sourceDef = context.pluginHooks.eventSourceDefs[eventSource.sourceDefId];
         var fetchId = guid();
@@ -6275,7 +6275,7 @@ var FullCalendar = (function (exports) {
         });
         return __assign(__assign({}, eventSource), { isFetching: true, latestFetchId: fetchId });
     }
-    function receiveResponse(sourceHash, sourceId, fetchId, fetchRange) {
+    function receiveResponse$1(sourceHash, sourceId, fetchId, fetchRange) {
         var _a;
         var eventSource = sourceHash[sourceId];
         if (eventSource && // not already removed
@@ -6688,7 +6688,7 @@ var FullCalendar = (function (exports) {
         },
         fetch: function (arg, success, failure) {
             var meta = arg.eventSource.meta;
-            var requestParams = buildRequestParams$1(meta, arg.range, arg.context);
+            var requestParams = buildRequestParams$2(meta, arg.range, arg.context);
             requestJson(meta.method, meta.url, requestParams, function (rawEvents, xhr) {
                 success({ rawEvents: rawEvents, xhr: xhr });
             }, function (errorMessage, xhr) {
@@ -6700,7 +6700,7 @@ var FullCalendar = (function (exports) {
         eventSourceRefiners: JSON_FEED_EVENT_SOURCE_REFINERS,
         eventSourceDefs: [eventSourceDef$1],
     });
-    function buildRequestParams$1(meta, range, context) {
+    function buildRequestParams$2(meta, range, context) {
         var dateEnv = context.dateEnv, options = context.options;
         var startParam;
         var endParam;
@@ -9438,7 +9438,7 @@ var FullCalendar = (function (exports) {
             var seg = props.seg;
             var timeFormat = context.options.eventTimeFormat || props.defaultTimeFormat;
             var timeText = buildSegTimeText(seg, timeFormat, context, props.defaultDisplayEventTime, props.defaultDisplayEventEnd);
-            return (createElement(EventRoot, { seg: seg, timeText: timeText, disableDragging: props.disableDragging, disableResizing: props.disableResizing, defaultContent: props.defaultContent || renderInnerContent$4, isDragging: props.isDragging, isResizing: props.isResizing, isDateSelecting: props.isDateSelecting, isSelected: props.isSelected, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday }, function (rootElRef, classNames, innerElRef, innerContent, hookProps) { return (createElement("a", __assign({ className: props.extraClassNames.concat(classNames).join(' '), style: {
+            return (createElement(EventRoot, { seg: seg, timeText: timeText, disableDragging: props.disableDragging, disableResizing: props.disableResizing, defaultContent: props.defaultContent || renderInnerContent$6, isDragging: props.isDragging, isResizing: props.isResizing, isDateSelecting: props.isDateSelecting, isSelected: props.isSelected, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday }, function (rootElRef, classNames, innerElRef, innerContent, hookProps) { return (createElement("a", __assign({ className: props.extraClassNames.concat(classNames).join(' '), style: {
                     borderColor: hookProps.borderColor,
                     backgroundColor: hookProps.backgroundColor,
                 }, ref: rootElRef }, getSegAnchorAttrs(seg, context)),
@@ -9450,7 +9450,7 @@ var FullCalendar = (function (exports) {
         };
         return StandardEvent;
     }(BaseComponent));
-    function renderInnerContent$4(innerProps) {
+    function renderInnerContent$6(innerProps) {
         return (createElement("div", { className: "fc-event-main-frame" },
             innerProps.timeText && (createElement("div", { className: "fc-event-time" }, innerProps.timeText)),
             createElement("div", { className: "fc-event-title-container" },
@@ -9529,10 +9529,10 @@ var FullCalendar = (function (exports) {
     function renderFill(fillType) {
         return (createElement("div", { className: "fc-" + fillType }));
     }
-    var BgEvent = function (props) { return (createElement(EventRoot, { defaultContent: renderInnerContent$3, seg: props.seg /* uselesss i think */, timeText: "", disableDragging: true, disableResizing: true, isDragging: false, isResizing: false, isDateSelecting: false, isSelected: false, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday }, function (rootElRef, classNames, innerElRef, innerContent, hookProps) { return (createElement("div", { ref: rootElRef, className: ['fc-bg-event'].concat(classNames).join(' '), style: {
+    var BgEvent = function (props) { return (createElement(EventRoot, { defaultContent: renderInnerContent$5, seg: props.seg /* uselesss i think */, timeText: "", disableDragging: true, disableResizing: true, isDragging: false, isResizing: false, isDateSelecting: false, isSelected: false, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday }, function (rootElRef, classNames, innerElRef, innerContent, hookProps) { return (createElement("div", { ref: rootElRef, className: ['fc-bg-event'].concat(classNames).join(' '), style: {
             backgroundColor: hookProps.backgroundColor,
         } }, innerContent)); })); };
-    function renderInnerContent$3(props) {
+    function renderInnerContent$5(props) {
         var title = props.event.title;
         return title && (createElement("div", { className: "fc-event-title" }, props.event.title));
     }
@@ -11716,10 +11716,10 @@ var FullCalendar = (function (exports) {
         return UnselectAuto;
     }());
 
-    var OPTION_REFINERS$3 = {
+    var OPTION_REFINERS$5 = {
         fixedMirrorParent: identity,
     };
-    var LISTENER_REFINERS = {
+    var LISTENER_REFINERS$1 = {
         dateClick: identity,
         eventDragStart: identity,
         eventDragStop: identity,
@@ -12057,8 +12057,8 @@ var FullCalendar = (function (exports) {
         componentInteractions: [DateClicking, DateSelecting, EventDragging, EventResizing],
         calendarInteractions: [UnselectAuto],
         elementDraggingImpl: FeaturefulElementDragging,
-        optionRefiners: OPTION_REFINERS$3,
-        listenerRefiners: LISTENER_REFINERS,
+        optionRefiners: OPTION_REFINERS$5,
+        listenerRefiners: LISTENER_REFINERS$1,
     });
 
     /* An abstract class for the daygrid views, as well as month view. Renders one or more rows of day cells.
@@ -12244,12 +12244,12 @@ var FullCalendar = (function (exports) {
             var _a = this, props = _a.props, context = _a.context;
             var timeFormat = context.options.eventTimeFormat || DEFAULT_TABLE_EVENT_TIME_FORMAT;
             var timeText = buildSegTimeText(props.seg, timeFormat, context, true, props.defaultDisplayEventEnd);
-            return (createElement(EventRoot, { seg: props.seg, timeText: timeText, defaultContent: renderInnerContent$2, isDragging: props.isDragging, isResizing: false, isDateSelecting: false, isSelected: props.isSelected, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday }, function (rootElRef, classNames, innerElRef, innerContent) { return ( // we don't use styles!
+            return (createElement(EventRoot, { seg: props.seg, timeText: timeText, defaultContent: renderInnerContent$4, isDragging: props.isDragging, isResizing: false, isDateSelecting: false, isSelected: props.isSelected, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday }, function (rootElRef, classNames, innerElRef, innerContent) { return ( // we don't use styles!
             createElement("a", __assign({ className: ['fc-daygrid-event', 'fc-daygrid-dot-event'].concat(classNames).join(' '), ref: rootElRef }, getSegAnchorAttrs(props.seg, context)), innerContent)); }));
         };
         return TableListItemEvent;
     }(BaseComponent));
-    function renderInnerContent$2(innerProps) {
+    function renderInnerContent$4(innerProps) {
         return (createElement(Fragment, null,
             createElement("div", { className: "fc-daygrid-event-dot", style: { borderColor: innerProps.borderColor || innerProps.backgroundColor } }),
             innerProps.timeText && (createElement("div", { className: "fc-event-time" }, innerProps.timeText)),
@@ -12593,7 +12593,7 @@ var FullCalendar = (function (exports) {
                 props.renderIntro && props.renderIntro(),
                 props.cells.map(function (cell, col) {
                     var normalFgNodes = _this.renderFgSegs(col, props.forPrint ? singleColPlacements[col] : multiColPlacements[col], props.todayRange, isForcedInvisible);
-                    var mirrorFgNodes = _this.renderFgSegs(col, buildMirrorPlacements(mirrorSegsByCol[col], multiColPlacements), props.todayRange, {}, Boolean(props.eventDrag), Boolean(props.eventResize), false);
+                    var mirrorFgNodes = _this.renderFgSegs(col, buildMirrorPlacements$1(mirrorSegsByCol[col], multiColPlacements), props.todayRange, {}, Boolean(props.eventDrag), Boolean(props.eventResize), false);
                     return (createElement(TableCell, { key: cell.key, elRef: _this.cellElRefs.createRef(cell.key), innerElRef: _this.frameElRefs.createRef(cell.key) /* FF <td> problem, but okay to use for left/right. TODO: rename prop */, dateProfile: props.dateProfile, date: cell.date, showDayNumber: props.showDayNumbers, showWeekNumber: props.showWeekNumbers && col === 0, forceDayTop: props.showWeekNumbers /* even displaying weeknum for row, not necessarily day */, todayRange: props.todayRange, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, extraHookProps: cell.extraHookProps, extraDataAttrs: cell.extraDataAttrs, extraClassNames: cell.extraClassNames, extraDateSpan: cell.extraDateSpan, moreCnt: moreCnts[col], moreMarginTop: moreMarginTops[col], singlePlacements: singleColPlacements[col], fgContentElRef: _this.fgElRefs.createRef(cell.key), fgContent: ( // Fragment scopes the keys
                         createElement(Fragment, null,
                             createElement(Fragment, null, normalFgNodes),
@@ -12745,11 +12745,11 @@ var FullCalendar = (function (exports) {
     TableRow.addStateEquality({
         eventInstanceHeights: isPropsEqual,
     });
-    function buildMirrorPlacements(mirrorSegs, colPlacements) {
+    function buildMirrorPlacements$1(mirrorSegs, colPlacements) {
         if (!mirrorSegs.length) {
             return [];
         }
-        var topsByInstanceId = buildAbsoluteTopHash(colPlacements); // TODO: cache this at first render?
+        var topsByInstanceId = buildAbsoluteTopHash$1(colPlacements); // TODO: cache this at first render?
         return mirrorSegs.map(function (seg) { return ({
             seg: seg,
             isVisible: true,
@@ -12758,7 +12758,7 @@ var FullCalendar = (function (exports) {
             marginTop: 0,
         }); });
     }
-    function buildAbsoluteTopHash(colPlacements) {
+    function buildAbsoluteTopHash$1(colPlacements) {
         var topsByInstanceId = {};
         for (var _i = 0, colPlacements_1 = colPlacements; _i < colPlacements_1.length; _i++) {
             var placements = colPlacements_1[_i];
@@ -13050,12 +13050,12 @@ var FullCalendar = (function (exports) {
                 view: viewApi,
                 text: dateEnv.format(props.date, labelFormat),
             };
-            return (createElement(RenderHook, { hookProps: hookProps, classNames: options.slotLabelClassNames, content: options.slotLabelContent, defaultContent: renderInnerContent$1, didMount: options.slotLabelDidMount, willUnmount: options.slotLabelWillUnmount }, function (rootElRef, customClassNames, innerElRef, innerContent) { return (createElement("td", { ref: rootElRef, className: classNames.concat(customClassNames).join(' '), "data-time": props.isoTimeStr },
+            return (createElement(RenderHook, { hookProps: hookProps, classNames: options.slotLabelClassNames, content: options.slotLabelContent, defaultContent: renderInnerContent$3, didMount: options.slotLabelDidMount, willUnmount: options.slotLabelWillUnmount }, function (rootElRef, customClassNames, innerElRef, innerContent) { return (createElement("td", { ref: rootElRef, className: classNames.concat(customClassNames).join(' '), "data-time": props.isoTimeStr },
                 createElement("div", { className: "fc-timegrid-slot-label-frame fc-scrollgrid-shrink-frame" },
                     createElement("div", { className: "fc-timegrid-slot-label-cushion fc-scrollgrid-shrink-cushion", ref: innerElRef }, innerContent)))); }));
         }));
     }
-    function renderInnerContent$1(props) {
+    function renderInnerContent$3(props) {
         return props.text;
     }
 
@@ -13660,7 +13660,7 @@ var FullCalendar = (function (exports) {
         }
         return vcoords;
     }
-    function computeFgSegPlacements(segs, segVCoords, // might not have for every seg
+    function computeFgSegPlacements$1(segs, segVCoords, // might not have for every seg
     eventOrderStrict, eventMaxStack) {
         var segInputs = [];
         var dumbSegs = []; // segs without coords
@@ -13693,7 +13693,7 @@ var FullCalendar = (function (exports) {
         return { segPlacements: segPlacements, hiddenGroups: hiddenGroups };
     }
 
-    var DEFAULT_TIME_FORMAT$1 = createFormatter({
+    var DEFAULT_TIME_FORMAT$2 = createFormatter({
         hour: 'numeric',
         minute: '2-digit',
         meridiem: false,
@@ -13711,7 +13711,7 @@ var FullCalendar = (function (exports) {
             if (this.props.isShort) {
                 classNames.push('fc-timegrid-event-short');
             }
-            return (createElement(StandardEvent, __assign({}, this.props, { defaultTimeFormat: DEFAULT_TIME_FORMAT$1, extraClassNames: classNames })));
+            return (createElement(StandardEvent, __assign({}, this.props, { defaultTimeFormat: DEFAULT_TIME_FORMAT$2, extraClassNames: classNames })));
         };
         return TimeColEvent;
     }(BaseComponent));
@@ -13775,7 +13775,7 @@ var FullCalendar = (function (exports) {
             var _b = this.props, date = _b.date, slatCoords = _b.slatCoords, eventSelection = _b.eventSelection, todayRange = _b.todayRange, nowDate = _b.nowDate;
             var isMirror = isDragging || isResizing || isDateSelecting;
             var segVCoords = computeSegVCoords(segs, date, slatCoords, eventMinHeight);
-            var _c = computeFgSegPlacements(segs, segVCoords, eventOrderStrict, eventMaxStack), segPlacements = _c.segPlacements, hiddenGroups = _c.hiddenGroups;
+            var _c = computeFgSegPlacements$1(segs, segVCoords, eventOrderStrict, eventMaxStack), segPlacements = _c.segPlacements, hiddenGroups = _c.hiddenGroups;
             return (createElement(Fragment, null,
                 this.renderHiddenGroups(hiddenGroups, segs),
                 segPlacements.map(function (segPlacement) {
@@ -13929,13 +13929,13 @@ var FullCalendar = (function (exports) {
             if (props.onColCoords &&
                 props.clientWidth !== null // means sizing has stabilized
             ) {
-                props.onColCoords(new PositionCache(this.rootElRef.current, collectCellEls(this.cellElRefs.currentMap, props.cells), true, // horizontal
+                props.onColCoords(new PositionCache(this.rootElRef.current, collectCellEls$1(this.cellElRefs.currentMap, props.cells), true, // horizontal
                 false));
             }
         };
         return TimeColsContent;
     }(BaseComponent));
-    function collectCellEls(elMap, cells) {
+    function collectCellEls$1(elMap, cells) {
         return cells.map(function (cell) { return elMap[cell.key]; });
     }
 
@@ -14113,7 +14113,7 @@ var FullCalendar = (function (exports) {
 
     // potential nice values for the slot-duration and interval-duration
     // from largest to smallest
-    var STOCK_SUB_DURATIONS = [
+    var STOCK_SUB_DURATIONS$1 = [
         { hours: 1 },
         { minutes: 30 },
         { minutes: 15 },
@@ -14147,8 +14147,8 @@ var FullCalendar = (function (exports) {
         var labelInterval;
         var slotsPerLabel;
         // find the smallest stock label interval that results in more than one slots-per-label
-        for (i = STOCK_SUB_DURATIONS.length - 1; i >= 0; i -= 1) {
-            labelInterval = createDuration(STOCK_SUB_DURATIONS[i]);
+        for (i = STOCK_SUB_DURATIONS$1.length - 1; i >= 0; i -= 1) {
+            labelInterval = createDuration(STOCK_SUB_DURATIONS$1[i]);
             slotsPerLabel = wholeDivideDurations(labelInterval, slotDuration);
             if (slotsPerLabel !== null && slotsPerLabel > 1) {
                 return labelInterval;
@@ -14190,13 +14190,13 @@ var FullCalendar = (function (exports) {
         return new DayTableModel(daySeries, false);
     }
 
-    var OPTION_REFINERS$2 = {
+    var OPTION_REFINERS$4 = {
         allDaySlot: Boolean,
     };
 
     var timeGridPlugin = createPlugin({
         initialView: 'timeGridWeek',
-        optionRefiners: OPTION_REFINERS$2,
+        optionRefiners: OPTION_REFINERS$4,
         views: {
             timeGrid: {
                 component: DayTimeColsView,
@@ -14239,19 +14239,19 @@ var FullCalendar = (function (exports) {
                 sideText: sideText, navLinkAttrs: buildNavLinkAttrs(this.context, dayDate), sideNavLinkAttrs: buildNavLinkAttrs(this.context, dayDate, 'day', false) }, dayMeta);
             var classNames = ['fc-list-day'].concat(getDayClassNames(dayMeta, theme));
             // TODO: make a reusable HOC for dayHeader (used in daygrid/timegrid too)
-            return (createElement(RenderHook, { hookProps: hookProps, classNames: options.dayHeaderClassNames, content: options.dayHeaderContent, defaultContent: renderInnerContent, didMount: options.dayHeaderDidMount, willUnmount: options.dayHeaderWillUnmount }, function (rootElRef, customClassNames, innerElRef, innerContent) { return (createElement("tr", { ref: rootElRef, className: classNames.concat(customClassNames).join(' '), "data-date": formatDayString(dayDate) },
+            return (createElement(RenderHook, { hookProps: hookProps, classNames: options.dayHeaderClassNames, content: options.dayHeaderContent, defaultContent: renderInnerContent$2, didMount: options.dayHeaderDidMount, willUnmount: options.dayHeaderWillUnmount }, function (rootElRef, customClassNames, innerElRef, innerContent) { return (createElement("tr", { ref: rootElRef, className: classNames.concat(customClassNames).join(' '), "data-date": formatDayString(dayDate) },
                 createElement("th", { scope: "colgroup", colSpan: 3, id: cellId, "aria-labelledby": textId },
                     createElement("div", { className: 'fc-list-day-cushion ' + theme.getClass('tableCellShaded'), ref: innerElRef }, innerContent)))); }));
         };
         return ListViewHeaderRow;
     }(BaseComponent));
-    function renderInnerContent(props) {
+    function renderInnerContent$2(props) {
         return (createElement(Fragment, null,
             props.text && (createElement("a", __assign({ id: props.textId, className: "fc-list-day-text" }, props.navLinkAttrs), props.text)),
             props.sideText && ( /* not keyboard tabbable */createElement("a", __assign({ "aria-hidden": true, className: "fc-list-day-side-text" }, props.sideNavLinkAttrs), props.sideText))));
     }
 
-    var DEFAULT_TIME_FORMAT = createFormatter({
+    var DEFAULT_TIME_FORMAT$1 = createFormatter({
         hour: 'numeric',
         minute: '2-digit',
         meridiem: 'short',
@@ -14264,7 +14264,7 @@ var FullCalendar = (function (exports) {
         ListViewEventRow.prototype.render = function () {
             var _a = this, props = _a.props, context = _a.context;
             var seg = props.seg, timeHeaderId = props.timeHeaderId, eventHeaderId = props.eventHeaderId, dateHeaderId = props.dateHeaderId;
-            var timeFormat = context.options.eventTimeFormat || DEFAULT_TIME_FORMAT;
+            var timeFormat = context.options.eventTimeFormat || DEFAULT_TIME_FORMAT$1;
             return (createElement(EventRoot, { seg: seg, timeText: "" // BAD. because of all-day content
                 , disableDragging: true, disableResizing: true, defaultContent: function () { return renderEventInnerContent(seg, context); } /* weird */, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday, isSelected: props.isSelected, isDragging: props.isDragging, isResizing: props.isResizing, isDateSelecting: props.isDateSelecting }, function (rootElRef, classNames, innerElRef, innerContent, hookProps) { return (createElement("tr", { className: ['fc-list-event', hookProps.event.url ? 'fc-event-forced-url' : ''].concat(classNames).join(' '), ref: rootElRef },
                 buildTimeContent(seg, timeFormat, context, timeHeaderId, dateHeaderId),
@@ -14476,7 +14476,7 @@ var FullCalendar = (function (exports) {
         return segsByDay;
     }
 
-    var OPTION_REFINERS$1 = {
+    var OPTION_REFINERS$3 = {
         listDayFormat: createFalsableFormatter,
         listDaySideFormat: createFalsableFormatter,
         noEventsClassNames: identity,
@@ -14490,7 +14490,7 @@ var FullCalendar = (function (exports) {
     }
 
     var listPlugin = createPlugin({
-        optionRefiners: OPTION_REFINERS$1,
+        optionRefiners: OPTION_REFINERS$3,
         views: {
             list: {
                 component: ListView,
@@ -14563,7 +14563,7 @@ var FullCalendar = (function (exports) {
     });
 
     // rename this file to options.ts like other packages?
-    var OPTION_REFINERS = {
+    var OPTION_REFINERS$2 = {
         googleCalendarApiKey: String,
     };
 
@@ -14606,7 +14606,7 @@ var FullCalendar = (function (exports) {
                 // TODO: make DRY with json-feed-event-source
                 var extraParams = meta.extraParams;
                 var extraParamsObj = typeof extraParams === 'function' ? extraParams() : extraParams;
-                var requestParams_1 = buildRequestParams(arg.range, apiKey, extraParamsObj, dateEnv);
+                var requestParams_1 = buildRequestParams$1(arg.range, apiKey, extraParamsObj, dateEnv);
                 requestJson('GET', url, requestParams_1, function (body, xhr) {
                     if (body.error) {
                         onFailure({
@@ -14647,7 +14647,7 @@ var FullCalendar = (function (exports) {
         }
         return apiBase + '/' + encodeURIComponent(meta.googleCalendarId) + '/events';
     }
-    function buildRequestParams(range, apiKey, extraParams, dateEnv) {
+    function buildRequestParams$1(range, apiKey, extraParams, dateEnv) {
         var params;
         var startStr;
         var endStr;
@@ -14698,12 +14698,5285 @@ var FullCalendar = (function (exports) {
     }
     var googleCalendarPlugin = createPlugin({
         eventSourceDefs: [eventSourceDef],
-        optionRefiners: OPTION_REFINERS,
+        optionRefiners: OPTION_REFINERS$2,
         eventSourceRefiners: EVENT_SOURCE_REFINERS,
     });
 
-    globalPlugins.push(interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, plugin, googleCalendarPlugin);
+    var RELEASE_DATE = '2021-11-03'; // for Scheduler
+    var UPGRADE_WINDOW = 365 + 7; // days. 1 week leeway, for tz shift reasons too
+    var INVALID_LICENSE_URL = 'http://fullcalendar.io/docs/schedulerLicenseKey#invalid';
+    var OUTDATED_LICENSE_URL = 'http://fullcalendar.io/docs/schedulerLicenseKey#outdated';
+    var PRESET_LICENSE_KEYS = [
+        'GPL-My-Project-Is-Open-Source',
+        'CC-Attribution-NonCommercial-NoDerivatives',
+    ];
+    var CSS = {
+        position: 'absolute',
+        zIndex: 99999,
+        bottom: '1px',
+        left: '1px',
+        background: '#eee',
+        borderColor: '#ddd',
+        borderStyle: 'solid',
+        borderWidth: '1px 1px 0 0',
+        padding: '2px 4px',
+        fontSize: '12px',
+        borderTopRightRadius: '3px',
+    };
+    function buildLicenseWarning(context) {
+        var key = context.options.schedulerLicenseKey;
+        var currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+        if (!isImmuneUrl(currentUrl)) {
+            var status_1 = processLicenseKey(key);
+            if (status_1 !== 'valid') {
+                return (createElement("div", { className: "fc-license-message", style: CSS }, (status_1 === 'outdated') ? (createElement(Fragment, null,
+                    'Your license key is too old to work with this version. ',
+                    createElement("a", { href: OUTDATED_LICENSE_URL }, "More Info"))) : (createElement(Fragment, null,
+                    'Your license key is invalid. ',
+                    createElement("a", { href: INVALID_LICENSE_URL }, "More Info")))));
+            }
+        }
+        return null;
+    }
+    /*
+    This decryption is not meant to be bulletproof. Just a way to remind about an upgrade.
+    */
+    function processLicenseKey(key) {
+        if (PRESET_LICENSE_KEYS.indexOf(key) !== -1) {
+            return 'valid';
+        }
+        var parts = (key || '').match(/^(\d+)-fcs-(\d+)$/);
+        if (parts && (parts[1].length === 10)) {
+            var purchaseDate = new Date(parseInt(parts[2], 10) * 1000);
+            var releaseDate = new Date(config.mockSchedulerReleaseDate || RELEASE_DATE);
+            if (isValidDate$1(releaseDate)) { // token won't be replaced in dev mode
+                var minPurchaseDate = addDays(releaseDate, -UPGRADE_WINDOW);
+                if (minPurchaseDate < purchaseDate) {
+                    return 'valid';
+                }
+                return 'outdated';
+            }
+        }
+        return 'invalid';
+    }
+    function isImmuneUrl(url) {
+        return /\w+:\/\/fullcalendar\.io\/|\/examples\/[\w-]+\.html$/.test(url);
+    }
 
+    var OPTION_REFINERS$1 = {
+        schedulerLicenseKey: String,
+    };
+
+    var premiumCommonPlugin = createPlugin({
+        optionRefiners: OPTION_REFINERS$1,
+        viewContainerAppends: [buildLicenseWarning],
+    });
+
+    var WHEEL_EVENT_NAMES = 'wheel mousewheel DomMouseScroll MozMousePixelScroll'.split(' ');
+    /*
+    ALSO, with the ability to disable touch
+    */
+    var ScrollListener = /** @class */ (function () {
+        function ScrollListener(el) {
+            var _this = this;
+            this.el = el;
+            this.emitter = new Emitter();
+            this.isScrolling = false;
+            this.isTouching = false; // user currently has finger down?
+            this.isRecentlyWheeled = false;
+            this.isRecentlyScrolled = false;
+            this.wheelWaiter = new DelayedRunner(this._handleWheelWaited.bind(this));
+            this.scrollWaiter = new DelayedRunner(this._handleScrollWaited.bind(this));
+            // Handlers
+            // ----------------------------------------------------------------------------------------------
+            this.handleScroll = function () {
+                _this.startScroll();
+                _this.emitter.trigger('scroll', _this.isRecentlyWheeled, _this.isTouching);
+                _this.isRecentlyScrolled = true;
+                _this.scrollWaiter.request(500);
+            };
+            // will fire *before* the scroll event is fired (might not cause a scroll)
+            this.handleWheel = function () {
+                _this.isRecentlyWheeled = true;
+                _this.wheelWaiter.request(500);
+            };
+            // will fire *before* the scroll event is fired (might not cause a scroll)
+            this.handleTouchStart = function () {
+                _this.isTouching = true;
+            };
+            this.handleTouchEnd = function () {
+                _this.isTouching = false;
+                // if the user ended their touch, and the scroll area wasn't moving,
+                // we consider this to be the end of the scroll.
+                if (!_this.isRecentlyScrolled) {
+                    _this.endScroll(); // won't fire if already ended
+                }
+            };
+            el.addEventListener('scroll', this.handleScroll);
+            el.addEventListener('touchstart', this.handleTouchStart, { passive: true });
+            el.addEventListener('touchend', this.handleTouchEnd);
+            for (var _i = 0, WHEEL_EVENT_NAMES_1 = WHEEL_EVENT_NAMES; _i < WHEEL_EVENT_NAMES_1.length; _i++) {
+                var eventName = WHEEL_EVENT_NAMES_1[_i];
+                el.addEventListener(eventName, this.handleWheel);
+            }
+        }
+        ScrollListener.prototype.destroy = function () {
+            var el = this.el;
+            el.removeEventListener('scroll', this.handleScroll);
+            el.removeEventListener('touchstart', this.handleTouchStart, { passive: true });
+            el.removeEventListener('touchend', this.handleTouchEnd);
+            for (var _i = 0, WHEEL_EVENT_NAMES_2 = WHEEL_EVENT_NAMES; _i < WHEEL_EVENT_NAMES_2.length; _i++) {
+                var eventName = WHEEL_EVENT_NAMES_2[_i];
+                el.removeEventListener(eventName, this.handleWheel);
+            }
+        };
+        // Start / Stop
+        // ----------------------------------------------------------------------------------------------
+        ScrollListener.prototype.startScroll = function () {
+            if (!this.isScrolling) {
+                this.isScrolling = true;
+                this.emitter.trigger('scrollStart', this.isRecentlyWheeled, this.isTouching);
+            }
+        };
+        ScrollListener.prototype.endScroll = function () {
+            if (this.isScrolling) {
+                this.emitter.trigger('scrollEnd');
+                this.isScrolling = false;
+                this.isRecentlyScrolled = true;
+                this.isRecentlyWheeled = false;
+                this.scrollWaiter.clear();
+                this.wheelWaiter.clear();
+            }
+        };
+        ScrollListener.prototype._handleScrollWaited = function () {
+            this.isRecentlyScrolled = false;
+            // only end the scroll if not currently touching.
+            // if touching, the scrolling will end later, on touchend.
+            if (!this.isTouching) {
+                this.endScroll(); // won't fire if already ended
+            }
+        };
+        ScrollListener.prototype._handleWheelWaited = function () {
+            this.isRecentlyWheeled = false;
+        };
+        return ScrollListener;
+    }());
+
+    // TODO: assume the el has no borders?
+    function getScrollCanvasOrigin(scrollEl) {
+        var rect = scrollEl.getBoundingClientRect();
+        var edges = computeEdges(scrollEl); // TODO: pass in isRtl?
+        return {
+            left: rect.left + edges.borderLeft + edges.scrollbarLeft - getScrollFromLeftEdge(scrollEl),
+            top: rect.top + edges.borderTop - scrollEl.scrollTop,
+        };
+    }
+    function getScrollFromLeftEdge(el) {
+        var scrollLeft = el.scrollLeft;
+        var computedStyles = window.getComputedStyle(el); // TODO: pass in isRtl instead?
+        if (computedStyles.direction === 'rtl') {
+            switch (getRtlScrollSystem()) {
+                case 'negative':
+                    scrollLeft *= -1; // convert to 'reverse'. fall through...
+                case 'reverse': // scrollLeft is distance between scrollframe's right edge scrollcanvas's right edge
+                    scrollLeft = el.scrollWidth - scrollLeft - el.clientWidth;
+            }
+        }
+        return scrollLeft;
+    }
+    function setScrollFromLeftEdge(el, scrollLeft) {
+        var computedStyles = window.getComputedStyle(el); // TODO: pass in isRtl instead?
+        if (computedStyles.direction === 'rtl') {
+            switch (getRtlScrollSystem()) {
+                case 'reverse':
+                    scrollLeft = el.scrollWidth - scrollLeft;
+                    break;
+                case 'negative':
+                    scrollLeft = -(el.scrollWidth - scrollLeft);
+                    break;
+            }
+        }
+        el.scrollLeft = scrollLeft;
+    }
+    // Horizontal Scroll System Detection
+    // ----------------------------------------------------------------------------------------------
+    var _rtlScrollSystem;
+    function getRtlScrollSystem() {
+        return _rtlScrollSystem || (_rtlScrollSystem = detectRtlScrollSystem());
+    }
+    function detectRtlScrollSystem() {
+        var el = document.createElement('div');
+        el.style.position = 'absolute';
+        el.style.top = '-1000px';
+        el.style.width = '1px';
+        el.style.height = '1px';
+        el.style.overflow = 'scroll';
+        el.style.direction = 'rtl';
+        el.style.fontSize = '100px';
+        el.innerHTML = 'A';
+        document.body.appendChild(el);
+        var system;
+        if (el.scrollLeft > 0) {
+            system = 'positive'; // scroll is a positive number from the left edge
+        }
+        else {
+            el.scrollLeft = 1;
+            if (el.scrollLeft > 0) {
+                system = 'reverse'; // scroll is a positive number from the right edge
+            }
+            else {
+                system = 'negative'; // scroll is a negative number from the right edge
+            }
+        }
+        removeElement(el);
+        return system;
+    }
+
+    var IS_MS_EDGE = typeof navigator !== 'undefined' && /Edge/.test(navigator.userAgent); // TODO: what about Chromeum-based Edge?
+    var STICKY_SELECTOR = '.fc-sticky';
+    /*
+    useful beyond the native position:sticky for these reasons:
+    - support in IE11
+    - nice centering support
+
+    REQUIREMENT: fc-sticky elements, if the fc-sticky className is taken away, should NOT have relative or absolute positioning.
+    This is because we attach the coords with JS, and the VDOM might take away the fc-sticky class but doesn't know kill the positioning.
+
+    TODO: don't query text-align:center. isn't compatible with flexbox centering. instead, check natural X coord within parent container
+    */
+    var StickyScrolling = /** @class */ (function () {
+        function StickyScrolling(scrollEl, isRtl) {
+            var _this = this;
+            this.scrollEl = scrollEl;
+            this.isRtl = isRtl;
+            this.usingRelative = null;
+            this.updateSize = function () {
+                var scrollEl = _this.scrollEl;
+                var els = findElements(scrollEl, STICKY_SELECTOR);
+                var elGeoms = _this.queryElGeoms(els);
+                var viewportWidth = scrollEl.clientWidth;
+                var viewportHeight = scrollEl.clientHeight;
+                if (_this.usingRelative) {
+                    var elDestinations = _this.computeElDestinations(elGeoms, viewportWidth); // read before prepPositioning
+                    assignRelativePositions(els, elGeoms, elDestinations, viewportWidth, viewportHeight);
+                }
+                else {
+                    assignStickyPositions(els, elGeoms, viewportWidth);
+                }
+            };
+            this.usingRelative =
+                !getStickySupported() || // IE11
+                    // https://stackoverflow.com/questions/56835658/in-microsoft-edge-sticky-positioning-doesnt-work-when-combined-with-dir-rtl
+                    (IS_MS_EDGE && isRtl);
+            if (this.usingRelative) {
+                this.listener = new ScrollListener(scrollEl);
+                this.listener.emitter.on('scrollEnd', this.updateSize);
+            }
+        }
+        StickyScrolling.prototype.destroy = function () {
+            if (this.listener) {
+                this.listener.destroy();
+            }
+        };
+        StickyScrolling.prototype.queryElGeoms = function (els) {
+            var _a = this, scrollEl = _a.scrollEl, isRtl = _a.isRtl;
+            var canvasOrigin = getScrollCanvasOrigin(scrollEl);
+            var elGeoms = [];
+            for (var _i = 0, els_1 = els; _i < els_1.length; _i++) {
+                var el = els_1[_i];
+                var parentBound = translateRect(computeInnerRect(el.parentNode, true, true), // weird way to call this!!!
+                -canvasOrigin.left, -canvasOrigin.top);
+                var elRect = el.getBoundingClientRect();
+                var computedStyles = window.getComputedStyle(el);
+                var textAlign = window.getComputedStyle(el.parentNode).textAlign; // ask the parent
+                var naturalBound = null;
+                if (textAlign === 'start') {
+                    textAlign = isRtl ? 'right' : 'left';
+                }
+                else if (textAlign === 'end') {
+                    textAlign = isRtl ? 'left' : 'right';
+                }
+                if (computedStyles.position !== 'sticky') {
+                    naturalBound = translateRect(elRect, -canvasOrigin.left - (parseFloat(computedStyles.left) || 0), // could be 'auto'
+                    -canvasOrigin.top - (parseFloat(computedStyles.top) || 0));
+                }
+                elGeoms.push({
+                    parentBound: parentBound,
+                    naturalBound: naturalBound,
+                    elWidth: elRect.width,
+                    elHeight: elRect.height,
+                    textAlign: textAlign,
+                });
+            }
+            return elGeoms;
+        };
+        // only for IE
+        StickyScrolling.prototype.computeElDestinations = function (elGeoms, viewportWidth) {
+            var scrollEl = this.scrollEl;
+            var viewportTop = scrollEl.scrollTop;
+            var viewportLeft = getScrollFromLeftEdge(scrollEl);
+            var viewportRight = viewportLeft + viewportWidth;
+            return elGeoms.map(function (elGeom) {
+                var elWidth = elGeom.elWidth, elHeight = elGeom.elHeight, parentBound = elGeom.parentBound, naturalBound = elGeom.naturalBound;
+                var destLeft; // relative to canvas topleft
+                var destTop; // "
+                switch (elGeom.textAlign) {
+                    case 'left':
+                        destLeft = viewportLeft;
+                        break;
+                    case 'right':
+                        destLeft = viewportRight - elWidth;
+                        break;
+                    case 'center':
+                        destLeft = (viewportLeft + viewportRight) / 2 - elWidth / 2; /// noooo, use half-width insteadddddddd
+                        break;
+                }
+                destLeft = Math.min(destLeft, parentBound.right - elWidth);
+                destLeft = Math.max(destLeft, parentBound.left);
+                destTop = viewportTop;
+                destTop = Math.min(destTop, parentBound.bottom - elHeight);
+                destTop = Math.max(destTop, naturalBound.top); // better to use natural top for upper bound
+                return { left: destLeft, top: destTop };
+            });
+        };
+        return StickyScrolling;
+    }());
+    function assignRelativePositions(els, elGeoms, elDestinations, viewportWidth, viewportHeight) {
+        els.forEach(function (el, i) {
+            var _a = elGeoms[i], naturalBound = _a.naturalBound, parentBound = _a.parentBound;
+            var parentWidth = parentBound.right - parentBound.left;
+            var parentHeight = parentBound.bottom - parentBound.bottom;
+            var left;
+            var top;
+            if (parentWidth > viewportWidth ||
+                parentHeight > viewportHeight) {
+                left = elDestinations[i].left - naturalBound.left;
+                top = elDestinations[i].top - naturalBound.top;
+            }
+            else { // if parent container can be completely in view, we don't need stickiness
+                left = '';
+                top = '';
+            }
+            applyStyle(el, {
+                position: 'relative',
+                left: left,
+                right: -left,
+                top: top,
+            });
+        });
+    }
+    function assignStickyPositions(els, elGeoms, viewportWidth) {
+        els.forEach(function (el, i) {
+            var _a = elGeoms[i], textAlign = _a.textAlign, elWidth = _a.elWidth, parentBound = _a.parentBound;
+            var parentWidth = parentBound.right - parentBound.left;
+            var left;
+            if (textAlign === 'center' &&
+                parentWidth > viewportWidth) {
+                left = (viewportWidth - elWidth) / 2;
+            }
+            else { // if parent container can be completely in view, we don't need stickiness
+                left = '';
+            }
+            applyStyle(el, {
+                left: left,
+                right: left,
+                top: 0,
+            });
+        });
+    }
+    var _isStickySupported;
+    function getStickySupported() {
+        if (_isStickySupported == null) {
+            _isStickySupported = computeStickySupported();
+        }
+        return _isStickySupported;
+    }
+    function computeStickySupported() {
+        var el = document.createElement('div');
+        el.style.position = 'sticky';
+        document.body.appendChild(el);
+        var val = window.getComputedStyle(el).position;
+        removeElement(el);
+        return val === 'sticky';
+    }
+
+    var ClippedScroller = /** @class */ (function (_super) {
+        __extends(ClippedScroller, _super);
+        function ClippedScroller() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.elRef = createRef();
+            _this.state = {
+                xScrollbarWidth: 0,
+                yScrollbarWidth: 0,
+            };
+            _this.handleScroller = function (scroller) {
+                _this.scroller = scroller;
+                setRef(_this.props.scrollerRef, scroller);
+            };
+            _this.handleSizing = function () {
+                var props = _this.props;
+                if (props.overflowY === 'scroll-hidden') {
+                    _this.setState({ yScrollbarWidth: _this.scroller.getYScrollbarWidth() });
+                }
+                if (props.overflowX === 'scroll-hidden') {
+                    _this.setState({ xScrollbarWidth: _this.scroller.getXScrollbarWidth() });
+                }
+            };
+            return _this;
+        }
+        ClippedScroller.prototype.render = function () {
+            var _a = this, props = _a.props, state = _a.state, context = _a.context;
+            var isScrollbarOnLeft = context.isRtl && getIsRtlScrollbarOnLeft();
+            var overcomeLeft = 0;
+            var overcomeRight = 0;
+            var overcomeBottom = 0;
+            if (props.overflowX === 'scroll-hidden') {
+                overcomeBottom = state.xScrollbarWidth;
+            }
+            if (props.overflowY === 'scroll-hidden') {
+                if (state.yScrollbarWidth != null) {
+                    if (isScrollbarOnLeft) {
+                        overcomeLeft = state.yScrollbarWidth;
+                    }
+                    else {
+                        overcomeRight = state.yScrollbarWidth;
+                    }
+                }
+            }
+            return (createElement("div", { ref: this.elRef, className: 'fc-scroller-harness' + (props.liquid ? ' fc-scroller-harness-liquid' : '') },
+                createElement(Scroller, { ref: this.handleScroller, elRef: this.props.scrollerElRef, overflowX: props.overflowX === 'scroll-hidden' ? 'scroll' : props.overflowX, overflowY: props.overflowY === 'scroll-hidden' ? 'scroll' : props.overflowY, overcomeLeft: overcomeLeft, overcomeRight: overcomeRight, overcomeBottom: overcomeBottom, maxHeight: typeof props.maxHeight === 'number'
+                        ? (props.maxHeight + (props.overflowX === 'scroll-hidden' ? state.xScrollbarWidth : 0))
+                        : '', liquid: props.liquid, liquidIsAbsolute: true }, props.children)));
+        };
+        ClippedScroller.prototype.componentDidMount = function () {
+            this.handleSizing();
+            this.context.addResizeHandler(this.handleSizing);
+        };
+        ClippedScroller.prototype.componentDidUpdate = function (prevProps) {
+            if (!isPropsEqual(prevProps, this.props)) { // an external change?
+                this.handleSizing();
+            }
+        };
+        ClippedScroller.prototype.componentWillUnmount = function () {
+            this.context.removeResizeHandler(this.handleSizing);
+        };
+        ClippedScroller.prototype.needsXScrolling = function () {
+            return this.scroller.needsXScrolling();
+        };
+        ClippedScroller.prototype.needsYScrolling = function () {
+            return this.scroller.needsYScrolling();
+        };
+        return ClippedScroller;
+    }(BaseComponent));
+
+    var ScrollSyncer = /** @class */ (function () {
+        function ScrollSyncer(isVertical, scrollEls) {
+            var _this = this;
+            this.isVertical = isVertical;
+            this.scrollEls = scrollEls;
+            this.isPaused = false;
+            this.scrollListeners = scrollEls.map(function (el) { return _this.bindScroller(el); });
+        }
+        ScrollSyncer.prototype.destroy = function () {
+            for (var _i = 0, _a = this.scrollListeners; _i < _a.length; _i++) {
+                var scrollListener = _a[_i];
+                scrollListener.destroy();
+            }
+        };
+        ScrollSyncer.prototype.bindScroller = function (el) {
+            var _this = this;
+            var _a = this, scrollEls = _a.scrollEls, isVertical = _a.isVertical;
+            var scrollListener = new ScrollListener(el);
+            var onScroll = function (isWheel, isTouch) {
+                if (!_this.isPaused) {
+                    if (!_this.masterEl || (_this.masterEl !== el && (isWheel || isTouch))) {
+                        _this.assignMaster(el);
+                    }
+                    if (_this.masterEl === el) { // dealing with current
+                        for (var _i = 0, scrollEls_1 = scrollEls; _i < scrollEls_1.length; _i++) {
+                            var otherEl = scrollEls_1[_i];
+                            if (otherEl !== el) {
+                                if (isVertical) {
+                                    otherEl.scrollTop = el.scrollTop;
+                                }
+                                else {
+                                    otherEl.scrollLeft = el.scrollLeft;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            var onScrollEnd = function () {
+                if (_this.masterEl === el) {
+                    _this.masterEl = null;
+                }
+            };
+            scrollListener.emitter.on('scroll', onScroll);
+            scrollListener.emitter.on('scrollEnd', onScrollEnd);
+            return scrollListener;
+        };
+        ScrollSyncer.prototype.assignMaster = function (el) {
+            this.masterEl = el;
+            for (var _i = 0, _a = this.scrollListeners; _i < _a.length; _i++) {
+                var scrollListener = _a[_i];
+                if (scrollListener.el !== el) {
+                    scrollListener.endScroll(); // to prevent residual scrolls from reclaiming master
+                }
+            }
+        };
+        /*
+        will normalize the scrollLeft value
+        */
+        ScrollSyncer.prototype.forceScrollLeft = function (scrollLeft) {
+            this.isPaused = true;
+            for (var _i = 0, _a = this.scrollListeners; _i < _a.length; _i++) {
+                var listener = _a[_i];
+                setScrollFromLeftEdge(listener.el, scrollLeft);
+            }
+            this.isPaused = false;
+        };
+        ScrollSyncer.prototype.forceScrollTop = function (top) {
+            this.isPaused = true;
+            for (var _i = 0, _a = this.scrollListeners; _i < _a.length; _i++) {
+                var listener = _a[_i];
+                listener.el.scrollTop = top;
+            }
+            this.isPaused = false;
+        };
+        return ScrollSyncer;
+    }());
+
+    /*
+    TODO: make <ScrollGridSection> subcomponent
+    NOTE: doesn't support collapsibleWidth (which is sortof a hack anyway)
+    */
+    var ScrollGrid = /** @class */ (function (_super) {
+        __extends(ScrollGrid, _super);
+        function ScrollGrid() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.compileColGroupStats = memoizeArraylike(compileColGroupStat, isColGroupStatsEqual);
+            _this.renderMicroColGroups = memoizeArraylike(renderMicroColGroup); // yucky to memoize VNodes, but much more efficient for consumers
+            _this.clippedScrollerRefs = new RefMap();
+            // doesn't hold non-scrolling els used just for padding
+            _this.scrollerElRefs = new RefMap(_this._handleScrollerEl.bind(_this));
+            _this.chunkElRefs = new RefMap(_this._handleChunkEl.bind(_this));
+            _this.getStickyScrolling = memoizeArraylike(initStickyScrolling, null, destroyStickyScrolling);
+            _this.getScrollSyncersBySection = memoizeHashlike(initScrollSyncer.bind(_this, true), null, destroyScrollSyncer);
+            _this.getScrollSyncersByColumn = memoizeHashlike(initScrollSyncer.bind(_this, false), null, destroyScrollSyncer);
+            _this.stickyScrollings = [];
+            _this.scrollSyncersBySection = {};
+            _this.scrollSyncersByColumn = {};
+            // for row-height-syncing
+            _this.rowUnstableMap = new Map(); // no need to groom. always self-cancels
+            _this.rowInnerMaxHeightMap = new Map();
+            _this.anyRowHeightsChanged = false;
+            _this.recentSizingCnt = 0;
+            _this.state = {
+                shrinkWidths: [],
+                forceYScrollbars: false,
+                forceXScrollbars: false,
+                scrollerClientWidths: {},
+                scrollerClientHeights: {},
+                sectionRowMaxHeights: [],
+            };
+            _this.handleSizing = function (isForcedResize, sectionRowMaxHeightsChanged) {
+                if (!_this.allowSizing()) {
+                    return;
+                }
+                if (!sectionRowMaxHeightsChanged) { // something else changed, probably external
+                    _this.anyRowHeightsChanged = true;
+                }
+                var otherState = {};
+                // if reacting to self-change of sectionRowMaxHeightsChanged, or not stable, don't do anything
+                if (isForcedResize || (!sectionRowMaxHeightsChanged && !_this.rowUnstableMap.size)) {
+                    otherState.sectionRowMaxHeights = _this.computeSectionRowMaxHeights();
+                }
+                _this.setState(__assign(__assign({ shrinkWidths: _this.computeShrinkWidths() }, _this.computeScrollerDims()), otherState), function () {
+                    if (!_this.rowUnstableMap.size) {
+                        _this.updateStickyScrolling(); // needs to happen AFTER final positioning committed to DOM
+                    }
+                });
+            };
+            _this.handleRowHeightChange = function (rowEl, isStable) {
+                var _a = _this, rowUnstableMap = _a.rowUnstableMap, rowInnerMaxHeightMap = _a.rowInnerMaxHeightMap;
+                if (!isStable) {
+                    rowUnstableMap.set(rowEl, true);
+                }
+                else {
+                    rowUnstableMap.delete(rowEl);
+                    var innerMaxHeight = getRowInnerMaxHeight(rowEl);
+                    if (!rowInnerMaxHeightMap.has(rowEl) || rowInnerMaxHeightMap.get(rowEl) !== innerMaxHeight) {
+                        rowInnerMaxHeightMap.set(rowEl, innerMaxHeight);
+                        _this.anyRowHeightsChanged = true;
+                    }
+                    if (!rowUnstableMap.size && _this.anyRowHeightsChanged) {
+                        _this.anyRowHeightsChanged = false;
+                        _this.setState({
+                            sectionRowMaxHeights: _this.computeSectionRowMaxHeights(),
+                        });
+                    }
+                }
+            };
+            return _this;
+        }
+        ScrollGrid.prototype.render = function () {
+            var _a = this, props = _a.props, state = _a.state, context = _a.context;
+            var shrinkWidths = state.shrinkWidths;
+            var colGroupStats = this.compileColGroupStats(props.colGroups.map(function (colGroup) { return [colGroup]; }));
+            var microColGroupNodes = this.renderMicroColGroups(colGroupStats.map(function (stat, i) { return [stat.cols, shrinkWidths[i]]; }));
+            var classNames = getScrollGridClassNames(props.liquid, context);
+            var _b = this.getDims(); _b[0]; _b[1];
+            // TODO: make DRY
+            var sectionConfigs = props.sections;
+            var configCnt = sectionConfigs.length;
+            var configI = 0;
+            var currentConfig;
+            var headSectionNodes = [];
+            var bodySectionNodes = [];
+            var footSectionNodes = [];
+            while (configI < configCnt && (currentConfig = sectionConfigs[configI]).type === 'header') {
+                headSectionNodes.push(this.renderSection(currentConfig, configI, colGroupStats, microColGroupNodes, state.sectionRowMaxHeights, true));
+                configI += 1;
+            }
+            while (configI < configCnt && (currentConfig = sectionConfigs[configI]).type === 'body') {
+                bodySectionNodes.push(this.renderSection(currentConfig, configI, colGroupStats, microColGroupNodes, state.sectionRowMaxHeights, false));
+                configI += 1;
+            }
+            while (configI < configCnt && (currentConfig = sectionConfigs[configI]).type === 'footer') {
+                footSectionNodes.push(this.renderSection(currentConfig, configI, colGroupStats, microColGroupNodes, state.sectionRowMaxHeights, true));
+                configI += 1;
+            }
+            var isBuggy = !getCanVGrowWithinCell(); // see NOTE in SimpleScrollGrid
+            var roleAttrs = { role: 'rowgroup' };
+            return createElement('table', {
+                ref: props.elRef,
+                role: 'grid',
+                className: classNames.join(' '),
+            }, renderMacroColGroup(colGroupStats, shrinkWidths), Boolean(!isBuggy && headSectionNodes.length) && createElement.apply(void 0, __spreadArray(['thead', roleAttrs], headSectionNodes)), Boolean(!isBuggy && bodySectionNodes.length) && createElement.apply(void 0, __spreadArray(['tbody', roleAttrs], bodySectionNodes)), Boolean(!isBuggy && footSectionNodes.length) && createElement.apply(void 0, __spreadArray(['tfoot', roleAttrs], footSectionNodes)), isBuggy && createElement.apply(void 0, __spreadArray(__spreadArray(__spreadArray(['tbody', roleAttrs], headSectionNodes), bodySectionNodes), footSectionNodes)));
+        };
+        ScrollGrid.prototype.renderSection = function (sectionConfig, sectionIndex, colGroupStats, microColGroupNodes, sectionRowMaxHeights, isHeader) {
+            var _this = this;
+            if ('outerContent' in sectionConfig) {
+                return (createElement(Fragment, { key: sectionConfig.key }, sectionConfig.outerContent));
+            }
+            return (createElement("tr", { key: sectionConfig.key, role: "presentation", className: getSectionClassNames(sectionConfig, this.props.liquid).join(' ') }, sectionConfig.chunks.map(function (chunkConfig, i) { return _this.renderChunk(sectionConfig, sectionIndex, colGroupStats[i], microColGroupNodes[i], chunkConfig, i, (sectionRowMaxHeights[sectionIndex] || [])[i] || [], isHeader); })));
+        };
+        ScrollGrid.prototype.renderChunk = function (sectionConfig, sectionIndex, colGroupStat, microColGroupNode, chunkConfig, chunkIndex, rowHeights, isHeader) {
+            if ('outerContent' in chunkConfig) {
+                return (createElement(Fragment, { key: chunkConfig.key }, chunkConfig.outerContent));
+            }
+            var state = this.state;
+            var scrollerClientWidths = state.scrollerClientWidths, scrollerClientHeights = state.scrollerClientHeights;
+            var _a = this.getDims(), sectionCnt = _a[0], chunksPerSection = _a[1];
+            var index = sectionIndex * chunksPerSection + chunkIndex;
+            var sideScrollIndex = (!this.context.isRtl || getIsRtlScrollbarOnLeft()) ? chunksPerSection - 1 : 0;
+            var isVScrollSide = chunkIndex === sideScrollIndex;
+            var isLastSection = sectionIndex === sectionCnt - 1;
+            var forceXScrollbars = isLastSection && state.forceXScrollbars; // NOOOO can result in `null`
+            var forceYScrollbars = isVScrollSide && state.forceYScrollbars; // NOOOO can result in `null`
+            var allowXScrolling = colGroupStat && colGroupStat.allowXScrolling; // rename?
+            var allowYScrolling = getAllowYScrolling(this.props, sectionConfig); // rename? do in section func?
+            var chunkVGrow = getSectionHasLiquidHeight(this.props, sectionConfig); // do in section func?
+            var expandRows = sectionConfig.expandRows && chunkVGrow;
+            var tableMinWidth = (colGroupStat && colGroupStat.totalColMinWidth) || '';
+            var content = renderChunkContent(sectionConfig, chunkConfig, {
+                tableColGroupNode: microColGroupNode,
+                tableMinWidth: tableMinWidth,
+                clientWidth: scrollerClientWidths[index] !== undefined ? scrollerClientWidths[index] : null,
+                clientHeight: scrollerClientHeights[index] !== undefined ? scrollerClientHeights[index] : null,
+                expandRows: expandRows,
+                syncRowHeights: Boolean(sectionConfig.syncRowHeights),
+                rowSyncHeights: rowHeights,
+                reportRowHeightChange: this.handleRowHeightChange,
+            }, isHeader);
+            var overflowX = forceXScrollbars ? (isLastSection ? 'scroll' : 'scroll-hidden') :
+                !allowXScrolling ? 'hidden' :
+                    (isLastSection ? 'auto' : 'scroll-hidden');
+            var overflowY = forceYScrollbars ? (isVScrollSide ? 'scroll' : 'scroll-hidden') :
+                !allowYScrolling ? 'hidden' :
+                    (isVScrollSide ? 'auto' : 'scroll-hidden');
+            // it *could* be possible to reduce DOM wrappers by only doing a ClippedScroller when allowXScrolling or allowYScrolling,
+            // but if these values were to change, the inner components would be unmounted/remounted because of the parent change.
+            content = (createElement(ClippedScroller, { ref: this.clippedScrollerRefs.createRef(index), scrollerElRef: this.scrollerElRefs.createRef(index), overflowX: overflowX, overflowY: overflowY, liquid: chunkVGrow, maxHeight: sectionConfig.maxHeight }, content));
+            return createElement(isHeader ? 'th' : 'td', {
+                key: chunkConfig.key,
+                ref: this.chunkElRefs.createRef(index),
+                role: 'presentation',
+            }, content);
+        };
+        ScrollGrid.prototype.componentDidMount = function () {
+            this.updateScrollSyncers();
+            this.handleSizing(false);
+            this.context.addResizeHandler(this.handleSizing);
+        };
+        ScrollGrid.prototype.componentDidUpdate = function (prevProps, prevState) {
+            this.updateScrollSyncers();
+            // TODO: need better solution when state contains non-sizing things
+            this.handleSizing(false, prevState.sectionRowMaxHeights !== this.state.sectionRowMaxHeights);
+        };
+        ScrollGrid.prototype.componentWillUnmount = function () {
+            this.context.removeResizeHandler(this.handleSizing);
+            this.destroyStickyScrolling();
+            this.destroyScrollSyncers();
+        };
+        ScrollGrid.prototype.allowSizing = function () {
+            var now = new Date();
+            if (!this.lastSizingDate ||
+                now.valueOf() > this.lastSizingDate.valueOf() + config.SCROLLGRID_RESIZE_INTERVAL) {
+                this.lastSizingDate = now;
+                this.recentSizingCnt = 0;
+                return true;
+            }
+            return (this.recentSizingCnt += 1) <= 10;
+        };
+        ScrollGrid.prototype.computeShrinkWidths = function () {
+            var _this = this;
+            var colGroupStats = this.compileColGroupStats(this.props.colGroups.map(function (colGroup) { return [colGroup]; }));
+            var _a = this.getDims(), sectionCnt = _a[0], chunksPerSection = _a[1];
+            var cnt = sectionCnt * chunksPerSection;
+            var shrinkWidths = [];
+            colGroupStats.forEach(function (colGroupStat, i) {
+                if (colGroupStat.hasShrinkCol) {
+                    var chunkEls = _this.chunkElRefs.collect(i, cnt, chunksPerSection); // in one col
+                    shrinkWidths[i] = computeShrinkWidth(chunkEls);
+                }
+            });
+            return shrinkWidths;
+        };
+        // has the side effect of grooming rowInnerMaxHeightMap
+        // TODO: somehow short-circuit if there are no new height changes
+        ScrollGrid.prototype.computeSectionRowMaxHeights = function () {
+            var newHeightMap = new Map();
+            var _a = this.getDims(), sectionCnt = _a[0], chunksPerSection = _a[1];
+            var sectionRowMaxHeights = [];
+            for (var sectionI = 0; sectionI < sectionCnt; sectionI += 1) {
+                var sectionConfig = this.props.sections[sectionI];
+                var assignableHeights = []; // chunk, row
+                if (sectionConfig && sectionConfig.syncRowHeights) {
+                    var rowHeightsByChunk = [];
+                    for (var chunkI = 0; chunkI < chunksPerSection; chunkI += 1) {
+                        var index = sectionI * chunksPerSection + chunkI;
+                        var rowHeights = [];
+                        var chunkEl = this.chunkElRefs.currentMap[index];
+                        if (chunkEl) {
+                            rowHeights = findElements(chunkEl, '.fc-scrollgrid-sync-table tr').map(function (rowEl) {
+                                var max = getRowInnerMaxHeight(rowEl);
+                                newHeightMap.set(rowEl, max);
+                                return max;
+                            });
+                        }
+                        else {
+                            rowHeights = [];
+                        }
+                        rowHeightsByChunk.push(rowHeights);
+                    }
+                    var rowCnt = rowHeightsByChunk[0].length;
+                    var isEqualRowCnt = true;
+                    for (var chunkI = 1; chunkI < chunksPerSection; chunkI += 1) {
+                        var isOuterContent = sectionConfig.chunks[chunkI] && sectionConfig.chunks[chunkI].outerContent !== undefined; // can be null
+                        if (!isOuterContent && rowHeightsByChunk[chunkI].length !== rowCnt) { // skip outer content
+                            isEqualRowCnt = false;
+                            break;
+                        }
+                    }
+                    if (!isEqualRowCnt) {
+                        var chunkHeightSums = [];
+                        for (var chunkI = 0; chunkI < chunksPerSection; chunkI += 1) {
+                            chunkHeightSums.push(sumNumbers(rowHeightsByChunk[chunkI]) + rowHeightsByChunk[chunkI].length);
+                        }
+                        var maxTotalSum = Math.max.apply(Math, chunkHeightSums);
+                        for (var chunkI = 0; chunkI < chunksPerSection; chunkI += 1) {
+                            var rowInChunkCnt = rowHeightsByChunk[chunkI].length;
+                            var rowInChunkTotalHeight = maxTotalSum - rowInChunkCnt; // subtract border
+                            // height of non-first row. we do this to avoid rounding, because it's unreliable within a table
+                            var rowInChunkHeightOthers = Math.floor(rowInChunkTotalHeight / rowInChunkCnt);
+                            // whatever is leftover goes to the first row
+                            var rowInChunkHeightFirst = rowInChunkTotalHeight - rowInChunkHeightOthers * (rowInChunkCnt - 1);
+                            var rowInChunkHeights = [];
+                            var row = 0;
+                            if (row < rowInChunkCnt) {
+                                rowInChunkHeights.push(rowInChunkHeightFirst);
+                                row += 1;
+                            }
+                            while (row < rowInChunkCnt) {
+                                rowInChunkHeights.push(rowInChunkHeightOthers);
+                                row += 1;
+                            }
+                            assignableHeights.push(rowInChunkHeights);
+                        }
+                    }
+                    else {
+                        for (var chunkI = 0; chunkI < chunksPerSection; chunkI += 1) {
+                            assignableHeights.push([]);
+                        }
+                        for (var row = 0; row < rowCnt; row += 1) {
+                            var rowHeightsAcrossChunks = [];
+                            for (var chunkI = 0; chunkI < chunksPerSection; chunkI += 1) {
+                                var h = rowHeightsByChunk[chunkI][row];
+                                if (h != null) { // protect against outerContent
+                                    rowHeightsAcrossChunks.push(h);
+                                }
+                            }
+                            var maxHeight = Math.max.apply(Math, rowHeightsAcrossChunks);
+                            for (var chunkI = 0; chunkI < chunksPerSection; chunkI += 1) {
+                                assignableHeights[chunkI].push(maxHeight);
+                            }
+                        }
+                    }
+                }
+                sectionRowMaxHeights.push(assignableHeights);
+            }
+            this.rowInnerMaxHeightMap = newHeightMap;
+            return sectionRowMaxHeights;
+        };
+        ScrollGrid.prototype.computeScrollerDims = function () {
+            var scrollbarWidth = getScrollbarWidths();
+            var _a = this.getDims(), sectionCnt = _a[0], chunksPerSection = _a[1];
+            var sideScrollI = (!this.context.isRtl || getIsRtlScrollbarOnLeft()) ? chunksPerSection - 1 : 0;
+            var lastSectionI = sectionCnt - 1;
+            var currentScrollers = this.clippedScrollerRefs.currentMap;
+            var scrollerEls = this.scrollerElRefs.currentMap;
+            var forceYScrollbars = false;
+            var forceXScrollbars = false;
+            var scrollerClientWidths = {};
+            var scrollerClientHeights = {};
+            for (var sectionI = 0; sectionI < sectionCnt; sectionI += 1) { // along edge
+                var index = sectionI * chunksPerSection + sideScrollI;
+                var scroller = currentScrollers[index];
+                if (scroller && scroller.needsYScrolling()) {
+                    forceYScrollbars = true;
+                    break;
+                }
+            }
+            for (var chunkI = 0; chunkI < chunksPerSection; chunkI += 1) { // along last row
+                var index = lastSectionI * chunksPerSection + chunkI;
+                var scroller = currentScrollers[index];
+                if (scroller && scroller.needsXScrolling()) {
+                    forceXScrollbars = true;
+                    break;
+                }
+            }
+            for (var sectionI = 0; sectionI < sectionCnt; sectionI += 1) {
+                for (var chunkI = 0; chunkI < chunksPerSection; chunkI += 1) {
+                    var index = sectionI * chunksPerSection + chunkI;
+                    var scrollerEl = scrollerEls[index];
+                    if (scrollerEl) {
+                        // TODO: weird way to get this. need harness b/c doesn't include table borders
+                        var harnessEl = scrollerEl.parentNode;
+                        scrollerClientWidths[index] = Math.floor(harnessEl.getBoundingClientRect().width - ((chunkI === sideScrollI && forceYScrollbars)
+                            ? scrollbarWidth.y // use global because scroller might not have scrollbars yet but will need them in future
+                            : 0));
+                        scrollerClientHeights[index] = Math.floor(harnessEl.getBoundingClientRect().height - ((sectionI === lastSectionI && forceXScrollbars)
+                            ? scrollbarWidth.x // use global because scroller might not have scrollbars yet but will need them in future
+                            : 0));
+                    }
+                }
+            }
+            return { forceYScrollbars: forceYScrollbars, forceXScrollbars: forceXScrollbars, scrollerClientWidths: scrollerClientWidths, scrollerClientHeights: scrollerClientHeights };
+        };
+        ScrollGrid.prototype.updateStickyScrolling = function () {
+            var isRtl = this.context.isRtl;
+            var argsByKey = this.scrollerElRefs.getAll().map(function (scrollEl) { return [scrollEl, isRtl]; });
+            var stickyScrollings = this.getStickyScrolling(argsByKey);
+            stickyScrollings.forEach(function (stickyScrolling) { return stickyScrolling.updateSize(); });
+            this.stickyScrollings = stickyScrollings;
+        };
+        ScrollGrid.prototype.destroyStickyScrolling = function () {
+            this.stickyScrollings.forEach(destroyStickyScrolling);
+        };
+        ScrollGrid.prototype.updateScrollSyncers = function () {
+            var _a = this.getDims(), sectionCnt = _a[0], chunksPerSection = _a[1];
+            var cnt = sectionCnt * chunksPerSection;
+            var scrollElsBySection = {};
+            var scrollElsByColumn = {};
+            var scrollElMap = this.scrollerElRefs.currentMap;
+            for (var sectionI = 0; sectionI < sectionCnt; sectionI += 1) {
+                var startIndex = sectionI * chunksPerSection;
+                var endIndex = startIndex + chunksPerSection;
+                scrollElsBySection[sectionI] = collectFromHash(scrollElMap, startIndex, endIndex, 1); // use the filtered
+            }
+            for (var col = 0; col < chunksPerSection; col += 1) {
+                scrollElsByColumn[col] = this.scrollerElRefs.collect(col, cnt, chunksPerSection); // DON'T use the filtered
+            }
+            this.scrollSyncersBySection = this.getScrollSyncersBySection(scrollElsBySection);
+            this.scrollSyncersByColumn = this.getScrollSyncersByColumn(scrollElsByColumn);
+        };
+        ScrollGrid.prototype.destroyScrollSyncers = function () {
+            mapHash(this.scrollSyncersBySection, destroyScrollSyncer);
+            mapHash(this.scrollSyncersByColumn, destroyScrollSyncer);
+        };
+        ScrollGrid.prototype.getChunkConfigByIndex = function (index) {
+            var chunksPerSection = this.getDims()[1];
+            var sectionI = Math.floor(index / chunksPerSection);
+            var chunkI = index % chunksPerSection;
+            var sectionConfig = this.props.sections[sectionI];
+            return sectionConfig && sectionConfig.chunks[chunkI];
+        };
+        ScrollGrid.prototype.forceScrollLeft = function (col, scrollLeft) {
+            var scrollSyncer = this.scrollSyncersByColumn[col];
+            if (scrollSyncer) {
+                scrollSyncer.forceScrollLeft(scrollLeft);
+            }
+        };
+        ScrollGrid.prototype.forceScrollTop = function (sectionI, scrollTop) {
+            var scrollSyncer = this.scrollSyncersBySection[sectionI];
+            if (scrollSyncer) {
+                scrollSyncer.forceScrollTop(scrollTop);
+            }
+        };
+        ScrollGrid.prototype._handleChunkEl = function (chunkEl, key) {
+            var chunkConfig = this.getChunkConfigByIndex(parseInt(key, 10));
+            if (chunkConfig) { // null if section disappeared. bad, b/c won't null-set the elRef
+                setRef(chunkConfig.elRef, chunkEl);
+            }
+        };
+        ScrollGrid.prototype._handleScrollerEl = function (scrollerEl, key) {
+            var chunkConfig = this.getChunkConfigByIndex(parseInt(key, 10));
+            if (chunkConfig) { // null if section disappeared. bad, b/c won't null-set the elRef
+                setRef(chunkConfig.scrollerElRef, scrollerEl);
+            }
+        };
+        ScrollGrid.prototype.getDims = function () {
+            var sectionCnt = this.props.sections.length;
+            var chunksPerSection = sectionCnt ? this.props.sections[0].chunks.length : 0;
+            return [sectionCnt, chunksPerSection];
+        };
+        return ScrollGrid;
+    }(BaseComponent));
+    ScrollGrid.addStateEquality({
+        shrinkWidths: isArraysEqual,
+        scrollerClientWidths: isPropsEqual,
+        scrollerClientHeights: isPropsEqual,
+    });
+    function sumNumbers(numbers) {
+        var sum = 0;
+        for (var _i = 0, numbers_1 = numbers; _i < numbers_1.length; _i++) {
+            var n = numbers_1[_i];
+            sum += n;
+        }
+        return sum;
+    }
+    function getRowInnerMaxHeight(rowEl) {
+        var innerHeights = findElements(rowEl, '.fc-scrollgrid-sync-inner').map(getElHeight);
+        if (innerHeights.length) {
+            return Math.max.apply(Math, innerHeights);
+        }
+        return 0;
+    }
+    function getElHeight(el) {
+        return el.offsetHeight; // better to deal with integers, for rounding, for PureComponent
+    }
+    function renderMacroColGroup(colGroupStats, shrinkWidths) {
+        var children = colGroupStats.map(function (colGroupStat, i) {
+            var width = colGroupStat.width;
+            if (width === 'shrink') {
+                width = colGroupStat.totalColWidth + sanitizeShrinkWidth(shrinkWidths[i]) + 1; // +1 for border :(
+            }
+            return ( // eslint-disable-next-line react/jsx-key
+            createElement("col", { style: { width: width } }));
+        });
+        return createElement.apply(void 0, __spreadArray(['colgroup', {}], children));
+    }
+    function compileColGroupStat(colGroupConfig) {
+        var totalColWidth = sumColProp(colGroupConfig.cols, 'width'); // excludes "shrink"
+        var totalColMinWidth = sumColProp(colGroupConfig.cols, 'minWidth');
+        var hasShrinkCol = hasShrinkWidth(colGroupConfig.cols);
+        var allowXScrolling = colGroupConfig.width !== 'shrink' && Boolean(totalColWidth || totalColMinWidth || hasShrinkCol);
+        return {
+            hasShrinkCol: hasShrinkCol,
+            totalColWidth: totalColWidth,
+            totalColMinWidth: totalColMinWidth,
+            allowXScrolling: allowXScrolling,
+            cols: colGroupConfig.cols,
+            width: colGroupConfig.width,
+        };
+    }
+    function sumColProp(cols, propName) {
+        var total = 0;
+        for (var _i = 0, cols_1 = cols; _i < cols_1.length; _i++) {
+            var col = cols_1[_i];
+            var val = col[propName];
+            if (typeof val === 'number') {
+                total += val * (col.span || 1);
+            }
+        }
+        return total;
+    }
+    var COL_GROUP_STAT_EQUALITY = {
+        cols: isColPropsEqual,
+    };
+    function isColGroupStatsEqual(stat0, stat1) {
+        return compareObjs(stat0, stat1, COL_GROUP_STAT_EQUALITY);
+    }
+    // for memoizers...
+    function initScrollSyncer(isVertical) {
+        var scrollEls = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            scrollEls[_i - 1] = arguments[_i];
+        }
+        return new ScrollSyncer(isVertical, scrollEls);
+    }
+    function destroyScrollSyncer(scrollSyncer) {
+        scrollSyncer.destroy();
+    }
+    function initStickyScrolling(scrollEl, isRtl) {
+        return new StickyScrolling(scrollEl, isRtl);
+    }
+    function destroyStickyScrolling(stickyScrolling) {
+        stickyScrolling.destroy();
+    }
+
+    var scrollGridPlugin = createPlugin({
+        deps: [
+            premiumCommonPlugin,
+        ],
+        scrollGridImpl: ScrollGrid,
+    });
+    config.SCROLLGRID_RESIZE_INTERVAL = 500;
+
+    config.COLLAPSIBLE_WIDTH_THRESHOLD = 1200;
+    var contexts = [];
+    var undoFuncs = [];
+    var adaptivePlugin = createPlugin({
+        deps: [
+            premiumCommonPlugin,
+        ],
+        contextInit: function (context) {
+            if (!contexts.length) {
+                attachGlobalHandlers();
+            }
+            contexts.push(context);
+            context.calendarApi.on('_unmount', function () {
+                removeExact(contexts, context);
+                if (!contexts.length) {
+                    removeGlobalHandlers();
+                }
+            });
+        },
+    });
+    function attachGlobalHandlers() {
+        window.addEventListener('beforeprint', handleBeforePrint);
+        window.addEventListener('afterprint', handleAfterPrint);
+        // // for testing
+        // let forPrint = false
+        // document.addEventListener('keypress', (ev) => {
+        //   if (ev.key === 'p') {
+        //     forPrint = !forPrint
+        //     if (forPrint) {
+        //       handleBeforePrint()
+        //     } else {
+        //       handleAfterPrint()
+        //     }
+        //   }
+        // })
+    }
+    function removeGlobalHandlers() {
+        window.removeEventListener('beforeprint', handleBeforePrint);
+        window.removeEventListener('afterprint', handleAfterPrint);
+    }
+    function handleBeforePrint() {
+        var scrollEls = queryScrollerEls();
+        var scrollCoords = queryScrollerCoords(scrollEls);
+        for (var _i = 0, contexts_1 = contexts; _i < contexts_1.length; _i++) {
+            var context = contexts_1[_i];
+            context.emitter.trigger('_beforeprint');
+        }
+        flushToDom(); // because printing grabs DOM immediately after
+        killHorizontalScrolling(scrollEls, scrollCoords);
+        undoFuncs.push(function () { return restoreScrollerCoords(scrollEls, scrollCoords); });
+        undoFuncs.push(freezeScrollgridWidths());
+    }
+    function handleAfterPrint() {
+        for (var _i = 0, contexts_2 = contexts; _i < contexts_2.length; _i++) {
+            var context = contexts_2[_i];
+            context.emitter.trigger('_afterprint');
+        }
+        flushToDom(); // guarantee that there are real scrollers
+        while (undoFuncs.length) {
+            undoFuncs.shift()();
+        }
+    }
+    // scrollgrid widths
+    function freezeScrollgridWidths() {
+        var els = findElements(document.body, '.fc-scrollgrid');
+        els.forEach(freezeScrollGridWidth);
+        return function () { return els.forEach(unfreezeScrollGridWidth); };
+    }
+    function freezeScrollGridWidth(el) {
+        var elWidth = el.getBoundingClientRect().width;
+        // along with collapsibleWidth, this is a hack for #5707
+        if (!el.classList.contains('fc-scrollgrid-collapsible') || elWidth < config.COLLAPSIBLE_WIDTH_THRESHOLD) {
+            el.style.width = elWidth + 'px';
+        }
+    }
+    function unfreezeScrollGridWidth(el) {
+        el.style.width = '';
+    }
+    // scrollers
+    // TODO: use scroll normalization!? yes
+    function queryScrollerEls() {
+        return findElements(document.body, '.fc-scroller-harness > .fc-scroller');
+    }
+    function queryScrollerCoords(els) {
+        return els.map(function (el) {
+            var computedStyle = window.getComputedStyle(el);
+            return {
+                scrollLeft: el.scrollLeft,
+                scrollTop: el.scrollTop,
+                overflowX: computedStyle.overflowX,
+                overflowY: computedStyle.overflowY,
+                marginBottom: computedStyle.marginBottom,
+            };
+        });
+    }
+    function killHorizontalScrolling(els, coords) {
+        els.forEach(function (el, i) {
+            el.style.overflowX = 'visible'; // need to clear X/Y to get true overflow
+            el.style.overflowY = 'visible'; // "
+            el.style.marginBottom = ''; // for clipping away scrollbar. disable
+            el.style.left = -coords[i].scrollLeft + 'px'; // simulate scrollLeft! will be position:relative
+        });
+    }
+    function restoreScrollerCoords(els, coords) {
+        els.forEach(function (el, i) {
+            var c = coords[i];
+            el.style.overflowX = c.overflowX;
+            el.style.overflowY = c.overflowY;
+            el.style.marginBottom = c.marginBottom;
+            el.style.left = '';
+            el.scrollLeft = c.scrollLeft;
+            el.scrollTop = c.scrollTop;
+        });
+    }
+
+    var MIN_AUTO_LABELS = 18; // more than `12` months but less that `24` hours
+    var MAX_AUTO_SLOTS_PER_LABEL = 6; // allows 6 10-min slots in an hour
+    var MAX_AUTO_CELLS = 200; // allows 4-days to have a :30 slot duration
+    config.MAX_TIMELINE_SLOTS = 1000;
+    // potential nice values for slot-duration and interval-duration
+    var STOCK_SUB_DURATIONS = [
+        { years: 1 },
+        { months: 1 },
+        { days: 1 },
+        { hours: 1 },
+        { minutes: 30 },
+        { minutes: 15 },
+        { minutes: 10 },
+        { minutes: 5 },
+        { minutes: 1 },
+        { seconds: 30 },
+        { seconds: 15 },
+        { seconds: 10 },
+        { seconds: 5 },
+        { seconds: 1 },
+        { milliseconds: 500 },
+        { milliseconds: 100 },
+        { milliseconds: 10 },
+        { milliseconds: 1 },
+    ];
+    function buildTimelineDateProfile(dateProfile, dateEnv, allOptions, dateProfileGenerator) {
+        var tDateProfile = {
+            labelInterval: allOptions.slotLabelInterval,
+            slotDuration: allOptions.slotDuration,
+        };
+        validateLabelAndSlot(tDateProfile, dateProfile, dateEnv); // validate after computed grid duration
+        ensureLabelInterval(tDateProfile, dateProfile, dateEnv);
+        ensureSlotDuration(tDateProfile, dateProfile, dateEnv);
+        var input = allOptions.slotLabelFormat;
+        var rawFormats = Array.isArray(input) ? input :
+            (input != null) ? [input] :
+                computeHeaderFormats(tDateProfile, dateProfile, dateEnv, allOptions);
+        tDateProfile.headerFormats = rawFormats.map(function (rawFormat) { return createFormatter(rawFormat); });
+        tDateProfile.isTimeScale = Boolean(tDateProfile.slotDuration.milliseconds);
+        var largeUnit = null;
+        if (!tDateProfile.isTimeScale) {
+            var slotUnit = greatestDurationDenominator(tDateProfile.slotDuration).unit;
+            if (/year|month|week/.test(slotUnit)) {
+                largeUnit = slotUnit;
+            }
+        }
+        tDateProfile.largeUnit = largeUnit;
+        tDateProfile.emphasizeWeeks =
+            asCleanDays(tDateProfile.slotDuration) === 1 &&
+                currentRangeAs('weeks', dateProfile, dateEnv) >= 2 &&
+                !allOptions.businessHours;
+        /*
+        console.log('label interval =', timelineView.labelInterval.humanize())
+        console.log('slot duration =', timelineView.slotDuration.humanize())
+        console.log('header formats =', timelineView.headerFormats)
+        console.log('isTimeScale', timelineView.isTimeScale)
+        console.log('largeUnit', timelineView.largeUnit)
+        */
+        var rawSnapDuration = allOptions.snapDuration;
+        var snapDuration;
+        var snapsPerSlot;
+        if (rawSnapDuration) {
+            snapDuration = createDuration(rawSnapDuration);
+            snapsPerSlot = wholeDivideDurations(tDateProfile.slotDuration, snapDuration);
+            // ^ TODO: warning if not whole?
+        }
+        if (snapsPerSlot == null) {
+            snapDuration = tDateProfile.slotDuration;
+            snapsPerSlot = 1;
+        }
+        tDateProfile.snapDuration = snapDuration;
+        tDateProfile.snapsPerSlot = snapsPerSlot;
+        // more...
+        var timeWindowMs = asRoughMs(dateProfile.slotMaxTime) - asRoughMs(dateProfile.slotMinTime);
+        // TODO: why not use normalizeRange!?
+        var normalizedStart = normalizeDate(dateProfile.renderRange.start, tDateProfile, dateEnv);
+        var normalizedEnd = normalizeDate(dateProfile.renderRange.end, tDateProfile, dateEnv);
+        // apply slotMinTime/slotMaxTime
+        // TODO: View should be responsible.
+        if (tDateProfile.isTimeScale) {
+            normalizedStart = dateEnv.add(normalizedStart, dateProfile.slotMinTime);
+            normalizedEnd = dateEnv.add(addDays(normalizedEnd, -1), dateProfile.slotMaxTime);
+        }
+        tDateProfile.timeWindowMs = timeWindowMs;
+        tDateProfile.normalizedRange = { start: normalizedStart, end: normalizedEnd };
+        var slotDates = [];
+        var date = normalizedStart;
+        while (date < normalizedEnd) {
+            if (isValidDate(date, tDateProfile, dateProfile, dateProfileGenerator)) {
+                slotDates.push(date);
+            }
+            date = dateEnv.add(date, tDateProfile.slotDuration);
+        }
+        tDateProfile.slotDates = slotDates;
+        // more...
+        var snapIndex = -1;
+        var snapDiff = 0; // index of the diff :(
+        var snapDiffToIndex = [];
+        var snapIndexToDiff = [];
+        date = normalizedStart;
+        while (date < normalizedEnd) {
+            if (isValidDate(date, tDateProfile, dateProfile, dateProfileGenerator)) {
+                snapIndex += 1;
+                snapDiffToIndex.push(snapIndex);
+                snapIndexToDiff.push(snapDiff);
+            }
+            else {
+                snapDiffToIndex.push(snapIndex + 0.5);
+            }
+            date = dateEnv.add(date, tDateProfile.snapDuration);
+            snapDiff += 1;
+        }
+        tDateProfile.snapDiffToIndex = snapDiffToIndex;
+        tDateProfile.snapIndexToDiff = snapIndexToDiff;
+        tDateProfile.snapCnt = snapIndex + 1; // is always one behind
+        tDateProfile.slotCnt = tDateProfile.snapCnt / tDateProfile.snapsPerSlot;
+        // more...
+        tDateProfile.isWeekStarts = buildIsWeekStarts(tDateProfile, dateEnv);
+        tDateProfile.cellRows = buildCellRows(tDateProfile, dateEnv);
+        tDateProfile.slotsPerLabel = wholeDivideDurations(tDateProfile.labelInterval, tDateProfile.slotDuration);
+        return tDateProfile;
+    }
+    /*
+    snaps to appropriate unit
+    */
+    function normalizeDate(date, tDateProfile, dateEnv) {
+        var normalDate = date;
+        if (!tDateProfile.isTimeScale) {
+            normalDate = startOfDay(normalDate);
+            if (tDateProfile.largeUnit) {
+                normalDate = dateEnv.startOf(normalDate, tDateProfile.largeUnit);
+            }
+        }
+        return normalDate;
+    }
+    /*
+    snaps to appropriate unit
+    */
+    function normalizeRange(range, tDateProfile, dateEnv) {
+        if (!tDateProfile.isTimeScale) {
+            range = computeVisibleDayRange(range);
+            if (tDateProfile.largeUnit) {
+                var dayRange = range; // preserve original result
+                range = {
+                    start: dateEnv.startOf(range.start, tDateProfile.largeUnit),
+                    end: dateEnv.startOf(range.end, tDateProfile.largeUnit),
+                };
+                // if date is partially through the interval, or is in the same interval as the start,
+                // make the exclusive end be the *next* interval
+                if (range.end.valueOf() !== dayRange.end.valueOf() || range.end <= range.start) {
+                    range = {
+                        start: range.start,
+                        end: dateEnv.add(range.end, tDateProfile.slotDuration),
+                    };
+                }
+            }
+        }
+        return range;
+    }
+    function isValidDate(date, tDateProfile, dateProfile, dateProfileGenerator) {
+        if (dateProfileGenerator.isHiddenDay(date)) {
+            return false;
+        }
+        if (tDateProfile.isTimeScale) {
+            // determine if the time is within slotMinTime/slotMaxTime, which may have wacky values
+            var day = startOfDay(date);
+            var timeMs = date.valueOf() - day.valueOf();
+            var ms = timeMs - asRoughMs(dateProfile.slotMinTime); // milliseconds since slotMinTime
+            ms = ((ms % 86400000) + 86400000) % 86400000; // make negative values wrap to 24hr clock
+            return ms < tDateProfile.timeWindowMs; // before the slotMaxTime?
+        }
+        return true;
+    }
+    function validateLabelAndSlot(tDateProfile, dateProfile, dateEnv) {
+        var currentRange = dateProfile.currentRange;
+        // make sure labelInterval doesn't exceed the max number of cells
+        if (tDateProfile.labelInterval) {
+            var labelCnt = dateEnv.countDurationsBetween(currentRange.start, currentRange.end, tDateProfile.labelInterval);
+            if (labelCnt > config.MAX_TIMELINE_SLOTS) {
+                console.warn('slotLabelInterval results in too many cells');
+                tDateProfile.labelInterval = null;
+            }
+        }
+        // make sure slotDuration doesn't exceed the maximum number of cells
+        if (tDateProfile.slotDuration) {
+            var slotCnt = dateEnv.countDurationsBetween(currentRange.start, currentRange.end, tDateProfile.slotDuration);
+            if (slotCnt > config.MAX_TIMELINE_SLOTS) {
+                console.warn('slotDuration results in too many cells');
+                tDateProfile.slotDuration = null;
+            }
+        }
+        // make sure labelInterval is a multiple of slotDuration
+        if (tDateProfile.labelInterval && tDateProfile.slotDuration) {
+            var slotsPerLabel = wholeDivideDurations(tDateProfile.labelInterval, tDateProfile.slotDuration);
+            if (slotsPerLabel === null || slotsPerLabel < 1) {
+                console.warn('slotLabelInterval must be a multiple of slotDuration');
+                tDateProfile.slotDuration = null;
+            }
+        }
+    }
+    function ensureLabelInterval(tDateProfile, dateProfile, dateEnv) {
+        var currentRange = dateProfile.currentRange;
+        var labelInterval = tDateProfile.labelInterval;
+        if (!labelInterval) {
+            // compute based off the slot duration
+            // find the largest label interval with an acceptable slots-per-label
+            var input = void 0;
+            if (tDateProfile.slotDuration) {
+                for (var _i = 0, STOCK_SUB_DURATIONS_1 = STOCK_SUB_DURATIONS; _i < STOCK_SUB_DURATIONS_1.length; _i++) {
+                    input = STOCK_SUB_DURATIONS_1[_i];
+                    var tryLabelInterval = createDuration(input);
+                    var slotsPerLabel = wholeDivideDurations(tryLabelInterval, tDateProfile.slotDuration);
+                    if (slotsPerLabel !== null && slotsPerLabel <= MAX_AUTO_SLOTS_PER_LABEL) {
+                        labelInterval = tryLabelInterval;
+                        break;
+                    }
+                }
+                // use the slot duration as a last resort
+                if (!labelInterval) {
+                    labelInterval = tDateProfile.slotDuration;
+                }
+                // compute based off the view's duration
+                // find the largest label interval that yields the minimum number of labels
+            }
+            else {
+                for (var _a = 0, STOCK_SUB_DURATIONS_2 = STOCK_SUB_DURATIONS; _a < STOCK_SUB_DURATIONS_2.length; _a++) {
+                    input = STOCK_SUB_DURATIONS_2[_a];
+                    labelInterval = createDuration(input);
+                    var labelCnt = dateEnv.countDurationsBetween(currentRange.start, currentRange.end, labelInterval);
+                    if (labelCnt >= MIN_AUTO_LABELS) {
+                        break;
+                    }
+                }
+            }
+            tDateProfile.labelInterval = labelInterval;
+        }
+        return labelInterval;
+    }
+    function ensureSlotDuration(tDateProfile, dateProfile, dateEnv) {
+        var currentRange = dateProfile.currentRange;
+        var slotDuration = tDateProfile.slotDuration;
+        if (!slotDuration) {
+            var labelInterval = ensureLabelInterval(tDateProfile, dateProfile, dateEnv); // will compute if necessary
+            // compute based off the label interval
+            // find the largest slot duration that is different from labelInterval, but still acceptable
+            for (var _i = 0, STOCK_SUB_DURATIONS_3 = STOCK_SUB_DURATIONS; _i < STOCK_SUB_DURATIONS_3.length; _i++) {
+                var input = STOCK_SUB_DURATIONS_3[_i];
+                var trySlotDuration = createDuration(input);
+                var slotsPerLabel = wholeDivideDurations(labelInterval, trySlotDuration);
+                if (slotsPerLabel !== null && slotsPerLabel > 1 && slotsPerLabel <= MAX_AUTO_SLOTS_PER_LABEL) {
+                    slotDuration = trySlotDuration;
+                    break;
+                }
+            }
+            // only allow the value if it won't exceed the view's # of slots limit
+            if (slotDuration) {
+                var slotCnt = dateEnv.countDurationsBetween(currentRange.start, currentRange.end, slotDuration);
+                if (slotCnt > MAX_AUTO_CELLS) {
+                    slotDuration = null;
+                }
+            }
+            // use the label interval as a last resort
+            if (!slotDuration) {
+                slotDuration = labelInterval;
+            }
+            tDateProfile.slotDuration = slotDuration;
+        }
+        return slotDuration;
+    }
+    function computeHeaderFormats(tDateProfile, dateProfile, dateEnv, allOptions) {
+        var format1;
+        var format2;
+        var labelInterval = tDateProfile.labelInterval;
+        var unit = greatestDurationDenominator(labelInterval).unit;
+        var weekNumbersVisible = allOptions.weekNumbers;
+        var format0 = (format1 = (format2 = null));
+        // NOTE: weekNumber computation function wont work
+        if ((unit === 'week') && !weekNumbersVisible) {
+            unit = 'day';
+        }
+        switch (unit) {
+            case 'year':
+                format0 = { year: 'numeric' }; // '2015'
+                break;
+            case 'month':
+                if (currentRangeAs('years', dateProfile, dateEnv) > 1) {
+                    format0 = { year: 'numeric' }; // '2015'
+                }
+                format1 = { month: 'short' }; // 'Jan'
+                break;
+            case 'week':
+                if (currentRangeAs('years', dateProfile, dateEnv) > 1) {
+                    format0 = { year: 'numeric' }; // '2015'
+                }
+                format1 = { week: 'narrow' }; // 'Wk4'
+                break;
+            case 'day':
+                if (currentRangeAs('years', dateProfile, dateEnv) > 1) {
+                    format0 = { year: 'numeric', month: 'long' }; // 'January 2014'
+                }
+                else if (currentRangeAs('months', dateProfile, dateEnv) > 1) {
+                    format0 = { month: 'long' }; // 'January'
+                }
+                if (weekNumbersVisible) {
+                    format1 = { week: 'short' }; // 'Wk 4'
+                }
+                format2 = { weekday: 'narrow', day: 'numeric' }; // 'Su 9'
+                break;
+            case 'hour':
+                if (weekNumbersVisible) {
+                    format0 = { week: 'short' }; // 'Wk 4'
+                }
+                if (currentRangeAs('days', dateProfile, dateEnv) > 1) {
+                    format1 = { weekday: 'short', day: 'numeric', month: 'numeric', omitCommas: true }; // Sat 4/7
+                }
+                format2 = {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    omitZeroMinute: true,
+                    meridiem: 'short',
+                };
+                break;
+            case 'minute':
+                // sufficiently large number of different minute cells?
+                if ((asRoughMinutes(labelInterval) / 60) >= MAX_AUTO_SLOTS_PER_LABEL) {
+                    format0 = {
+                        hour: 'numeric',
+                        meridiem: 'short',
+                    };
+                    format1 = function (params) { return (':' + padStart(params.date.minute, 2) // ':30'
+                    ); };
+                }
+                else {
+                    format0 = {
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        meridiem: 'short',
+                    };
+                }
+                break;
+            case 'second':
+                // sufficiently large number of different second cells?
+                if ((asRoughSeconds(labelInterval) / 60) >= MAX_AUTO_SLOTS_PER_LABEL) {
+                    format0 = { hour: 'numeric', minute: '2-digit', meridiem: 'lowercase' }; // '8:30 PM'
+                    format1 = function (params) { return (':' + padStart(params.date.second, 2) // ':30'
+                    ); };
+                }
+                else {
+                    format0 = { hour: 'numeric', minute: '2-digit', second: '2-digit', meridiem: 'lowercase' }; // '8:30:45 PM'
+                }
+                break;
+            case 'millisecond':
+                format0 = { hour: 'numeric', minute: '2-digit', second: '2-digit', meridiem: 'lowercase' }; // '8:30:45 PM'
+                format1 = function (params) { return ('.' + padStart(params.millisecond, 3)); };
+                break;
+        }
+        return [].concat(format0 || [], format1 || [], format2 || []);
+    }
+    // Compute the number of the give units in the "current" range.
+    // Won't go more precise than days.
+    // Will return `0` if there's not a clean whole interval.
+    function currentRangeAs(unit, dateProfile, dateEnv) {
+        var range = dateProfile.currentRange;
+        var res = null;
+        if (unit === 'years') {
+            res = dateEnv.diffWholeYears(range.start, range.end);
+        }
+        else if (unit === 'months') {
+            res = dateEnv.diffWholeMonths(range.start, range.end);
+        }
+        else if (unit === 'weeks') {
+            res = dateEnv.diffWholeMonths(range.start, range.end);
+        }
+        else if (unit === 'days') {
+            res = diffWholeDays(range.start, range.end);
+        }
+        return res || 0;
+    }
+    function buildIsWeekStarts(tDateProfile, dateEnv) {
+        var slotDates = tDateProfile.slotDates, emphasizeWeeks = tDateProfile.emphasizeWeeks;
+        var prevWeekNumber = null;
+        var isWeekStarts = [];
+        for (var _i = 0, slotDates_1 = slotDates; _i < slotDates_1.length; _i++) {
+            var slotDate = slotDates_1[_i];
+            var weekNumber = dateEnv.computeWeekNumber(slotDate);
+            var isWeekStart = emphasizeWeeks && (prevWeekNumber !== null) && (prevWeekNumber !== weekNumber);
+            prevWeekNumber = weekNumber;
+            isWeekStarts.push(isWeekStart);
+        }
+        return isWeekStarts;
+    }
+    function buildCellRows(tDateProfile, dateEnv) {
+        var slotDates = tDateProfile.slotDates;
+        var formats = tDateProfile.headerFormats;
+        var cellRows = formats.map(function () { return []; }); // indexed by row,col
+        var slotAsDays = asCleanDays(tDateProfile.slotDuration);
+        var guessedSlotUnit = slotAsDays === 7 ? 'week' :
+            slotAsDays === 1 ? 'day' :
+                null;
+        // specifically for navclicks
+        var rowUnitsFromFormats = formats.map(function (format) { return (format.getLargestUnit ? format.getLargestUnit() : null); });
+        // builds cellRows and slotCells
+        for (var i = 0; i < slotDates.length; i += 1) {
+            var date = slotDates[i];
+            var isWeekStart = tDateProfile.isWeekStarts[i];
+            for (var row = 0; row < formats.length; row += 1) {
+                var format = formats[row];
+                var rowCells = cellRows[row];
+                var leadingCell = rowCells[rowCells.length - 1];
+                var isLastRow = row === formats.length - 1;
+                var isSuperRow = formats.length > 1 && !isLastRow; // more than one row and not the last
+                var newCell = null;
+                var rowUnit = rowUnitsFromFormats[row] || (isLastRow ? guessedSlotUnit : null);
+                if (isSuperRow) {
+                    var text = dateEnv.format(date, format);
+                    if (!leadingCell || (leadingCell.text !== text)) {
+                        newCell = buildCellObject(date, text, rowUnit);
+                    }
+                    else {
+                        leadingCell.colspan += 1;
+                    }
+                }
+                else if (!leadingCell ||
+                    isInt(dateEnv.countDurationsBetween(tDateProfile.normalizedRange.start, date, tDateProfile.labelInterval))) {
+                    var text = dateEnv.format(date, format);
+                    newCell = buildCellObject(date, text, rowUnit);
+                }
+                else {
+                    leadingCell.colspan += 1;
+                }
+                if (newCell) {
+                    newCell.weekStart = isWeekStart;
+                    rowCells.push(newCell);
+                }
+            }
+        }
+        return cellRows;
+    }
+    function buildCellObject(date, text, rowUnit) {
+        return { date: date, text: text, rowUnit: rowUnit, colspan: 1, isWeekStart: false };
+    }
+
+    var TimelineHeaderThInner = /** @class */ (function (_super) {
+        __extends(TimelineHeaderThInner, _super);
+        function TimelineHeaderThInner() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TimelineHeaderThInner.prototype.render = function () {
+            var _a = this, props = _a.props, context = _a.context;
+            return (createElement(ContentHook, { hookProps: props.hookProps, content: context.options.slotLabelContent, defaultContent: renderInnerContent$1 }, function (innerElRef, innerContent) { return (createElement("a", __assign({ ref: innerElRef, className: 'fc-timeline-slot-cushion fc-scrollgrid-sync-inner' + (props.isSticky ? ' fc-sticky' : '') }, props.navLinkAttrs), innerContent)); }));
+        };
+        return TimelineHeaderThInner;
+    }(BaseComponent));
+    function renderInnerContent$1(props) {
+        return props.text;
+    }
+    function refineHookProps$2(input) {
+        return {
+            level: input.level,
+            date: input.dateEnv.toDate(input.dateMarker),
+            view: input.viewApi,
+            text: input.text,
+        };
+    }
+
+    var TimelineHeaderTh = /** @class */ (function (_super) {
+        __extends(TimelineHeaderTh, _super);
+        function TimelineHeaderTh() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.refineHookProps = memoizeObjArg(refineHookProps$2);
+            _this.normalizeClassNames = buildClassNameNormalizer();
+            _this.buildCellNavLinkAttrs = memoize(buildCellNavLinkAttrs);
+            return _this;
+        }
+        TimelineHeaderTh.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var dateEnv = context.dateEnv, options = context.options;
+            var cell = props.cell, dateProfile = props.dateProfile, tDateProfile = props.tDateProfile;
+            // the cell.rowUnit is f'd
+            // giving 'month' for a 3-day view
+            // workaround: to infer day, do NOT time
+            var dateMeta = getDateMeta(cell.date, props.todayRange, props.nowDate, dateProfile);
+            var classNames = ['fc-timeline-slot', 'fc-timeline-slot-label'].concat(cell.rowUnit === 'time' // TODO: so slot classnames for week/month/bigger. see note above about rowUnit
+                ? getSlotClassNames(dateMeta, context.theme)
+                : getDayClassNames(dateMeta, context.theme));
+            if (cell.isWeekStart) {
+                classNames.push('fc-timeline-slot-em');
+            }
+            var hookProps = this.refineHookProps({
+                level: props.rowLevel,
+                dateMarker: cell.date,
+                text: cell.text,
+                dateEnv: context.dateEnv,
+                viewApi: context.viewApi,
+            });
+            var customClassNames = this.normalizeClassNames(options.slotLabelClassNames, hookProps);
+            return (createElement(MountHook, { hookProps: hookProps, didMount: options.slotLabelDidMount, willUnmount: options.slotLabelWillUnmount }, function (rootElRef) { return (createElement("th", { ref: rootElRef, className: classNames.concat(customClassNames).join(' '), "data-date": dateEnv.formatIso(cell.date, { omitTime: !tDateProfile.isTimeScale, omitTimeZoneOffset: true }), colSpan: cell.colspan },
+                createElement("div", { className: "fc-timeline-slot-frame", style: { height: props.rowInnerHeight } },
+                    createElement(TimelineHeaderThInner, { hookProps: hookProps, isSticky: props.isSticky, navLinkAttrs: _this.buildCellNavLinkAttrs(context, cell.date, cell.rowUnit) })))); }));
+        };
+        return TimelineHeaderTh;
+    }(BaseComponent));
+    function buildCellNavLinkAttrs(context, cellDate, rowUnit) {
+        return (rowUnit && rowUnit !== 'time')
+            ? buildNavLinkAttrs(context, cellDate, rowUnit)
+            : {};
+    }
+
+    var TimelineHeaderRows = /** @class */ (function (_super) {
+        __extends(TimelineHeaderRows, _super);
+        function TimelineHeaderRows() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TimelineHeaderRows.prototype.render = function () {
+            var _a = this.props, dateProfile = _a.dateProfile, tDateProfile = _a.tDateProfile, rowInnerHeights = _a.rowInnerHeights, todayRange = _a.todayRange, nowDate = _a.nowDate;
+            var cellRows = tDateProfile.cellRows;
+            return (createElement(Fragment, null, cellRows.map(function (rowCells, rowLevel) {
+                var isLast = rowLevel === cellRows.length - 1;
+                var isChrono = tDateProfile.isTimeScale && isLast; // the final row, with times?
+                var classNames = [
+                    'fc-timeline-header-row',
+                    isChrono ? 'fc-timeline-header-row-chrono' : '',
+                ];
+                return ( // eslint-disable-next-line react/no-array-index-key
+                createElement("tr", { key: rowLevel, className: classNames.join(' ') }, rowCells.map(function (cell) { return (createElement(TimelineHeaderTh, { key: cell.date.toISOString(), cell: cell, rowLevel: rowLevel, dateProfile: dateProfile, tDateProfile: tDateProfile, todayRange: todayRange, nowDate: nowDate, rowInnerHeight: rowInnerHeights && rowInnerHeights[rowLevel], isSticky: !isLast })); })));
+            })));
+        };
+        return TimelineHeaderRows;
+    }(BaseComponent));
+
+    var TimelineCoords = /** @class */ (function () {
+        function TimelineCoords(slatRootEl, // okay to expose?
+        slatEls, dateProfile, tDateProfile, dateEnv, isRtl) {
+            this.slatRootEl = slatRootEl;
+            this.dateProfile = dateProfile;
+            this.tDateProfile = tDateProfile;
+            this.dateEnv = dateEnv;
+            this.isRtl = isRtl;
+            this.outerCoordCache = new PositionCache(slatRootEl, slatEls, true, // isHorizontal
+            false);
+            // for the inner divs within the slats
+            // used for event rendering and scrollTime, to disregard slat border
+            this.innerCoordCache = new PositionCache(slatRootEl, findDirectChildren(slatEls, 'div'), true, // isHorizontal
+            false);
+        }
+        TimelineCoords.prototype.isDateInRange = function (date) {
+            return rangeContainsMarker(this.dateProfile.currentRange, date);
+        };
+        // results range from negative width of area to 0
+        TimelineCoords.prototype.dateToCoord = function (date) {
+            var tDateProfile = this.tDateProfile;
+            var snapCoverage = this.computeDateSnapCoverage(date);
+            var slotCoverage = snapCoverage / tDateProfile.snapsPerSlot;
+            var slotIndex = Math.floor(slotCoverage);
+            slotIndex = Math.min(slotIndex, tDateProfile.slotCnt - 1);
+            var partial = slotCoverage - slotIndex;
+            var _a = this, innerCoordCache = _a.innerCoordCache, outerCoordCache = _a.outerCoordCache;
+            if (this.isRtl) {
+                return outerCoordCache.originClientRect.width - (outerCoordCache.rights[slotIndex] -
+                    (innerCoordCache.getWidth(slotIndex) * partial));
+            }
+            return (outerCoordCache.lefts[slotIndex] +
+                (innerCoordCache.getWidth(slotIndex) * partial));
+        };
+        TimelineCoords.prototype.rangeToCoords = function (range) {
+            return {
+                start: this.dateToCoord(range.start),
+                end: this.dateToCoord(range.end),
+            };
+        };
+        TimelineCoords.prototype.durationToCoord = function (duration) {
+            var _a = this, dateProfile = _a.dateProfile, tDateProfile = _a.tDateProfile, dateEnv = _a.dateEnv, isRtl = _a.isRtl;
+            var coord = 0;
+            if (dateProfile) {
+                var date = dateEnv.add(dateProfile.activeRange.start, duration);
+                if (!tDateProfile.isTimeScale) {
+                    date = startOfDay(date);
+                }
+                coord = this.dateToCoord(date);
+                // hack to overcome the left borders of non-first slat
+                if (!isRtl && coord) {
+                    coord += 1;
+                }
+            }
+            return coord;
+        };
+        TimelineCoords.prototype.coordFromLeft = function (coord) {
+            if (this.isRtl) {
+                return this.outerCoordCache.originClientRect.width - coord;
+            }
+            return coord;
+        };
+        // returned value is between 0 and the number of snaps
+        TimelineCoords.prototype.computeDateSnapCoverage = function (date) {
+            return computeDateSnapCoverage(date, this.tDateProfile, this.dateEnv);
+        };
+        return TimelineCoords;
+    }());
+    // returned value is between 0 and the number of snaps
+    function computeDateSnapCoverage(date, tDateProfile, dateEnv) {
+        var snapDiff = dateEnv.countDurationsBetween(tDateProfile.normalizedRange.start, date, tDateProfile.snapDuration);
+        if (snapDiff < 0) {
+            return 0;
+        }
+        if (snapDiff >= tDateProfile.snapDiffToIndex.length) {
+            return tDateProfile.snapCnt;
+        }
+        var snapDiffInt = Math.floor(snapDiff);
+        var snapCoverage = tDateProfile.snapDiffToIndex[snapDiffInt];
+        if (isInt(snapCoverage)) { // not an in-between value
+            snapCoverage += snapDiff - snapDiffInt; // add the remainder
+        }
+        else {
+            // a fractional value, meaning the date is not visible
+            // always round up in this case. works for start AND end dates in a range.
+            snapCoverage = Math.ceil(snapCoverage);
+        }
+        return snapCoverage;
+    }
+    function coordToCss(hcoord, isRtl) {
+        if (hcoord === null) {
+            return { left: '', right: '' };
+        }
+        if (isRtl) {
+            return { right: hcoord, left: '' };
+        }
+        return { left: hcoord, right: '' };
+    }
+    function coordsToCss(hcoords, isRtl) {
+        if (!hcoords) {
+            return { left: '', right: '' };
+        }
+        if (isRtl) {
+            return { right: hcoords.start, left: -hcoords.end };
+        }
+        return { left: hcoords.start, right: -hcoords.end };
+    }
+
+    var TimelineHeader = /** @class */ (function (_super) {
+        __extends(TimelineHeader, _super);
+        function TimelineHeader() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.rootElRef = createRef();
+            return _this;
+        }
+        TimelineHeader.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            // TODO: very repetitive
+            // TODO: make part of tDateProfile?
+            var timerUnit = greatestDurationDenominator(props.tDateProfile.slotDuration).unit;
+            // WORKAROUND: make ignore slatCoords when out of sync with dateProfile
+            var slatCoords = props.slatCoords && props.slatCoords.dateProfile === props.dateProfile ? props.slatCoords : null;
+            return (createElement(NowTimer, { unit: timerUnit }, function (nowDate, todayRange) { return (createElement("div", { className: "fc-timeline-header", ref: _this.rootElRef },
+                createElement("table", { "aria-hidden": true, className: "fc-scrollgrid-sync-table", style: { minWidth: props.tableMinWidth, width: props.clientWidth } },
+                    props.tableColGroupNode,
+                    createElement("tbody", null,
+                        createElement(TimelineHeaderRows, { dateProfile: props.dateProfile, tDateProfile: props.tDateProfile, nowDate: nowDate, todayRange: todayRange, rowInnerHeights: props.rowInnerHeights }))),
+                context.options.nowIndicator && (
+                // need to have a container regardless of whether the current view has a visible now indicator
+                // because apparently removal of the element resets the scroll for some reasons (issue #5351).
+                // this issue doesn't happen for the timeline body however (
+                createElement("div", { className: "fc-timeline-now-indicator-container" }, (slatCoords && slatCoords.isDateInRange(nowDate)) && (createElement(NowIndicatorRoot, { isAxis: true, date: nowDate }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("div", { ref: rootElRef, className: ['fc-timeline-now-indicator-arrow'].concat(classNames).join(' '), style: coordToCss(slatCoords.dateToCoord(nowDate), context.isRtl) }, innerContent)); })))))); }));
+        };
+        TimelineHeader.prototype.componentDidMount = function () {
+            this.updateSize();
+        };
+        TimelineHeader.prototype.componentDidUpdate = function () {
+            this.updateSize();
+        };
+        TimelineHeader.prototype.updateSize = function () {
+            if (this.props.onMaxCushionWidth) {
+                this.props.onMaxCushionWidth(this.computeMaxCushionWidth());
+            }
+        };
+        TimelineHeader.prototype.computeMaxCushionWidth = function () {
+            return Math.max.apply(Math, findElements(this.rootElRef.current, '.fc-timeline-header-row:last-child .fc-timeline-slot-cushion').map(function (el) { return el.getBoundingClientRect().width; }));
+        };
+        return TimelineHeader;
+    }(BaseComponent));
+
+    var TimelineSlatCell = /** @class */ (function (_super) {
+        __extends(TimelineSlatCell, _super);
+        function TimelineSlatCell() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TimelineSlatCell.prototype.render = function () {
+            var _a = this, props = _a.props, context = _a.context;
+            var dateEnv = context.dateEnv, options = context.options, theme = context.theme;
+            var date = props.date, tDateProfile = props.tDateProfile, isEm = props.isEm;
+            var dateMeta = getDateMeta(props.date, props.todayRange, props.nowDate, props.dateProfile);
+            var classNames = ['fc-timeline-slot', 'fc-timeline-slot-lane'];
+            var dataAttrs = { 'data-date': dateEnv.formatIso(date, { omitTimeZoneOffset: true, omitTime: !tDateProfile.isTimeScale }) };
+            var hookProps = __assign(__assign({ date: dateEnv.toDate(props.date) }, dateMeta), { view: context.viewApi });
+            if (isEm) {
+                classNames.push('fc-timeline-slot-em');
+            }
+            if (tDateProfile.isTimeScale) {
+                classNames.push(isInt(dateEnv.countDurationsBetween(tDateProfile.normalizedRange.start, props.date, tDateProfile.labelInterval)) ?
+                    'fc-timeline-slot-major' :
+                    'fc-timeline-slot-minor');
+            }
+            classNames.push.apply(classNames, (props.isDay
+                ? getDayClassNames(dateMeta, theme)
+                : getSlotClassNames(dateMeta, theme)));
+            return (createElement(RenderHook, { hookProps: hookProps, classNames: options.slotLaneClassNames, content: options.slotLaneContent, didMount: options.slotLaneDidMount, willUnmount: options.slotLaneWillUnmount, elRef: props.elRef }, function (rootElRef, customClassNames, innerElRef, innerContent) { return (createElement("td", __assign({ ref: rootElRef, className: classNames.concat(customClassNames).join(' ') }, dataAttrs),
+                createElement("div", { ref: innerElRef }, innerContent))); }));
+        };
+        return TimelineSlatCell;
+    }(BaseComponent));
+
+    var TimelineSlatsBody = /** @class */ (function (_super) {
+        __extends(TimelineSlatsBody, _super);
+        function TimelineSlatsBody() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TimelineSlatsBody.prototype.render = function () {
+            var props = this.props;
+            var tDateProfile = props.tDateProfile, cellElRefs = props.cellElRefs;
+            var slotDates = tDateProfile.slotDates, isWeekStarts = tDateProfile.isWeekStarts;
+            var isDay = !tDateProfile.isTimeScale && !tDateProfile.largeUnit;
+            return (createElement("tbody", null,
+                createElement("tr", null, slotDates.map(function (slotDate, i) {
+                    var key = slotDate.toISOString();
+                    return (createElement(TimelineSlatCell, { key: key, elRef: cellElRefs.createRef(key), date: slotDate, dateProfile: props.dateProfile, tDateProfile: tDateProfile, nowDate: props.nowDate, todayRange: props.todayRange, isEm: isWeekStarts[i], isDay: isDay }));
+                }))));
+        };
+        return TimelineSlatsBody;
+    }(BaseComponent));
+
+    var TimelineSlats = /** @class */ (function (_super) {
+        __extends(TimelineSlats, _super);
+        function TimelineSlats() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.rootElRef = createRef();
+            _this.cellElRefs = new RefMap();
+            _this.handleScrollRequest = function (request) {
+                var onScrollLeftRequest = _this.props.onScrollLeftRequest;
+                var coords = _this.coords;
+                if (onScrollLeftRequest && coords) {
+                    if (request.time) {
+                        var scrollLeft = coords.coordFromLeft(coords.durationToCoord(request.time));
+                        onScrollLeftRequest(scrollLeft);
+                    }
+                    return true;
+                }
+                return null; // best?
+            };
+            return _this;
+        }
+        TimelineSlats.prototype.render = function () {
+            var _a = this, props = _a.props, context = _a.context;
+            return (createElement("div", { className: "fc-timeline-slots", ref: this.rootElRef },
+                createElement("table", { "aria-hidden": true, className: context.theme.getClass('table'), style: {
+                        minWidth: props.tableMinWidth,
+                        width: props.clientWidth,
+                    } },
+                    props.tableColGroupNode,
+                    createElement(TimelineSlatsBody, { cellElRefs: this.cellElRefs, dateProfile: props.dateProfile, tDateProfile: props.tDateProfile, nowDate: props.nowDate, todayRange: props.todayRange }))));
+        };
+        TimelineSlats.prototype.componentDidMount = function () {
+            this.updateSizing();
+            this.scrollResponder = this.context.createScrollResponder(this.handleScrollRequest);
+        };
+        TimelineSlats.prototype.componentDidUpdate = function (prevProps) {
+            this.updateSizing();
+            this.scrollResponder.update(prevProps.dateProfile !== this.props.dateProfile);
+        };
+        TimelineSlats.prototype.componentWillUnmount = function () {
+            this.scrollResponder.detach();
+            if (this.props.onCoords) {
+                this.props.onCoords(null);
+            }
+        };
+        TimelineSlats.prototype.updateSizing = function () {
+            var _a = this, props = _a.props, context = _a.context;
+            if (props.clientWidth !== null && // is sizing stable?
+                this.scrollResponder
+            // ^it's possible to have clientWidth immediately after mount (when returning from print view), but w/o scrollResponder
+            ) {
+                var rootEl = this.rootElRef.current;
+                if (rootEl.offsetWidth) { // not hidden by css
+                    this.coords = new TimelineCoords(this.rootElRef.current, collectCellEls(this.cellElRefs.currentMap, props.tDateProfile.slotDates), props.dateProfile, props.tDateProfile, context.dateEnv, context.isRtl);
+                    if (props.onCoords) {
+                        props.onCoords(this.coords);
+                    }
+                    this.scrollResponder.update(false); // TODO: wouldn't have to do this if coords were in state
+                }
+            }
+        };
+        TimelineSlats.prototype.positionToHit = function (leftPosition) {
+            var outerCoordCache = this.coords.outerCoordCache;
+            var _a = this.context, dateEnv = _a.dateEnv, isRtl = _a.isRtl;
+            var tDateProfile = this.props.tDateProfile;
+            var slatIndex = outerCoordCache.leftToIndex(leftPosition);
+            if (slatIndex != null) {
+                // somewhat similar to what TimeGrid does. consolidate?
+                var slatWidth = outerCoordCache.getWidth(slatIndex);
+                var partial = isRtl ?
+                    (outerCoordCache.rights[slatIndex] - leftPosition) / slatWidth :
+                    (leftPosition - outerCoordCache.lefts[slatIndex]) / slatWidth;
+                var localSnapIndex = Math.floor(partial * tDateProfile.snapsPerSlot);
+                var start = dateEnv.add(tDateProfile.slotDates[slatIndex], multiplyDuration(tDateProfile.snapDuration, localSnapIndex));
+                var end = dateEnv.add(start, tDateProfile.snapDuration);
+                return {
+                    dateSpan: {
+                        range: { start: start, end: end },
+                        allDay: !this.props.tDateProfile.isTimeScale,
+                    },
+                    dayEl: this.cellElRefs.currentMap[slatIndex],
+                    left: outerCoordCache.lefts[slatIndex],
+                    right: outerCoordCache.rights[slatIndex],
+                };
+            }
+            return null;
+        };
+        return TimelineSlats;
+    }(BaseComponent));
+    function collectCellEls(elMap, slotDates) {
+        return slotDates.map(function (slotDate) {
+            var key = slotDate.toISOString();
+            return elMap[key];
+        });
+    }
+
+    function computeSegHCoords(segs, minWidth, timelineCoords) {
+        var hcoords = [];
+        if (timelineCoords) {
+            for (var _i = 0, segs_1 = segs; _i < segs_1.length; _i++) {
+                var seg = segs_1[_i];
+                var res = timelineCoords.rangeToCoords(seg);
+                var start = Math.round(res.start); // for barely-overlapping collisions
+                var end = Math.round(res.end); //
+                if (end - start < minWidth) {
+                    end = start + minWidth;
+                }
+                hcoords.push({ start: start, end: end });
+            }
+        }
+        return hcoords;
+    }
+    function computeFgSegPlacements(segs, segHCoords, // might not have for every seg
+    eventInstanceHeights, // might not have for every seg
+    moreLinkHeights, // might not have for every more-link
+    strictOrder, maxStackCnt) {
+        var segInputs = [];
+        var crudePlacements = []; // when we don't know dims
+        for (var i = 0; i < segs.length; i += 1) {
+            var seg = segs[i];
+            var instanceId = seg.eventRange.instance.instanceId;
+            var height = eventInstanceHeights[instanceId];
+            var hcoords = segHCoords[i];
+            if (height && hcoords) {
+                segInputs.push({
+                    index: i,
+                    span: hcoords,
+                    thickness: height,
+                });
+            }
+            else {
+                crudePlacements.push({
+                    seg: seg,
+                    hcoords: hcoords,
+                    top: null,
+                });
+            }
+        }
+        var hierarchy = new SegHierarchy();
+        if (strictOrder != null) {
+            hierarchy.strictOrder = strictOrder;
+        }
+        if (maxStackCnt != null) {
+            hierarchy.maxStackCnt = maxStackCnt;
+        }
+        var hiddenEntries = hierarchy.addSegs(segInputs);
+        var hiddenPlacements = hiddenEntries.map(function (entry) { return ({
+            seg: segs[entry.index],
+            hcoords: entry.span,
+            top: null,
+        }); });
+        var hiddenGroups = groupIntersectingEntries(hiddenEntries);
+        var moreLinkInputs = [];
+        var moreLinkCrudePlacements = [];
+        var extractSeg = function (entry) { return segs[entry.index]; };
+        for (var i = 0; i < hiddenGroups.length; i += 1) {
+            var hiddenGroup = hiddenGroups[i];
+            var sortedSegs = hiddenGroup.entries.map(extractSeg);
+            var height = moreLinkHeights[buildIsoString(computeEarliestSegStart(sortedSegs))]; // not optimal :(
+            if (height != null) {
+                // NOTE: the hiddenGroup's spanStart/spanEnd are already computed by rangeToCoords. computed during input.
+                moreLinkInputs.push({
+                    index: segs.length + i,
+                    thickness: height,
+                    span: hiddenGroup.span,
+                });
+            }
+            else {
+                moreLinkCrudePlacements.push({
+                    seg: sortedSegs,
+                    hcoords: hiddenGroup.span,
+                    top: null,
+                });
+            }
+        }
+        // add more-links into the hierarchy, but don't limit
+        hierarchy.maxStackCnt = -1;
+        hierarchy.addSegs(moreLinkInputs);
+        var visibleRects = hierarchy.toRects();
+        var visiblePlacements = [];
+        var maxHeight = 0;
+        for (var _i = 0, visibleRects_1 = visibleRects; _i < visibleRects_1.length; _i++) {
+            var rect = visibleRects_1[_i];
+            var segIndex = rect.index;
+            visiblePlacements.push({
+                seg: segIndex < segs.length
+                    ? segs[segIndex] // a real seg
+                    : hiddenGroups[segIndex - segs.length].entries.map(extractSeg),
+                hcoords: rect.span,
+                top: rect.levelCoord,
+            });
+            maxHeight = Math.max(maxHeight, rect.levelCoord + rect.thickness);
+        }
+        return [
+            visiblePlacements.concat(crudePlacements, hiddenPlacements, moreLinkCrudePlacements),
+            maxHeight,
+        ];
+    }
+
+    var TimelineLaneBg = /** @class */ (function (_super) {
+        __extends(TimelineLaneBg, _super);
+        function TimelineLaneBg() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TimelineLaneBg.prototype.render = function () {
+            var props = this.props;
+            var highlightSeg = [].concat(props.eventResizeSegs, props.dateSelectionSegs);
+            return props.timelineCoords && (createElement("div", { className: "fc-timeline-bg" },
+                this.renderSegs(props.businessHourSegs || [], props.timelineCoords, 'non-business'),
+                this.renderSegs(props.bgEventSegs || [], props.timelineCoords, 'bg-event'),
+                this.renderSegs(highlightSeg, props.timelineCoords, 'highlight')));
+        };
+        TimelineLaneBg.prototype.renderSegs = function (segs, timelineCoords, fillType) {
+            var _a = this.props, todayRange = _a.todayRange, nowDate = _a.nowDate;
+            var isRtl = this.context.isRtl;
+            var segHCoords = computeSegHCoords(segs, 0, timelineCoords);
+            var children = segs.map(function (seg, i) {
+                var hcoords = segHCoords[i];
+                var hStyle = coordsToCss(hcoords, isRtl);
+                return (createElement("div", { key: buildEventRangeKey(seg.eventRange), className: "fc-timeline-bg-harness", style: hStyle }, fillType === 'bg-event' ?
+                    createElement(BgEvent, __assign({ seg: seg }, getSegMeta(seg, todayRange, nowDate))) :
+                    renderFill(fillType)));
+            });
+            return createElement(Fragment, null, children);
+        };
+        return TimelineLaneBg;
+    }(BaseComponent));
+
+    var TimelineLaneSlicer = /** @class */ (function (_super) {
+        __extends(TimelineLaneSlicer, _super);
+        function TimelineLaneSlicer() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TimelineLaneSlicer.prototype.sliceRange = function (origRange, dateProfile, dateProfileGenerator, tDateProfile, dateEnv) {
+            var normalRange = normalizeRange(origRange, tDateProfile, dateEnv);
+            var segs = [];
+            // protect against when the span is entirely in an invalid date region
+            if (computeDateSnapCoverage(normalRange.start, tDateProfile, dateEnv)
+                < computeDateSnapCoverage(normalRange.end, tDateProfile, dateEnv)) {
+                // intersect the footprint's range with the grid's range
+                var slicedRange = intersectRanges(normalRange, tDateProfile.normalizedRange);
+                if (slicedRange) {
+                    segs.push({
+                        start: slicedRange.start,
+                        end: slicedRange.end,
+                        isStart: slicedRange.start.valueOf() === normalRange.start.valueOf()
+                            && isValidDate(slicedRange.start, tDateProfile, dateProfile, dateProfileGenerator),
+                        isEnd: slicedRange.end.valueOf() === normalRange.end.valueOf()
+                            && isValidDate(addMs(slicedRange.end, -1), tDateProfile, dateProfile, dateProfileGenerator),
+                    });
+                }
+            }
+            return segs;
+        };
+        return TimelineLaneSlicer;
+    }(Slicer));
+
+    var DEFAULT_TIME_FORMAT = createFormatter({
+        hour: 'numeric',
+        minute: '2-digit',
+        omitZeroMinute: true,
+        meridiem: 'narrow',
+    });
+    var TimelineEvent = /** @class */ (function (_super) {
+        __extends(TimelineEvent, _super);
+        function TimelineEvent() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TimelineEvent.prototype.render = function () {
+            var props = this.props;
+            return (createElement(StandardEvent, __assign({}, props, { extraClassNames: ['fc-timeline-event', 'fc-h-event'], defaultTimeFormat: DEFAULT_TIME_FORMAT, defaultDisplayEventTime: !props.isTimeScale })));
+        };
+        return TimelineEvent;
+    }(BaseComponent));
+
+    var TimelineLaneMoreLink = /** @class */ (function (_super) {
+        __extends(TimelineLaneMoreLink, _super);
+        function TimelineLaneMoreLink() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.rootElRef = createRef();
+            return _this;
+        }
+        TimelineLaneMoreLink.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var hiddenSegs = props.hiddenSegs, elRef = props.elRef, placement = props.placement, resourceId = props.resourceId;
+            var top = placement.top, hcoords = placement.hcoords;
+            var isVisible = hcoords && top !== null;
+            var hStyle = coordsToCss(hcoords, context.isRtl);
+            var extraDateSpan = resourceId ? { resourceId: resourceId } : {};
+            return (createElement(MoreLinkRoot, { allDayDate: null, moreCnt: hiddenSegs.length, allSegs: hiddenSegs, hiddenSegs: hiddenSegs, alignmentElRef: this.rootElRef, dateProfile: props.dateProfile, todayRange: props.todayRange, extraDateSpan: extraDateSpan, popoverContent: function () { return (createElement(Fragment, null, hiddenSegs.map(function (seg) {
+                    var instanceId = seg.eventRange.instance.instanceId;
+                    return (createElement("div", { key: instanceId, style: { visibility: props.isForcedInvisible[instanceId] ? 'hidden' : '' } },
+                        createElement(TimelineEvent, __assign({ isTimeScale: props.isTimeScale, seg: seg, isDragging: false, isResizing: false, isDateSelecting: false, isSelected: instanceId === props.eventSelection }, getSegMeta(seg, props.todayRange, props.nowDate)))));
+                }))); } }, function (rootElRef, classNames, innerElRef, innerContent, handleClick, title, isExpanded, popoverId) { return (createElement("a", { ref: function (el) {
+                    setRef(rootElRef, el); // for MoreLinkRoot
+                    setRef(elRef, el); // for props props
+                    setRef(_this.rootElRef, el); // for this component
+                }, className: ['fc-timeline-more-link'].concat(classNames).join(' '), style: __assign({ visibility: isVisible ? '' : 'hidden', top: top || 0 }, hStyle), onClick: handleClick, title: title, "aria-expanded": isExpanded, "aria-controls": popoverId },
+                createElement("div", { ref: innerElRef, className: "fc-timeline-more-link-inner fc-sticky" }, innerContent))); }));
+        };
+        return TimelineLaneMoreLink;
+    }(BaseComponent));
+
+    var TimelineLane = /** @class */ (function (_super) {
+        __extends(TimelineLane, _super);
+        function TimelineLane() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.slicer = new TimelineLaneSlicer();
+            _this.sortEventSegs = memoize(sortEventSegs);
+            _this.harnessElRefs = new RefMap();
+            _this.moreElRefs = new RefMap();
+            _this.innerElRef = createRef();
+            // TODO: memoize event positioning
+            _this.state = {
+                eventInstanceHeights: {},
+                moreLinkHeights: {},
+            };
+            return _this;
+        }
+        TimelineLane.prototype.render = function () {
+            var _a = this, props = _a.props, state = _a.state, context = _a.context;
+            var options = context.options;
+            var dateProfile = props.dateProfile, tDateProfile = props.tDateProfile;
+            var slicedProps = this.slicer.sliceProps(props, dateProfile, tDateProfile.isTimeScale ? null : props.nextDayThreshold, context, // wish we didn't have to pass in the rest of the args...
+            dateProfile, context.dateProfileGenerator, tDateProfile, context.dateEnv);
+            var mirrorSegs = (slicedProps.eventDrag ? slicedProps.eventDrag.segs : null) ||
+                (slicedProps.eventResize ? slicedProps.eventResize.segs : null) ||
+                [];
+            var fgSegs = this.sortEventSegs(slicedProps.fgEventSegs, options.eventOrder);
+            var fgSegHCoords = computeSegHCoords(fgSegs, options.eventMinWidth, props.timelineCoords);
+            var _b = computeFgSegPlacements(fgSegs, fgSegHCoords, state.eventInstanceHeights, state.moreLinkHeights, options.eventOrderStrict, options.eventMaxStack), fgPlacements = _b[0], fgHeight = _b[1];
+            var isForcedInvisible = // TODO: more convenient
+             (slicedProps.eventDrag ? slicedProps.eventDrag.affectedInstances : null) ||
+                (slicedProps.eventResize ? slicedProps.eventResize.affectedInstances : null) ||
+                {};
+            return (createElement(Fragment, null,
+                createElement(TimelineLaneBg, { businessHourSegs: slicedProps.businessHourSegs, bgEventSegs: slicedProps.bgEventSegs, timelineCoords: props.timelineCoords, eventResizeSegs: slicedProps.eventResize ? slicedProps.eventResize.segs : [] /* bad new empty array? */, dateSelectionSegs: slicedProps.dateSelectionSegs, nowDate: props.nowDate, todayRange: props.todayRange }),
+                createElement("div", { className: "fc-timeline-events fc-scrollgrid-sync-inner", ref: this.innerElRef, style: { height: fgHeight } },
+                    this.renderFgSegs(fgPlacements, isForcedInvisible, false, false, false),
+                    this.renderFgSegs(buildMirrorPlacements(mirrorSegs, props.timelineCoords, fgPlacements), {}, Boolean(slicedProps.eventDrag), Boolean(slicedProps.eventResize), false))));
+        };
+        TimelineLane.prototype.componentDidMount = function () {
+            this.updateSize();
+        };
+        TimelineLane.prototype.componentDidUpdate = function (prevProps, prevState) {
+            if (prevProps.eventStore !== this.props.eventStore || // external thing changed?
+                prevProps.timelineCoords !== this.props.timelineCoords || // external thing changed?
+                prevState.moreLinkHeights !== this.state.moreLinkHeights // HACK. see addStateEquality
+            ) {
+                this.updateSize();
+            }
+        };
+        TimelineLane.prototype.updateSize = function () {
+            var _this = this;
+            var props = this.props;
+            var timelineCoords = props.timelineCoords;
+            if (props.onHeightChange) {
+                props.onHeightChange(this.innerElRef.current, false);
+            }
+            if (timelineCoords) {
+                this.setState({
+                    eventInstanceHeights: mapHash(this.harnessElRefs.currentMap, function (harnessEl) { return (Math.round(harnessEl.getBoundingClientRect().height)); }),
+                    moreLinkHeights: mapHash(this.moreElRefs.currentMap, function (moreEl) { return (Math.round(moreEl.getBoundingClientRect().height)); }),
+                }, function () {
+                    if (props.onHeightChange) {
+                        props.onHeightChange(_this.innerElRef.current, true);
+                    }
+                });
+            }
+        };
+        TimelineLane.prototype.renderFgSegs = function (segPlacements, isForcedInvisible, isDragging, isResizing, isDateSelecting) {
+            var _a = this, harnessElRefs = _a.harnessElRefs, moreElRefs = _a.moreElRefs, props = _a.props, context = _a.context;
+            var isMirror = isDragging || isResizing || isDateSelecting;
+            return (createElement(Fragment, null, segPlacements.map(function (segPlacement) {
+                var seg = segPlacement.seg, hcoords = segPlacement.hcoords, top = segPlacement.top;
+                if (Array.isArray(seg)) { // a more-link
+                    var isoStr = buildIsoString(computeEarliestSegStart(seg));
+                    return (createElement(TimelineLaneMoreLink, { key: 'm:' + isoStr /* "m" for "more" */, elRef: moreElRefs.createRef(isoStr), hiddenSegs: seg, placement: segPlacement, dateProfile: props.dateProfile, nowDate: props.nowDate, todayRange: props.todayRange, isTimeScale: props.tDateProfile.isTimeScale, eventSelection: props.eventSelection, resourceId: props.resourceId, isForcedInvisible: isForcedInvisible }));
+                }
+                var instanceId = seg.eventRange.instance.instanceId;
+                var isVisible = isMirror || Boolean(!isForcedInvisible[instanceId] && hcoords && top !== null);
+                var hStyle = coordsToCss(hcoords, context.isRtl);
+                return (createElement("div", { key: 'e:' + instanceId /* "e" for "event" */, ref: isMirror ? null : harnessElRefs.createRef(instanceId), className: "fc-timeline-event-harness", style: __assign({ visibility: isVisible ? '' : 'hidden', top: top || 0 }, hStyle) },
+                    createElement(TimelineEvent, __assign({ isTimeScale: props.tDateProfile.isTimeScale, seg: seg, isDragging: isDragging, isResizing: isResizing, isDateSelecting: isDateSelecting, isSelected: instanceId === props.eventSelection /* TODO: bad for mirror? */ }, getSegMeta(seg, props.todayRange, props.nowDate)))));
+            })));
+        };
+        return TimelineLane;
+    }(BaseComponent));
+    TimelineLane.addStateEquality({
+        eventInstanceHeights: isPropsEqual,
+        moreLinkHeights: isPropsEqual,
+    });
+    function buildMirrorPlacements(mirrorSegs, timelineCoords, fgPlacements) {
+        if (!mirrorSegs.length || !timelineCoords) {
+            return [];
+        }
+        var topsByInstanceId = buildAbsoluteTopHash(fgPlacements); // TODO: cache this at first render?
+        return mirrorSegs.map(function (seg) { return ({
+            seg: seg,
+            hcoords: timelineCoords.rangeToCoords(seg),
+            top: topsByInstanceId[seg.eventRange.instance.instanceId],
+        }); });
+    }
+    function buildAbsoluteTopHash(placements) {
+        var topsByInstanceId = {};
+        for (var _i = 0, placements_1 = placements; _i < placements_1.length; _i++) {
+            var placement = placements_1[_i];
+            var seg = placement.seg;
+            if (!Array.isArray(seg)) { // doesn't represent a more-link
+                topsByInstanceId[seg.eventRange.instance.instanceId] = placement.top;
+            }
+        }
+        return topsByInstanceId;
+    }
+
+    var TimelineGrid = /** @class */ (function (_super) {
+        __extends(TimelineGrid, _super);
+        function TimelineGrid() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.slatsRef = createRef();
+            _this.state = {
+                coords: null,
+            };
+            _this.handeEl = function (el) {
+                if (el) {
+                    _this.context.registerInteractiveComponent(_this, { el: el });
+                }
+                else {
+                    _this.context.unregisterInteractiveComponent(_this);
+                }
+            };
+            _this.handleCoords = function (coords) {
+                _this.setState({ coords: coords });
+                if (_this.props.onSlatCoords) {
+                    _this.props.onSlatCoords(coords);
+                }
+            };
+            return _this;
+        }
+        TimelineGrid.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, state = _a.state, context = _a.context;
+            var options = context.options;
+            var dateProfile = props.dateProfile, tDateProfile = props.tDateProfile;
+            var timerUnit = greatestDurationDenominator(tDateProfile.slotDuration).unit;
+            return (createElement("div", { className: "fc-timeline-body", ref: this.handeEl, style: {
+                    minWidth: props.tableMinWidth,
+                    height: props.clientHeight,
+                    width: props.clientWidth,
+                } },
+                createElement(NowTimer, { unit: timerUnit }, function (nowDate, todayRange) { return (createElement(Fragment, null,
+                    createElement(TimelineSlats, { ref: _this.slatsRef, dateProfile: dateProfile, tDateProfile: tDateProfile, nowDate: nowDate, todayRange: todayRange, clientWidth: props.clientWidth, tableColGroupNode: props.tableColGroupNode, tableMinWidth: props.tableMinWidth, onCoords: _this.handleCoords, onScrollLeftRequest: props.onScrollLeftRequest }),
+                    createElement(TimelineLane, { dateProfile: dateProfile, tDateProfile: props.tDateProfile, nowDate: nowDate, todayRange: todayRange, nextDayThreshold: options.nextDayThreshold, businessHours: props.businessHours, eventStore: props.eventStore, eventUiBases: props.eventUiBases, dateSelection: props.dateSelection, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, timelineCoords: state.coords }),
+                    (options.nowIndicator && state.coords && state.coords.isDateInRange(nowDate)) && (createElement("div", { className: "fc-timeline-now-indicator-container" },
+                        createElement(NowIndicatorRoot, { isAxis: false, date: nowDate }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("div", { ref: rootElRef, className: ['fc-timeline-now-indicator-line'].concat(classNames).join(' '), style: coordToCss(state.coords.dateToCoord(nowDate), context.isRtl) }, innerContent)); }))))); })));
+        };
+        // Hit System
+        // ------------------------------------------------------------------------------------------
+        TimelineGrid.prototype.queryHit = function (positionLeft, positionTop, elWidth, elHeight) {
+            var slats = this.slatsRef.current;
+            var slatHit = slats.positionToHit(positionLeft);
+            if (slatHit) {
+                return {
+                    dateProfile: this.props.dateProfile,
+                    dateSpan: slatHit.dateSpan,
+                    rect: {
+                        left: slatHit.left,
+                        right: slatHit.right,
+                        top: 0,
+                        bottom: elHeight,
+                    },
+                    dayEl: slatHit.dayEl,
+                    layer: 0,
+                };
+            }
+            return null;
+        };
+        return TimelineGrid;
+    }(DateComponent));
+
+    var TimelineView = /** @class */ (function (_super) {
+        __extends(TimelineView, _super);
+        function TimelineView() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.buildTimelineDateProfile = memoize(buildTimelineDateProfile);
+            _this.scrollGridRef = createRef();
+            _this.state = {
+                slatCoords: null,
+                slotCushionMaxWidth: null,
+            };
+            _this.handleSlatCoords = function (slatCoords) {
+                _this.setState({ slatCoords: slatCoords });
+            };
+            _this.handleScrollLeftRequest = function (scrollLeft) {
+                var scrollGrid = _this.scrollGridRef.current;
+                scrollGrid.forceScrollLeft(0, scrollLeft);
+            };
+            _this.handleMaxCushionWidth = function (slotCushionMaxWidth) {
+                _this.setState({
+                    slotCushionMaxWidth: Math.ceil(slotCushionMaxWidth), // for less rerendering TODO: DRY
+                });
+            };
+            return _this;
+        }
+        TimelineView.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, state = _a.state, context = _a.context;
+            var options = context.options;
+            var stickyHeaderDates = !props.forPrint && getStickyHeaderDates(options);
+            var stickyFooterScrollbar = !props.forPrint && getStickyFooterScrollbar(options);
+            var tDateProfile = this.buildTimelineDateProfile(props.dateProfile, context.dateEnv, options, context.dateProfileGenerator);
+            var extraClassNames = [
+                'fc-timeline',
+                options.eventOverlap === false ? 'fc-timeline-overlap-disabled' : '',
+            ];
+            var slotMinWidth = options.slotMinWidth;
+            var slatCols = buildSlatCols(tDateProfile, slotMinWidth || this.computeFallbackSlotMinWidth(tDateProfile));
+            var sections = [
+                {
+                    type: 'header',
+                    key: 'header',
+                    isSticky: stickyHeaderDates,
+                    chunks: [{
+                            key: 'timeline',
+                            content: function (contentArg) { return (createElement(TimelineHeader, { dateProfile: props.dateProfile, clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, tableMinWidth: contentArg.tableMinWidth, tableColGroupNode: contentArg.tableColGroupNode, tDateProfile: tDateProfile, slatCoords: state.slatCoords, onMaxCushionWidth: slotMinWidth ? null : _this.handleMaxCushionWidth })); },
+                        }],
+                },
+                {
+                    type: 'body',
+                    key: 'body',
+                    liquid: true,
+                    chunks: [{
+                            key: 'timeline',
+                            content: function (contentArg) { return (createElement(TimelineGrid, __assign({}, props, { clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, tableMinWidth: contentArg.tableMinWidth, tableColGroupNode: contentArg.tableColGroupNode, tDateProfile: tDateProfile, onSlatCoords: _this.handleSlatCoords, onScrollLeftRequest: _this.handleScrollLeftRequest }))); },
+                        }],
+                },
+            ];
+            if (stickyFooterScrollbar) {
+                sections.push({
+                    type: 'footer',
+                    key: 'footer',
+                    isSticky: true,
+                    chunks: [{
+                            key: 'timeline',
+                            content: renderScrollShim,
+                        }],
+                });
+            }
+            return (createElement(ViewRoot, { viewSpec: context.viewSpec }, function (rootElRef, classNames) { return (createElement("div", { ref: rootElRef, className: extraClassNames.concat(classNames).join(' ') },
+                createElement(ScrollGrid, { ref: _this.scrollGridRef, liquid: !props.isHeightAuto && !props.forPrint, collapsibleWidth: false, colGroups: [
+                        { cols: slatCols },
+                    ], sections: sections }))); }));
+        };
+        TimelineView.prototype.computeFallbackSlotMinWidth = function (tDateProfile) {
+            return Math.max(30, ((this.state.slotCushionMaxWidth || 0) / tDateProfile.slotsPerLabel));
+        };
+        return TimelineView;
+    }(DateComponent));
+    function buildSlatCols(tDateProfile, slotMinWidth) {
+        return [{
+                span: tDateProfile.slotCnt,
+                minWidth: slotMinWidth || 1, // needs to be a non-zero number to trigger horizontal scrollbars!??????
+            }];
+    }
+
+    var timelinePlugin = createPlugin({
+        deps: [
+            premiumCommonPlugin,
+        ],
+        initialView: 'timelineDay',
+        views: {
+            timeline: {
+                component: TimelineView,
+                usesMinMaxTime: true,
+                eventResizableFromStart: true, // how is this consumed for TimelineView tho?
+            },
+            timelineDay: {
+                type: 'timeline',
+                duration: { days: 1 },
+            },
+            timelineWeek: {
+                type: 'timeline',
+                duration: { weeks: 1 },
+            },
+            timelineMonth: {
+                type: 'timeline',
+                duration: { months: 1 },
+            },
+            timelineYear: {
+                type: 'timeline',
+                duration: { years: 1 },
+            },
+        },
+    });
+
+    function massageEventDragMutation(eventMutation, hit0, hit1) {
+        var resource0 = hit0.dateSpan.resourceId;
+        var resource1 = hit1.dateSpan.resourceId;
+        if (resource0 && resource1 &&
+            resource0 !== resource1) {
+            eventMutation.resourceMutation = {
+                matchResourceId: resource0,
+                setResourceId: resource1,
+            };
+        }
+    }
+    /*
+    TODO: all this would be much easier if we were using a hash!
+    */
+    function applyEventDefMutation(eventDef, mutation, context) {
+        var resourceMutation = mutation.resourceMutation;
+        if (resourceMutation && computeResourceEditable(eventDef, context)) {
+            var index = eventDef.resourceIds.indexOf(resourceMutation.matchResourceId);
+            if (index !== -1) {
+                var resourceIds = eventDef.resourceIds.slice(); // copy
+                resourceIds.splice(index, 1); // remove
+                if (resourceIds.indexOf(resourceMutation.setResourceId) === -1) { // not already in there
+                    resourceIds.push(resourceMutation.setResourceId); // add
+                }
+                eventDef.resourceIds = resourceIds;
+            }
+        }
+    }
+    /*
+    HACK
+    TODO: use EventUi system instead of this
+    */
+    function computeResourceEditable(eventDef, context) {
+        var resourceEditable = eventDef.resourceEditable;
+        if (resourceEditable == null) {
+            var source = eventDef.sourceId && context.getCurrentData().eventSources[eventDef.sourceId];
+            if (source) {
+                resourceEditable = source.extendedProps.resourceEditable; // used the Source::extendedProps hack
+            }
+            if (resourceEditable == null) {
+                resourceEditable = context.options.eventResourceEditable;
+                if (resourceEditable == null) {
+                    resourceEditable = context.options.editable; // TODO: use defaults system instead
+                }
+            }
+        }
+        return resourceEditable;
+    }
+    function transformEventDrop(mutation, context) {
+        var resourceMutation = mutation.resourceMutation;
+        if (resourceMutation) {
+            var calendarApi = context.calendarApi;
+            return {
+                oldResource: calendarApi.getResourceById(resourceMutation.matchResourceId),
+                newResource: calendarApi.getResourceById(resourceMutation.setResourceId),
+            };
+        }
+        return {
+            oldResource: null,
+            newResource: null,
+        };
+    }
+
+    var ResourceDataAdder = /** @class */ (function () {
+        function ResourceDataAdder() {
+            this.filterResources = memoize(filterResources);
+        }
+        ResourceDataAdder.prototype.transform = function (viewProps, calendarProps) {
+            if (calendarProps.viewSpec.optionDefaults.needsResourceData) {
+                return {
+                    resourceStore: this.filterResources(calendarProps.resourceStore, calendarProps.options.filterResourcesWithEvents, calendarProps.eventStore, calendarProps.dateProfile.activeRange),
+                    resourceEntityExpansions: calendarProps.resourceEntityExpansions,
+                };
+            }
+            return null;
+        };
+        return ResourceDataAdder;
+    }());
+    function filterResources(resourceStore, doFilterResourcesWithEvents, eventStore, activeRange) {
+        if (doFilterResourcesWithEvents) {
+            var instancesInRange = filterEventInstancesInRange(eventStore.instances, activeRange);
+            var hasEvents_1 = computeHasEvents(instancesInRange, eventStore.defs);
+            __assign(hasEvents_1, computeAncestorHasEvents(hasEvents_1, resourceStore));
+            return filterHash(resourceStore, function (resource, resourceId) { return hasEvents_1[resourceId]; });
+        }
+        return resourceStore;
+    }
+    function filterEventInstancesInRange(eventInstances, activeRange) {
+        return filterHash(eventInstances, function (eventInstance) { return rangesIntersect(eventInstance.range, activeRange); });
+    }
+    function computeHasEvents(eventInstances, eventDefs) {
+        var hasEvents = {};
+        for (var instanceId in eventInstances) {
+            var instance = eventInstances[instanceId];
+            for (var _i = 0, _a = eventDefs[instance.defId].resourceIds; _i < _a.length; _i++) {
+                var resourceId = _a[_i];
+                hasEvents[resourceId] = true;
+            }
+        }
+        return hasEvents;
+    }
+    /*
+    mark resources as having events if any of their ancestors have them
+    NOTE: resourceStore might not have all the resources that hasEvents{} has keyed
+    */
+    function computeAncestorHasEvents(hasEvents, resourceStore) {
+        var res = {};
+        for (var resourceId in hasEvents) {
+            var resource = void 0;
+            while ((resource = resourceStore[resourceId])) {
+                resourceId = resource.parentId; // now functioning as the parentId
+                if (resourceId) {
+                    res[resourceId] = true;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+    /*
+    for making sure events that have editable resources are always draggable in resource views
+    */
+    function transformIsDraggable(val, eventDef, eventUi, context) {
+        if (!val) {
+            var state = context.getCurrentData();
+            var viewSpec = state.viewSpecs[state.currentViewType];
+            if (viewSpec.optionDefaults.needsResourceData) {
+                if (computeResourceEditable(eventDef, context)) {
+                    return true;
+                }
+            }
+        }
+        return val;
+    }
+
+    // for when non-resource view should be given EventUi info (for event coloring/constraints based off of resource data)
+    var ResourceEventConfigAdder = /** @class */ (function () {
+        function ResourceEventConfigAdder() {
+            this.buildResourceEventUis = memoize(buildResourceEventUis, isPropsEqual);
+            this.injectResourceEventUis = memoize(injectResourceEventUis);
+        }
+        ResourceEventConfigAdder.prototype.transform = function (viewProps, calendarProps) {
+            if (!calendarProps.viewSpec.optionDefaults.needsResourceData) {
+                return {
+                    eventUiBases: this.injectResourceEventUis(viewProps.eventUiBases, viewProps.eventStore.defs, this.buildResourceEventUis(calendarProps.resourceStore)),
+                };
+            }
+            return null;
+        };
+        return ResourceEventConfigAdder;
+    }());
+    function buildResourceEventUis(resourceStore) {
+        return mapHash(resourceStore, function (resource) { return resource.ui; });
+    }
+    function injectResourceEventUis(eventUiBases, eventDefs, resourceEventUis) {
+        return mapHash(eventUiBases, function (eventUi, defId) {
+            if (defId) { // not the '' key
+                return injectResourceEventUi(eventUi, eventDefs[defId], resourceEventUis);
+            }
+            return eventUi;
+        });
+    }
+    function injectResourceEventUi(origEventUi, eventDef, resourceEventUis) {
+        var parts = [];
+        // first resource takes precedence, which fights with the ordering of combineEventUis, thus the unshifts
+        for (var _i = 0, _a = eventDef.resourceIds; _i < _a.length; _i++) {
+            var resourceId = _a[_i];
+            if (resourceEventUis[resourceId]) {
+                parts.unshift(resourceEventUis[resourceId]);
+            }
+        }
+        parts.unshift(origEventUi);
+        return combineEventUis(parts);
+    }
+
+    var defs = []; // TODO: use plugin system
+    function registerResourceSourceDef(def) {
+        defs.push(def);
+    }
+    function getResourceSourceDef(id) {
+        return defs[id];
+    }
+    function getResourceSourceDefs() {
+        return defs;
+    }
+
+    // TODO: make this a plugin-able parser
+    // TODO: success/failure
+    var RESOURCE_SOURCE_REFINERS = {
+        id: String,
+        // for array. TODO: move to resource-array
+        resources: identity,
+        // for json feed. TODO: move to resource-json-feed
+        url: String,
+        method: String,
+        startParam: String,
+        endParam: String,
+        timeZoneParam: String,
+        extraParams: identity,
+    };
+    function parseResourceSource(input) {
+        var inputObj;
+        if (typeof input === 'string') {
+            inputObj = { url: input };
+        }
+        else if (typeof input === 'function' || Array.isArray(input)) {
+            inputObj = { resources: input };
+        }
+        else if (typeof input === 'object' && input) { // non-null object
+            inputObj = input;
+        }
+        if (inputObj) {
+            var _a = refineProps(inputObj, RESOURCE_SOURCE_REFINERS), refined = _a.refined, extra = _a.extra;
+            warnUnknownProps(extra);
+            var metaRes = buildResourceSourceMeta(refined);
+            if (metaRes) {
+                return {
+                    _raw: input,
+                    sourceId: guid(),
+                    sourceDefId: metaRes.sourceDefId,
+                    meta: metaRes.meta,
+                    publicId: refined.id || '',
+                    isFetching: false,
+                    latestFetchId: '',
+                    fetchRange: null,
+                };
+            }
+        }
+        return null;
+    }
+    function buildResourceSourceMeta(refined) {
+        var defs = getResourceSourceDefs();
+        for (var i = defs.length - 1; i >= 0; i -= 1) { // later-added plugins take precedence
+            var def = defs[i];
+            var meta = def.parseMeta(refined);
+            if (meta) {
+                return { meta: meta, sourceDefId: i };
+            }
+        }
+        return null;
+    }
+    function warnUnknownProps(props) {
+        for (var propName in props) {
+            console.warn("Unknown resource prop '" + propName + "'");
+        }
+    }
+
+    function reduceResourceSource(source, action, context) {
+        var options = context.options, dateProfile = context.dateProfile;
+        if (!source || !action) {
+            return createSource(options.initialResources || options.resources, dateProfile.activeRange, options.refetchResourcesOnNavigate, context);
+        }
+        switch (action.type) {
+            case 'RESET_RESOURCE_SOURCE':
+                return createSource(action.resourceSourceInput, dateProfile.activeRange, options.refetchResourcesOnNavigate, context);
+            case 'PREV': // TODO: how do we track all actions that affect dateProfile :(
+            case 'NEXT':
+            case 'CHANGE_DATE':
+            case 'CHANGE_VIEW_TYPE':
+                return handleRangeChange(source, dateProfile.activeRange, options.refetchResourcesOnNavigate, context);
+            case 'RECEIVE_RESOURCES':
+            case 'RECEIVE_RESOURCE_ERROR':
+                return receiveResponse(source, action.fetchId, action.fetchRange);
+            case 'REFETCH_RESOURCES':
+                return fetchSource(source, dateProfile.activeRange, context);
+            default:
+                return source;
+        }
+    }
+    function createSource(input, activeRange, refetchResourcesOnNavigate, context) {
+        if (input) {
+            var source = parseResourceSource(input);
+            source = fetchSource(source, refetchResourcesOnNavigate ? activeRange : null, context);
+            return source;
+        }
+        return null;
+    }
+    function handleRangeChange(source, activeRange, refetchResourcesOnNavigate, context) {
+        if (refetchResourcesOnNavigate &&
+            !doesSourceIgnoreRange(source) &&
+            (!source.fetchRange || !rangesEqual(source.fetchRange, activeRange))) {
+            return fetchSource(source, activeRange, context);
+        }
+        return source;
+    }
+    function doesSourceIgnoreRange(source) {
+        return Boolean(getResourceSourceDef(source.sourceDefId).ignoreRange);
+    }
+    function fetchSource(source, fetchRange, context) {
+        var sourceDef = getResourceSourceDef(source.sourceDefId);
+        var fetchId = guid();
+        sourceDef.fetch({
+            resourceSource: source,
+            range: fetchRange,
+            context: context,
+        }, function (res) {
+            context.dispatch({
+                type: 'RECEIVE_RESOURCES',
+                fetchId: fetchId,
+                fetchRange: fetchRange,
+                rawResources: res.rawResources,
+            });
+        }, function (error) {
+            context.dispatch({
+                type: 'RECEIVE_RESOURCE_ERROR',
+                fetchId: fetchId,
+                fetchRange: fetchRange,
+                error: error,
+            });
+        });
+        return __assign(__assign({}, source), { isFetching: true, latestFetchId: fetchId });
+    }
+    function receiveResponse(source, fetchId, fetchRange) {
+        if (fetchId === source.latestFetchId) {
+            return __assign(__assign({}, source), { isFetching: false, fetchRange: fetchRange });
+        }
+        return source;
+    }
+
+    var PRIVATE_ID_PREFIX = '_fc:';
+    var RESOURCE_REFINERS = {
+        id: String,
+        parentId: String,
+        children: identity,
+        title: String,
+        businessHours: identity,
+        extendedProps: identity,
+        // event-ui
+        eventEditable: Boolean,
+        eventStartEditable: Boolean,
+        eventDurationEditable: Boolean,
+        eventConstraint: identity,
+        eventOverlap: Boolean,
+        eventAllow: identity,
+        eventClassNames: parseClassNames,
+        eventBackgroundColor: String,
+        eventBorderColor: String,
+        eventTextColor: String,
+        eventColor: String,
+    };
+    /*
+    needs a full store so that it can populate children too
+    */
+    function parseResource(raw, parentId, store, context) {
+        if (parentId === void 0) { parentId = ''; }
+        var _a = refineProps(raw, RESOURCE_REFINERS), refined = _a.refined, extra = _a.extra;
+        var resource = {
+            id: refined.id || (PRIVATE_ID_PREFIX + guid()),
+            parentId: refined.parentId || parentId,
+            title: refined.title || '',
+            businessHours: refined.businessHours ? parseBusinessHours(refined.businessHours, context) : null,
+            ui: createEventUi({
+                editable: refined.eventEditable,
+                startEditable: refined.eventStartEditable,
+                durationEditable: refined.eventDurationEditable,
+                constraint: refined.eventConstraint,
+                overlap: refined.eventOverlap,
+                allow: refined.eventAllow,
+                classNames: refined.eventClassNames,
+                backgroundColor: refined.eventBackgroundColor,
+                borderColor: refined.eventBorderColor,
+                textColor: refined.eventTextColor,
+                color: refined.eventColor,
+            }, context),
+            extendedProps: __assign(__assign({}, extra), refined.extendedProps),
+        };
+        // help out ResourceApi from having user modify props
+        Object.freeze(resource.ui.classNames);
+        Object.freeze(resource.extendedProps);
+        if (store[resource.id]) ;
+        else {
+            store[resource.id] = resource;
+            if (refined.children) {
+                for (var _i = 0, _b = refined.children; _i < _b.length; _i++) {
+                    var childInput = _b[_i];
+                    parseResource(childInput, resource.id, store, context);
+                }
+            }
+        }
+        return resource;
+    }
+    /*
+    TODO: use this in more places
+    */
+    function getPublicId(id) {
+        if (id.indexOf(PRIVATE_ID_PREFIX) === 0) {
+            return '';
+        }
+        return id;
+    }
+
+    function reduceResourceStore(store, action, source, context) {
+        if (!store || !action) {
+            return {};
+        }
+        switch (action.type) {
+            case 'RECEIVE_RESOURCES':
+                return receiveRawResources(store, action.rawResources, action.fetchId, source, context);
+            case 'ADD_RESOURCE':
+                return addResource(store, action.resourceHash);
+            case 'REMOVE_RESOURCE':
+                return removeResource(store, action.resourceId);
+            case 'SET_RESOURCE_PROP':
+                return setResourceProp(store, action.resourceId, action.propName, action.propValue);
+            case 'SET_RESOURCE_EXTENDED_PROP':
+                return setResourceExtendedProp(store, action.resourceId, action.propName, action.propValue);
+            default:
+                return store;
+        }
+    }
+    function receiveRawResources(existingStore, inputs, fetchId, source, context) {
+        if (source.latestFetchId === fetchId) {
+            var nextStore = {};
+            for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
+                var input = inputs_1[_i];
+                parseResource(input, '', nextStore, context);
+            }
+            return nextStore;
+        }
+        return existingStore;
+    }
+    function addResource(existingStore, additions) {
+        // TODO: warn about duplicate IDs
+        return __assign(__assign({}, existingStore), additions);
+    }
+    function removeResource(existingStore, resourceId) {
+        var newStore = __assign({}, existingStore);
+        delete newStore[resourceId];
+        // promote children
+        for (var childResourceId in newStore) { // a child, *maybe* but probably not
+            if (newStore[childResourceId].parentId === resourceId) {
+                newStore[childResourceId] = __assign(__assign({}, newStore[childResourceId]), { parentId: '' });
+            }
+        }
+        return newStore;
+    }
+    function setResourceProp(existingStore, resourceId, name, value) {
+        var _a, _b;
+        var existingResource = existingStore[resourceId];
+        // TODO: sanitization
+        if (existingResource) {
+            return __assign(__assign({}, existingStore), (_a = {}, _a[resourceId] = __assign(__assign({}, existingResource), (_b = {}, _b[name] = value, _b)), _a));
+        }
+        return existingStore;
+    }
+    function setResourceExtendedProp(existingStore, resourceId, name, value) {
+        var _a, _b;
+        var existingResource = existingStore[resourceId];
+        if (existingResource) {
+            return __assign(__assign({}, existingStore), (_a = {}, _a[resourceId] = __assign(__assign({}, existingResource), { extendedProps: __assign(__assign({}, existingResource.extendedProps), (_b = {}, _b[name] = value, _b)) }), _a));
+        }
+        return existingStore;
+    }
+
+    function reduceResourceEntityExpansions(expansions, action) {
+        var _a;
+        if (!expansions || !action) {
+            return {};
+        }
+        switch (action.type) {
+            case 'SET_RESOURCE_ENTITY_EXPANDED':
+                return __assign(__assign({}, expansions), (_a = {}, _a[action.id] = action.isExpanded, _a));
+            default:
+                return expansions;
+        }
+    }
+
+    function reduceResources(state, action, context) {
+        var resourceSource = reduceResourceSource(state && state.resourceSource, action, context);
+        var resourceStore = reduceResourceStore(state && state.resourceStore, action, resourceSource, context);
+        var resourceEntityExpansions = reduceResourceEntityExpansions(state && state.resourceEntityExpansions, action);
+        return {
+            resourceSource: resourceSource,
+            resourceStore: resourceStore,
+            resourceEntityExpansions: resourceEntityExpansions,
+        };
+    }
+
+    var EVENT_REFINERS = {
+        resourceId: String,
+        resourceIds: identity,
+        resourceEditable: Boolean,
+    };
+    function generateEventDefResourceMembers(refined) {
+        return {
+            resourceIds: ensureStringArray(refined.resourceIds)
+                .concat(refined.resourceId ? [refined.resourceId] : []),
+            resourceEditable: refined.resourceEditable,
+        };
+    }
+    function ensureStringArray(items) {
+        return (items || []).map(function (item) { return String(item); });
+    }
+
+    function transformDateSelectionJoin(hit0, hit1) {
+        var resourceId0 = hit0.dateSpan.resourceId;
+        var resourceId1 = hit1.dateSpan.resourceId;
+        if (resourceId0 && resourceId1) {
+            return { resourceId: resourceId0 };
+        }
+        return null;
+    }
+
+    var ResourceApi = /** @class */ (function () {
+        function ResourceApi(_context, _resource) {
+            this._context = _context;
+            this._resource = _resource;
+        }
+        ResourceApi.prototype.setProp = function (name, value) {
+            var oldResource = this._resource;
+            this._context.dispatch({
+                type: 'SET_RESOURCE_PROP',
+                resourceId: oldResource.id,
+                propName: name,
+                propValue: value,
+            });
+            this.sync(oldResource);
+        };
+        ResourceApi.prototype.setExtendedProp = function (name, value) {
+            var oldResource = this._resource;
+            this._context.dispatch({
+                type: 'SET_RESOURCE_EXTENDED_PROP',
+                resourceId: oldResource.id,
+                propName: name,
+                propValue: value,
+            });
+            this.sync(oldResource);
+        };
+        ResourceApi.prototype.sync = function (oldResource) {
+            var context = this._context;
+            var resourceId = oldResource.id;
+            // TODO: what if dispatch didn't complete synchronously?
+            this._resource = context.getCurrentData().resourceStore[resourceId];
+            context.emitter.trigger('resourceChange', {
+                oldResource: new ResourceApi(context, oldResource),
+                resource: this,
+                revert: function () {
+                    var _a;
+                    context.dispatch({
+                        type: 'ADD_RESOURCE',
+                        resourceHash: (_a = {},
+                            _a[resourceId] = oldResource,
+                            _a),
+                    });
+                },
+            });
+        };
+        ResourceApi.prototype.remove = function () {
+            var context = this._context;
+            var internalResource = this._resource;
+            var resourceId = internalResource.id;
+            context.dispatch({
+                type: 'REMOVE_RESOURCE',
+                resourceId: resourceId,
+            });
+            context.emitter.trigger('resourceRemove', {
+                resource: this,
+                revert: function () {
+                    var _a;
+                    context.dispatch({
+                        type: 'ADD_RESOURCE',
+                        resourceHash: (_a = {},
+                            _a[resourceId] = internalResource,
+                            _a),
+                    });
+                },
+            });
+        };
+        ResourceApi.prototype.getParent = function () {
+            var context = this._context;
+            var parentId = this._resource.parentId;
+            if (parentId) {
+                return new ResourceApi(context, context.getCurrentData().resourceSource[parentId]);
+            }
+            return null;
+        };
+        ResourceApi.prototype.getChildren = function () {
+            var thisResourceId = this._resource.id;
+            var context = this._context;
+            var resourceStore = context.getCurrentData().resourceStore;
+            var childApis = [];
+            for (var resourceId in resourceStore) {
+                if (resourceStore[resourceId].parentId === thisResourceId) {
+                    childApis.push(new ResourceApi(context, resourceStore[resourceId]));
+                }
+            }
+            return childApis;
+        };
+        /*
+        this is really inefficient!
+        TODO: make EventApi::resourceIds a hash or keep an index in the Calendar's state
+        */
+        ResourceApi.prototype.getEvents = function () {
+            var thisResourceId = this._resource.id;
+            var context = this._context;
+            var _a = context.getCurrentData().eventStore, defs = _a.defs, instances = _a.instances;
+            var eventApis = [];
+            for (var instanceId in instances) {
+                var instance = instances[instanceId];
+                var def = defs[instance.defId];
+                if (def.resourceIds.indexOf(thisResourceId) !== -1) { // inefficient!!!
+                    eventApis.push(new EventApi(context, def, instance));
+                }
+            }
+            return eventApis;
+        };
+        Object.defineProperty(ResourceApi.prototype, "id", {
+            get: function () { return getPublicId(this._resource.id); },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "title", {
+            get: function () { return this._resource.title; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "eventConstraint", {
+            get: function () { return this._resource.ui.constraints[0] || null; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "eventOverlap", {
+            get: function () { return this._resource.ui.overlap; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "eventAllow", {
+            get: function () { return this._resource.ui.allows[0] || null; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "eventBackgroundColor", {
+            get: function () { return this._resource.ui.backgroundColor; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "eventBorderColor", {
+            get: function () { return this._resource.ui.borderColor; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "eventTextColor", {
+            get: function () { return this._resource.ui.textColor; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "eventClassNames", {
+            // NOTE: user can't modify these because Object.freeze was called in event-def parsing
+            get: function () { return this._resource.ui.classNames; },
+            enumerable: false,
+            configurable: true
+        });
+        Object.defineProperty(ResourceApi.prototype, "extendedProps", {
+            get: function () { return this._resource.extendedProps; },
+            enumerable: false,
+            configurable: true
+        });
+        ResourceApi.prototype.toPlainObject = function (settings) {
+            if (settings === void 0) { settings = {}; }
+            var internal = this._resource;
+            var ui = internal.ui;
+            var publicId = this.id;
+            var res = {};
+            if (publicId) {
+                res.id = publicId;
+            }
+            if (internal.title) {
+                res.title = internal.title;
+            }
+            if (settings.collapseEventColor && ui.backgroundColor && ui.backgroundColor === ui.borderColor) {
+                res.eventColor = ui.backgroundColor;
+            }
+            else {
+                if (ui.backgroundColor) {
+                    res.eventBackgroundColor = ui.backgroundColor;
+                }
+                if (ui.borderColor) {
+                    res.eventBorderColor = ui.borderColor;
+                }
+            }
+            if (ui.textColor) {
+                res.eventTextColor = ui.textColor;
+            }
+            if (ui.classNames.length) {
+                res.eventClassNames = ui.classNames;
+            }
+            if (Object.keys(internal.extendedProps).length) {
+                if (settings.collapseExtendedProps) {
+                    __assign(res, internal.extendedProps);
+                }
+                else {
+                    res.extendedProps = internal.extendedProps;
+                }
+            }
+            return res;
+        };
+        ResourceApi.prototype.toJSON = function () {
+            return this.toPlainObject();
+        };
+        return ResourceApi;
+    }());
+    function buildResourceApis(resourceStore, context) {
+        var resourceApis = [];
+        for (var resourceId in resourceStore) {
+            resourceApis.push(new ResourceApi(context, resourceStore[resourceId]));
+        }
+        return resourceApis;
+    }
+
+    CalendarApi.prototype.addResource = function (input, scrollTo) {
+        var _a;
+        var _this = this;
+        if (scrollTo === void 0) { scrollTo = true; }
+        var currentState = this.getCurrentData();
+        var resourceHash;
+        var resource;
+        if (input instanceof ResourceApi) {
+            resource = input._resource;
+            resourceHash = (_a = {}, _a[resource.id] = resource, _a);
+        }
+        else {
+            resourceHash = {};
+            resource = parseResource(input, '', resourceHash, currentState);
+        }
+        this.dispatch({
+            type: 'ADD_RESOURCE',
+            resourceHash: resourceHash,
+        });
+        if (scrollTo) {
+            // TODO: wait til dispatch completes somehow
+            this.trigger('_scrollRequest', { resourceId: resource.id });
+        }
+        var resourceApi = new ResourceApi(currentState, resource);
+        currentState.emitter.trigger('resourceAdd', {
+            resource: resourceApi,
+            revert: function () {
+                _this.dispatch({
+                    type: 'REMOVE_RESOURCE',
+                    resourceId: resource.id,
+                });
+            },
+        });
+        return resourceApi;
+    };
+    CalendarApi.prototype.getResourceById = function (id) {
+        id = String(id);
+        var currentState = this.getCurrentData(); // eslint-disable-line react/no-this-in-sfc
+        if (currentState.resourceStore) { // guard against calendar with no resource functionality
+            var rawResource = currentState.resourceStore[id];
+            if (rawResource) {
+                return new ResourceApi(currentState, rawResource);
+            }
+        }
+        return null;
+    };
+    CalendarApi.prototype.getResources = function () {
+        var currentState = this.getCurrentData();
+        var resourceStore = currentState.resourceStore;
+        var resourceApis = [];
+        if (resourceStore) { // guard against calendar with no resource functionality
+            for (var resourceId in resourceStore) {
+                resourceApis.push(new ResourceApi(currentState, resourceStore[resourceId]));
+            }
+        }
+        return resourceApis;
+    };
+    CalendarApi.prototype.getTopLevelResources = function () {
+        var currentState = this.getCurrentData();
+        var resourceStore = currentState.resourceStore;
+        var resourceApis = [];
+        if (resourceStore) { // guard against calendar with no resource functionality
+            for (var resourceId in resourceStore) {
+                if (!resourceStore[resourceId].parentId) {
+                    resourceApis.push(new ResourceApi(currentState, resourceStore[resourceId]));
+                }
+            }
+        }
+        return resourceApis;
+    };
+    CalendarApi.prototype.refetchResources = function () {
+        this.dispatch({
+            type: 'REFETCH_RESOURCES',
+        });
+    };
+    function transformDatePoint(dateSpan, context) {
+        return dateSpan.resourceId ?
+            { resource: context.calendarApi.getResourceById(dateSpan.resourceId) } :
+            {};
+    }
+    function transformDateSpan(dateSpan, context) {
+        return dateSpan.resourceId ?
+            { resource: context.calendarApi.getResourceById(dateSpan.resourceId) } :
+            {};
+    }
+
+    /*
+    splits things BASED OFF OF which resources they are associated with.
+    creates a '' entry which is when something has NO resource.
+    */
+    var ResourceSplitter = /** @class */ (function (_super) {
+        __extends(ResourceSplitter, _super);
+        function ResourceSplitter() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ResourceSplitter.prototype.getKeyInfo = function (props) {
+            return __assign({ '': {} }, props.resourceStore);
+        };
+        ResourceSplitter.prototype.getKeysForDateSpan = function (dateSpan) {
+            return [dateSpan.resourceId || ''];
+        };
+        ResourceSplitter.prototype.getKeysForEventDef = function (eventDef) {
+            var resourceIds = eventDef.resourceIds;
+            if (!resourceIds.length) {
+                return [''];
+            }
+            return resourceIds;
+        };
+        return ResourceSplitter;
+    }(Splitter));
+
+    function isPropsValidWithResources(combinedProps, context) {
+        var splitter = new ResourceSplitter();
+        var sets = splitter.splitProps(__assign(__assign({}, combinedProps), { resourceStore: context.getCurrentData().resourceStore }));
+        for (var resourceId in sets) {
+            var props = sets[resourceId];
+            // merge in event data from the non-resource segment
+            if (resourceId && sets['']) { // current segment is not the non-resource one, and there IS a non-resource one
+                props = __assign(__assign({}, props), { eventStore: mergeEventStores(sets[''].eventStore, props.eventStore), eventUiBases: __assign(__assign({}, sets[''].eventUiBases), props.eventUiBases) });
+            }
+            if (!isPropsValid(props, context, { resourceId: resourceId }, filterConfig.bind(null, resourceId))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    function filterConfig(resourceId, config) {
+        return __assign(__assign({}, config), { constraints: filterConstraints(resourceId, config.constraints) });
+    }
+    function filterConstraints(resourceId, constraints) {
+        return constraints.map(function (constraint) {
+            var defs = constraint.defs;
+            if (defs) { // we are dealing with an EventStore
+                // if any of the events define constraints to resources that are NOT this resource,
+                // then this resource is unconditionally prohibited, which is what a `false` value does.
+                for (var defId in defs) {
+                    var resourceIds = defs[defId].resourceIds;
+                    if (resourceIds.length && resourceIds.indexOf(resourceId) === -1) { // TODO: use a hash?!!! (for other reasons too)
+                        return false;
+                    }
+                }
+            }
+            return constraint;
+        });
+    }
+
+    function transformExternalDef(dateSpan) {
+        return dateSpan.resourceId ?
+            { resourceId: dateSpan.resourceId } :
+            {};
+    }
+
+    EventApi.prototype.getResources = function () {
+        var calendarApi = this._context.calendarApi;
+        return this._def.resourceIds.map(function (resourceId) { return calendarApi.getResourceById(resourceId); });
+    };
+    EventApi.prototype.setResources = function (resources) {
+        var resourceIds = [];
+        // massage resources -> resourceIds
+        for (var _i = 0, resources_1 = resources; _i < resources_1.length; _i++) {
+            var resource = resources_1[_i];
+            var resourceId = null;
+            if (typeof resource === 'string') {
+                resourceId = resource;
+            }
+            else if (typeof resource === 'number') {
+                resourceId = String(resource);
+            }
+            else if (resource instanceof ResourceApi) {
+                resourceId = resource.id; // guaranteed to always have an ID. hmmm
+            }
+            else {
+                console.warn('unknown resource type: ' + resource);
+            }
+            if (resourceId) {
+                resourceIds.push(resourceId);
+            }
+        }
+        this.mutate({
+            standardProps: {
+                resourceIds: resourceIds,
+            },
+        });
+    };
+
+    var optionChangeHandlers = {
+        resources: handleResources,
+    };
+    function handleResources(newSourceInput, context) {
+        var oldSourceInput = context.getCurrentData().resourceSource._raw;
+        if (oldSourceInput !== newSourceInput) {
+            context.dispatch({
+                type: 'RESET_RESOURCE_SOURCE',
+                resourceSourceInput: newSourceInput,
+            });
+        }
+    }
+
+    var DEFAULT_RESOURCE_ORDER = parseFieldSpecs('id,title');
+    function handleResourceStore(resourceStore, calendarData) {
+        var emitter = calendarData.emitter;
+        if (emitter.hasHandlers('resourcesSet')) {
+            emitter.trigger('resourcesSet', buildResourceApis(resourceStore, calendarData));
+        }
+    }
+
+    var OPTION_REFINERS = {
+        initialResources: identity,
+        resources: identity,
+        eventResourceEditable: Boolean,
+        refetchResourcesOnNavigate: Boolean,
+        resourceOrder: parseFieldSpecs,
+        filterResourcesWithEvents: Boolean,
+        resourceGroupField: String,
+        resourceAreaWidth: identity,
+        resourceAreaColumns: identity,
+        resourcesInitiallyExpanded: Boolean,
+        datesAboveResources: Boolean,
+        needsResourceData: Boolean,
+        resourceAreaHeaderClassNames: identity,
+        resourceAreaHeaderContent: identity,
+        resourceAreaHeaderDidMount: identity,
+        resourceAreaHeaderWillUnmount: identity,
+        resourceGroupLabelClassNames: identity,
+        resourceGroupLabelContent: identity,
+        resourceGroupLabelDidMount: identity,
+        resourceGroupLabelWillUnmount: identity,
+        resourceLabelClassNames: identity,
+        resourceLabelContent: identity,
+        resourceLabelDidMount: identity,
+        resourceLabelWillUnmount: identity,
+        resourceLaneClassNames: identity,
+        resourceLaneContent: identity,
+        resourceLaneDidMount: identity,
+        resourceLaneWillUnmount: identity,
+        resourceGroupLaneClassNames: identity,
+        resourceGroupLaneContent: identity,
+        resourceGroupLaneDidMount: identity,
+        resourceGroupLaneWillUnmount: identity,
+    };
+    var LISTENER_REFINERS = {
+        resourcesSet: identity,
+        resourceAdd: identity,
+        resourceChange: identity,
+        resourceRemove: identity,
+    };
+
+    registerResourceSourceDef({
+        ignoreRange: true,
+        parseMeta: function (refined) {
+            if (Array.isArray(refined.resources)) {
+                return refined.resources;
+            }
+            return null;
+        },
+        fetch: function (arg, successCallback) {
+            successCallback({
+                rawResources: arg.resourceSource.meta,
+            });
+        },
+    });
+
+    registerResourceSourceDef({
+        parseMeta: function (refined) {
+            if (typeof refined.resources === 'function') {
+                return refined.resources;
+            }
+            return null;
+        },
+        fetch: function (arg, success, failure) {
+            var dateEnv = arg.context.dateEnv;
+            var func = arg.resourceSource.meta;
+            var publicArg = arg.range ? {
+                start: dateEnv.toDate(arg.range.start),
+                end: dateEnv.toDate(arg.range.end),
+                startStr: dateEnv.formatIso(arg.range.start),
+                endStr: dateEnv.formatIso(arg.range.end),
+                timeZone: dateEnv.timeZone,
+            } : {};
+            // TODO: make more dry with EventSourceFunc
+            // TODO: accept a response?
+            unpromisify(func.bind(null, publicArg), function (rawResources) {
+                success({ rawResources: rawResources }); // needs an object response
+            }, failure);
+        },
+    });
+
+    registerResourceSourceDef({
+        parseMeta: function (refined) {
+            if (refined.url) {
+                return {
+                    url: refined.url,
+                    method: (refined.method || 'GET').toUpperCase(),
+                    extraParams: refined.extraParams,
+                };
+            }
+            return null;
+        },
+        fetch: function (arg, successCallback, failureCallback) {
+            var meta = arg.resourceSource.meta;
+            var requestParams = buildRequestParams(meta, arg.range, arg.context);
+            requestJson(meta.method, meta.url, requestParams, function (rawResources, xhr) {
+                successCallback({ rawResources: rawResources, xhr: xhr });
+            }, function (message, xhr) {
+                failureCallback({ message: message, xhr: xhr });
+            });
+        },
+    });
+    // TODO: somehow consolidate with event json feed
+    function buildRequestParams(meta, range, context) {
+        var dateEnv = context.dateEnv, options = context.options;
+        var startParam;
+        var endParam;
+        var timeZoneParam;
+        var customRequestParams;
+        var params = {};
+        if (range) {
+            startParam = meta.startParam;
+            if (startParam == null) {
+                startParam = options.startParam;
+            }
+            endParam = meta.endParam;
+            if (endParam == null) {
+                endParam = options.endParam;
+            }
+            timeZoneParam = meta.timeZoneParam;
+            if (timeZoneParam == null) {
+                timeZoneParam = options.timeZoneParam;
+            }
+            params[startParam] = dateEnv.formatIso(range.start);
+            params[endParam] = dateEnv.formatIso(range.end);
+            if (dateEnv.timeZone !== 'local') {
+                params[timeZoneParam] = dateEnv.timeZone;
+            }
+        }
+        // retrieve any outbound GET/POST data from the options
+        if (typeof meta.extraParams === 'function') {
+            // supplied as a function that returns a key/value object
+            customRequestParams = meta.extraParams();
+        }
+        else {
+            // probably supplied as a straight key/value object
+            customRequestParams = meta.extraParams || {};
+        }
+        __assign(params, customRequestParams);
+        return params;
+    }
+
+    // TODO: not used for Spreadsheet. START USING. difficult because of col-specific rendering props
+    function ResourceLabelRoot(props) {
+        return (createElement(ViewContextType.Consumer, null, function (context) {
+            var options = context.options;
+            var hookProps = {
+                resource: new ResourceApi(context, props.resource),
+                date: props.date ? context.dateEnv.toDate(props.date) : null,
+                view: context.viewApi,
+            };
+            var dataAttrs = {
+                'data-resource-id': props.resource.id,
+                'data-date': props.date ? formatDayString(props.date) : undefined,
+            };
+            return (createElement(RenderHook, { hookProps: hookProps, classNames: options.resourceLabelClassNames, content: options.resourceLabelContent, defaultContent: renderInnerContent, didMount: options.resourceLabelDidMount, willUnmount: options.resourceLabelWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return props.children(rootElRef, classNames, // TODO: pass in 'fc-resource' ?
+            dataAttrs, innerElRef, innerContent); }));
+        }));
+    }
+    function renderInnerContent(props) {
+        return props.resource.title || props.resource.id;
+    }
+
+    var ResourceCell = /** @class */ (function (_super) {
+        __extends(ResourceCell, _super);
+        function ResourceCell() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ResourceCell.prototype.render = function () {
+            var props = this.props;
+            return (createElement(ResourceLabelRoot, { resource: props.resource, date: props.date }, function (elRef, customClassNames, dataAttrs, innerElRef, innerContent) { return (createElement("th", __assign({ ref: elRef, role: "columnheader", className: ['fc-col-header-cell', 'fc-resource'].concat(customClassNames).join(' '), colSpan: props.colSpan }, dataAttrs),
+                createElement("div", { className: "fc-scrollgrid-sync-inner" },
+                    createElement("span", { className: [
+                            'fc-col-header-cell-cushion',
+                            props.isSticky ? 'fc-sticky' : '',
+                        ].join(' '), ref: innerElRef }, innerContent)))); }));
+        };
+        return ResourceCell;
+    }(BaseComponent));
+
+    var ResourceDayHeader = /** @class */ (function (_super) {
+        __extends(ResourceDayHeader, _super);
+        function ResourceDayHeader() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.buildDateFormat = memoize(buildDateFormat);
+            return _this;
+        }
+        ResourceDayHeader.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var dateFormat = this.buildDateFormat(context.options.dayHeaderFormat, props.datesRepDistinctDays, props.dates.length);
+            return (createElement(NowTimer, { unit: "day" }, function (nowDate, todayRange) {
+                if (props.dates.length === 1) {
+                    return _this.renderResourceRow(props.resources, props.dates[0]);
+                }
+                if (context.options.datesAboveResources) {
+                    return _this.renderDayAndResourceRows(props.dates, dateFormat, todayRange, props.resources);
+                }
+                return _this.renderResourceAndDayRows(props.resources, props.dates, dateFormat, todayRange);
+            }));
+        };
+        ResourceDayHeader.prototype.renderResourceRow = function (resources, date) {
+            var resourceCells = resources.map(function (resource) { return (createElement(ResourceCell, { key: resource.id, resource: resource, colSpan: 1, date: date })); });
+            return this.buildTr(resourceCells, 'resources');
+        };
+        ResourceDayHeader.prototype.renderDayAndResourceRows = function (dates, dateFormat, todayRange, resources) {
+            var dateCells = [];
+            var resourceCells = [];
+            for (var _i = 0, dates_1 = dates; _i < dates_1.length; _i++) {
+                var date = dates_1[_i];
+                dateCells.push(this.renderDateCell(date, dateFormat, todayRange, resources.length, null, true));
+                for (var _a = 0, resources_1 = resources; _a < resources_1.length; _a++) {
+                    var resource = resources_1[_a];
+                    resourceCells.push(createElement(ResourceCell, { key: resource.id + ':' + date.toISOString(), resource: resource, colSpan: 1, date: date }));
+                }
+            }
+            return (createElement(Fragment, null,
+                this.buildTr(dateCells, 'day'),
+                this.buildTr(resourceCells, 'resources')));
+        };
+        ResourceDayHeader.prototype.renderResourceAndDayRows = function (resources, dates, dateFormat, todayRange) {
+            var resourceCells = [];
+            var dateCells = [];
+            for (var _i = 0, resources_2 = resources; _i < resources_2.length; _i++) {
+                var resource = resources_2[_i];
+                resourceCells.push(createElement(ResourceCell, { key: resource.id, resource: resource, colSpan: dates.length, isSticky: true }));
+                for (var _a = 0, dates_2 = dates; _a < dates_2.length; _a++) {
+                    var date = dates_2[_a];
+                    dateCells.push(this.renderDateCell(date, dateFormat, todayRange, 1, resource));
+                }
+            }
+            return (createElement(Fragment, null,
+                this.buildTr(resourceCells, 'resources'),
+                this.buildTr(dateCells, 'day')));
+        };
+        // a cell with date text. might have a resource associated with it
+        ResourceDayHeader.prototype.renderDateCell = function (date, dateFormat, todayRange, colSpan, resource, isSticky) {
+            var props = this.props;
+            var keyPostfix = resource ? ":" + resource.id : '';
+            var extraHookProps = resource ? { resource: new ResourceApi(this.context, resource) } : {};
+            var extraDataAttrs = resource ? { 'data-resource-id': resource.id } : {};
+            return props.datesRepDistinctDays ? (createElement(TableDateCell, { key: date.toISOString() + keyPostfix, date: date, dateProfile: props.dateProfile, todayRange: todayRange, colCnt: props.dates.length * props.resources.length, dayHeaderFormat: dateFormat, colSpan: colSpan, isSticky: isSticky, extraHookProps: extraHookProps, extraDataAttrs: extraDataAttrs })) : (createElement(TableDowCell // we can't leverage the pure-componentness becausae the extra* props are new every time :(
+            , { key: date.getUTCDay() + keyPostfix, dow: date.getUTCDay(), dayHeaderFormat: dateFormat, colSpan: colSpan, isSticky: isSticky, extraHookProps: extraHookProps, extraDataAttrs: extraDataAttrs }));
+        };
+        ResourceDayHeader.prototype.buildTr = function (cells, key) {
+            var renderIntro = this.props.renderIntro;
+            if (!cells.length) {
+                cells = [createElement("td", { key: 0 }, "\u00A0")];
+            }
+            return (createElement("tr", { key: key, role: "row" },
+                renderIntro && renderIntro(key),
+                cells));
+        };
+        return ResourceDayHeader;
+    }(BaseComponent));
+    function buildDateFormat(dayHeaderFormat, datesRepDistinctDays, dayCnt) {
+        return dayHeaderFormat || computeFallbackHeaderFormat(datesRepDistinctDays, dayCnt);
+    }
+
+    var ResourceIndex = /** @class */ (function () {
+        function ResourceIndex(resources) {
+            var indicesById = {};
+            var ids = [];
+            for (var i = 0; i < resources.length; i += 1) {
+                var id = resources[i].id;
+                ids.push(id);
+                indicesById[id] = i;
+            }
+            this.ids = ids;
+            this.indicesById = indicesById;
+            this.length = resources.length;
+        }
+        return ResourceIndex;
+    }());
+
+    var AbstractResourceDayTableModel = /** @class */ (function () {
+        function AbstractResourceDayTableModel(dayTableModel, resources, context) {
+            this.dayTableModel = dayTableModel;
+            this.resources = resources;
+            this.context = context;
+            this.resourceIndex = new ResourceIndex(resources);
+            this.rowCnt = dayTableModel.rowCnt;
+            this.colCnt = dayTableModel.colCnt * resources.length;
+            this.cells = this.buildCells();
+        }
+        AbstractResourceDayTableModel.prototype.buildCells = function () {
+            var _a = this, rowCnt = _a.rowCnt, dayTableModel = _a.dayTableModel, resources = _a.resources;
+            var rows = [];
+            for (var row = 0; row < rowCnt; row += 1) {
+                var rowCells = [];
+                for (var dateCol = 0; dateCol < dayTableModel.colCnt; dateCol += 1) {
+                    for (var resourceCol = 0; resourceCol < resources.length; resourceCol += 1) {
+                        var resource = resources[resourceCol];
+                        var extraHookProps = { resource: new ResourceApi(this.context, resource) };
+                        var extraDataAttrs = { 'data-resource-id': resource.id };
+                        var extraClassNames = ['fc-resource'];
+                        var extraDateSpan = { resourceId: resource.id };
+                        var date = dayTableModel.cells[row][dateCol].date;
+                        rowCells[this.computeCol(dateCol, resourceCol)] = {
+                            key: resource.id + ':' + date.toISOString(),
+                            date: date,
+                            extraHookProps: extraHookProps,
+                            extraDataAttrs: extraDataAttrs,
+                            extraClassNames: extraClassNames,
+                            extraDateSpan: extraDateSpan,
+                        };
+                    }
+                }
+                rows.push(rowCells);
+            }
+            return rows;
+        };
+        return AbstractResourceDayTableModel;
+    }());
+
+    /*
+    resources over dates
+    */
+    var ResourceDayTableModel = /** @class */ (function (_super) {
+        __extends(ResourceDayTableModel, _super);
+        function ResourceDayTableModel() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ResourceDayTableModel.prototype.computeCol = function (dateI, resourceI) {
+            return resourceI * this.dayTableModel.colCnt + dateI;
+        };
+        /*
+        all date ranges are intact
+        */
+        ResourceDayTableModel.prototype.computeColRanges = function (dateStartI, dateEndI, resourceI) {
+            return [
+                {
+                    firstCol: this.computeCol(dateStartI, resourceI),
+                    lastCol: this.computeCol(dateEndI, resourceI),
+                    isStart: true,
+                    isEnd: true,
+                },
+            ];
+        };
+        return ResourceDayTableModel;
+    }(AbstractResourceDayTableModel));
+
+    /*
+    dates over resources
+    */
+    var DayResourceTableModel = /** @class */ (function (_super) {
+        __extends(DayResourceTableModel, _super);
+        function DayResourceTableModel() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        DayResourceTableModel.prototype.computeCol = function (dateI, resourceI) {
+            return dateI * this.resources.length + resourceI;
+        };
+        /*
+        every single day is broken up
+        */
+        DayResourceTableModel.prototype.computeColRanges = function (dateStartI, dateEndI, resourceI) {
+            var segs = [];
+            for (var i = dateStartI; i <= dateEndI; i += 1) {
+                var col = this.computeCol(i, resourceI);
+                segs.push({
+                    firstCol: col,
+                    lastCol: col,
+                    isStart: i === dateStartI,
+                    isEnd: i === dateEndI,
+                });
+            }
+            return segs;
+        };
+        return DayResourceTableModel;
+    }(AbstractResourceDayTableModel));
+
+    var NO_SEGS = []; // for memoizing
+    var VResourceJoiner = /** @class */ (function () {
+        function VResourceJoiner() {
+            this.joinDateSelection = memoize(this.joinSegs);
+            this.joinBusinessHours = memoize(this.joinSegs);
+            this.joinFgEvents = memoize(this.joinSegs);
+            this.joinBgEvents = memoize(this.joinSegs);
+            this.joinEventDrags = memoize(this.joinInteractions);
+            this.joinEventResizes = memoize(this.joinInteractions);
+        }
+        /*
+        propSets also has a '' key for things with no resource
+        */
+        VResourceJoiner.prototype.joinProps = function (propSets, resourceDayTable) {
+            var dateSelectionSets = [];
+            var businessHoursSets = [];
+            var fgEventSets = [];
+            var bgEventSets = [];
+            var eventDrags = [];
+            var eventResizes = [];
+            var eventSelection = '';
+            var keys = resourceDayTable.resourceIndex.ids.concat(['']); // add in the all-resource key
+            for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+                var key = keys_1[_i];
+                var props = propSets[key];
+                dateSelectionSets.push(props.dateSelectionSegs);
+                businessHoursSets.push(key ? props.businessHourSegs : NO_SEGS); // don't include redundant all-resource businesshours
+                fgEventSets.push(key ? props.fgEventSegs : NO_SEGS); // don't include fg all-resource segs
+                bgEventSets.push(props.bgEventSegs);
+                eventDrags.push(props.eventDrag);
+                eventResizes.push(props.eventResize);
+                eventSelection = eventSelection || props.eventSelection;
+            }
+            return {
+                dateSelectionSegs: this.joinDateSelection.apply(this, __spreadArray([resourceDayTable], dateSelectionSets)),
+                businessHourSegs: this.joinBusinessHours.apply(this, __spreadArray([resourceDayTable], businessHoursSets)),
+                fgEventSegs: this.joinFgEvents.apply(this, __spreadArray([resourceDayTable], fgEventSets)),
+                bgEventSegs: this.joinBgEvents.apply(this, __spreadArray([resourceDayTable], bgEventSets)),
+                eventDrag: this.joinEventDrags.apply(this, __spreadArray([resourceDayTable], eventDrags)),
+                eventResize: this.joinEventResizes.apply(this, __spreadArray([resourceDayTable], eventResizes)),
+                eventSelection: eventSelection,
+            };
+        };
+        VResourceJoiner.prototype.joinSegs = function (resourceDayTable) {
+            var segGroups = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                segGroups[_i - 1] = arguments[_i];
+            }
+            var resourceCnt = resourceDayTable.resources.length;
+            var transformedSegs = [];
+            for (var i = 0; i < resourceCnt; i += 1) {
+                for (var _a = 0, _b = segGroups[i]; _a < _b.length; _a++) {
+                    var seg = _b[_a];
+                    transformedSegs.push.apply(transformedSegs, this.transformSeg(seg, resourceDayTable, i));
+                }
+                for (var _c = 0, _d = segGroups[resourceCnt]; _c < _d.length; _c++) { // one beyond. the all-resource
+                    var seg = _d[_c];
+                    transformedSegs.push.apply(// one beyond. the all-resource
+                    transformedSegs, this.transformSeg(seg, resourceDayTable, i));
+                }
+            }
+            return transformedSegs;
+        };
+        /*
+        for expanding non-resource segs to all resources.
+        only for public use.
+        no memoizing.
+        */
+        VResourceJoiner.prototype.expandSegs = function (resourceDayTable, segs) {
+            var resourceCnt = resourceDayTable.resources.length;
+            var transformedSegs = [];
+            for (var i = 0; i < resourceCnt; i += 1) {
+                for (var _i = 0, segs_1 = segs; _i < segs_1.length; _i++) {
+                    var seg = segs_1[_i];
+                    transformedSegs.push.apply(transformedSegs, this.transformSeg(seg, resourceDayTable, i));
+                }
+            }
+            return transformedSegs;
+        };
+        VResourceJoiner.prototype.joinInteractions = function (resourceDayTable) {
+            var interactions = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                interactions[_i - 1] = arguments[_i];
+            }
+            var resourceCnt = resourceDayTable.resources.length;
+            var affectedInstances = {};
+            var transformedSegs = [];
+            var anyInteractions = false;
+            var isEvent = false;
+            for (var i = 0; i < resourceCnt; i += 1) {
+                var interaction = interactions[i];
+                if (interaction) {
+                    anyInteractions = true;
+                    for (var _a = 0, _b = interaction.segs; _a < _b.length; _a++) {
+                        var seg = _b[_a];
+                        transformedSegs.push.apply(transformedSegs, this.transformSeg(seg, resourceDayTable, i));
+                    }
+                    __assign(affectedInstances, interaction.affectedInstances);
+                    isEvent = isEvent || interaction.isEvent;
+                }
+                if (interactions[resourceCnt]) { // one beyond. the all-resource
+                    for (var _c = 0, _d = interactions[resourceCnt].segs; _c < _d.length; _c++) {
+                        var seg = _d[_c];
+                        transformedSegs.push.apply(transformedSegs, this.transformSeg(seg, resourceDayTable, i));
+                    }
+                }
+            }
+            if (anyInteractions) {
+                return {
+                    affectedInstances: affectedInstances,
+                    segs: transformedSegs,
+                    isEvent: isEvent,
+                };
+            }
+            return null;
+        };
+        return VResourceJoiner;
+    }());
+
+    /*
+    TODO: just use ResourceHash somehow? could then use the generic ResourceSplitter
+    */
+    var VResourceSplitter = /** @class */ (function (_super) {
+        __extends(VResourceSplitter, _super);
+        function VResourceSplitter() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        VResourceSplitter.prototype.getKeyInfo = function (props) {
+            var resourceDayTableModel = props.resourceDayTableModel;
+            var hash = mapHash(resourceDayTableModel.resourceIndex.indicesById, function (i) { return resourceDayTableModel.resources[i]; }); // :(
+            hash[''] = {};
+            return hash;
+        };
+        VResourceSplitter.prototype.getKeysForDateSpan = function (dateSpan) {
+            return [dateSpan.resourceId || ''];
+        };
+        VResourceSplitter.prototype.getKeysForEventDef = function (eventDef) {
+            var resourceIds = eventDef.resourceIds;
+            if (!resourceIds.length) {
+                return [''];
+            }
+            return resourceIds;
+        };
+        return VResourceSplitter;
+    }(Splitter));
+
+    /*
+    doesn't accept grouping
+    */
+    function flattenResources(resourceStore, orderSpecs) {
+        return buildRowNodes(resourceStore, [], orderSpecs, false, {}, true)
+            .map(function (node) { return node.resource; });
+    }
+    function buildRowNodes(resourceStore, groupSpecs, orderSpecs, isVGrouping, expansions, expansionDefault) {
+        var complexNodes = buildHierarchy(resourceStore, isVGrouping ? -1 : 1, groupSpecs, orderSpecs);
+        var flatNodes = [];
+        flattenNodes(complexNodes, flatNodes, isVGrouping, [], 0, expansions, expansionDefault);
+        return flatNodes;
+    }
+    function flattenNodes(complexNodes, res, isVGrouping, rowSpans, depth, expansions, expansionDefault) {
+        for (var i = 0; i < complexNodes.length; i += 1) {
+            var complexNode = complexNodes[i];
+            var group = complexNode.group;
+            if (group) {
+                if (isVGrouping) {
+                    var firstRowIndex = res.length;
+                    var rowSpanIndex = rowSpans.length;
+                    flattenNodes(complexNode.children, res, isVGrouping, rowSpans.concat(0), depth, expansions, expansionDefault);
+                    if (firstRowIndex < res.length) {
+                        var firstRow = res[firstRowIndex];
+                        var firstRowSpans = firstRow.rowSpans = firstRow.rowSpans.slice();
+                        firstRowSpans[rowSpanIndex] = res.length - firstRowIndex;
+                    }
+                }
+                else {
+                    var id = group.spec.field + ':' + group.value;
+                    var isExpanded = expansions[id] != null ? expansions[id] : expansionDefault;
+                    res.push({ id: id, group: group, isExpanded: isExpanded });
+                    if (isExpanded) {
+                        flattenNodes(complexNode.children, res, isVGrouping, rowSpans, depth + 1, expansions, expansionDefault);
+                    }
+                }
+            }
+            else if (complexNode.resource) {
+                var id = complexNode.resource.id;
+                var isExpanded = expansions[id] != null ? expansions[id] : expansionDefault;
+                res.push({
+                    id: id,
+                    rowSpans: rowSpans,
+                    depth: depth,
+                    isExpanded: isExpanded,
+                    hasChildren: Boolean(complexNode.children.length),
+                    resource: complexNode.resource,
+                    resourceFields: complexNode.resourceFields,
+                });
+                if (isExpanded) {
+                    flattenNodes(complexNode.children, res, isVGrouping, rowSpans, depth + 1, expansions, expansionDefault);
+                }
+            }
+        }
+    }
+    function buildHierarchy(resourceStore, maxDepth, groupSpecs, orderSpecs) {
+        var resourceNodes = buildResourceNodes(resourceStore, orderSpecs);
+        var builtNodes = [];
+        for (var resourceId in resourceNodes) {
+            var resourceNode = resourceNodes[resourceId];
+            if (!resourceNode.resource.parentId) {
+                insertResourceNode(resourceNode, builtNodes, groupSpecs, 0, maxDepth, orderSpecs);
+            }
+        }
+        return builtNodes;
+    }
+    function buildResourceNodes(resourceStore, orderSpecs) {
+        var nodeHash = {};
+        for (var resourceId in resourceStore) {
+            var resource = resourceStore[resourceId];
+            nodeHash[resourceId] = {
+                resource: resource,
+                resourceFields: buildResourceFields(resource),
+                children: [],
+            };
+        }
+        for (var resourceId in resourceStore) {
+            var resource = resourceStore[resourceId];
+            if (resource.parentId) {
+                var parentNode = nodeHash[resource.parentId];
+                if (parentNode) {
+                    insertResourceNodeInSiblings(nodeHash[resourceId], parentNode.children, orderSpecs);
+                }
+            }
+        }
+        return nodeHash;
+    }
+    function insertResourceNode(resourceNode, nodes, groupSpecs, depth, maxDepth, orderSpecs) {
+        if (groupSpecs.length && (maxDepth === -1 || depth <= maxDepth)) {
+            var groupNode = ensureGroupNodes(resourceNode, nodes, groupSpecs[0]);
+            insertResourceNode(resourceNode, groupNode.children, groupSpecs.slice(1), depth + 1, maxDepth, orderSpecs);
+        }
+        else {
+            insertResourceNodeInSiblings(resourceNode, nodes, orderSpecs);
+        }
+    }
+    function ensureGroupNodes(resourceNode, nodes, groupSpec) {
+        var groupValue = resourceNode.resourceFields[groupSpec.field];
+        var groupNode;
+        var newGroupIndex;
+        // find an existing group that matches, or determine the position for a new group
+        if (groupSpec.order) {
+            for (newGroupIndex = 0; newGroupIndex < nodes.length; newGroupIndex += 1) {
+                var node = nodes[newGroupIndex];
+                if (node.group) {
+                    var cmp = flexibleCompare(groupValue, node.group.value) * groupSpec.order;
+                    if (cmp === 0) {
+                        groupNode = node;
+                        break;
+                    }
+                    else if (cmp < 0) {
+                        break;
+                    }
+                }
+            }
+        }
+        else { // the groups are unordered
+            for (newGroupIndex = 0; newGroupIndex < nodes.length; newGroupIndex += 1) {
+                var node = nodes[newGroupIndex];
+                if (node.group && groupValue === node.group.value) {
+                    groupNode = node;
+                    break;
+                }
+            }
+        }
+        if (!groupNode) {
+            groupNode = {
+                group: {
+                    value: groupValue,
+                    spec: groupSpec,
+                },
+                children: [],
+            };
+            nodes.splice(newGroupIndex, 0, groupNode);
+        }
+        return groupNode;
+    }
+    function insertResourceNodeInSiblings(resourceNode, siblings, orderSpecs) {
+        var i;
+        for (i = 0; i < siblings.length; i += 1) {
+            var cmp = compareByFieldSpecs(siblings[i].resourceFields, resourceNode.resourceFields, orderSpecs); // TODO: pass in ResourceApi?
+            if (cmp > 0) { // went 1 past. insert at i
+                break;
+            }
+        }
+        siblings.splice(i, 0, resourceNode);
+    }
+    function buildResourceFields(resource) {
+        var obj = __assign(__assign(__assign({}, resource.extendedProps), resource.ui), resource);
+        delete obj.ui;
+        delete obj.extendedProps;
+        return obj;
+    }
+    function isGroupsEqual(group0, group1) {
+        return group0.spec === group1.spec && group0.value === group1.value;
+    }
+
+    var resourceCommonPlugin = createPlugin({
+        deps: [
+            premiumCommonPlugin,
+        ],
+        reducers: [
+            reduceResources,
+        ],
+        isLoadingFuncs: [
+            function (state) { return state.resourceSource && state.resourceSource.isFetching; },
+        ],
+        eventRefiners: EVENT_REFINERS,
+        eventDefMemberAdders: [generateEventDefResourceMembers],
+        isDraggableTransformers: [transformIsDraggable],
+        eventDragMutationMassagers: [massageEventDragMutation],
+        eventDefMutationAppliers: [applyEventDefMutation],
+        dateSelectionTransformers: [transformDateSelectionJoin],
+        datePointTransforms: [transformDatePoint],
+        dateSpanTransforms: [transformDateSpan],
+        viewPropsTransformers: [ResourceDataAdder, ResourceEventConfigAdder],
+        isPropsValid: isPropsValidWithResources,
+        externalDefTransforms: [transformExternalDef],
+        eventDropTransformers: [transformEventDrop],
+        optionChangeHandlers: optionChangeHandlers,
+        optionRefiners: OPTION_REFINERS,
+        listenerRefiners: LISTENER_REFINERS,
+        propSetHandlers: { resourceStore: handleResourceStore },
+    });
+
+    var ResourceDayTableJoiner = /** @class */ (function (_super) {
+        __extends(ResourceDayTableJoiner, _super);
+        function ResourceDayTableJoiner() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ResourceDayTableJoiner.prototype.transformSeg = function (seg, resourceDayTableModel, resourceI) {
+            var colRanges = resourceDayTableModel.computeColRanges(seg.firstCol, seg.lastCol, resourceI);
+            return colRanges.map(function (colRange) { return (__assign(__assign(__assign({}, seg), colRange), { isStart: seg.isStart && colRange.isStart, isEnd: seg.isEnd && colRange.isEnd })); });
+        };
+        return ResourceDayTableJoiner;
+    }(VResourceJoiner));
+
+    var ResourceDayTable = /** @class */ (function (_super) {
+        __extends(ResourceDayTable, _super);
+        function ResourceDayTable() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.splitter = new VResourceSplitter();
+            _this.slicers = {};
+            _this.joiner = new ResourceDayTableJoiner();
+            _this.tableRef = createRef();
+            _this.isHitComboAllowed = function (hit0, hit1) {
+                var allowAcrossResources = _this.props.resourceDayTableModel.dayTableModel.colCnt === 1;
+                return allowAcrossResources || hit0.dateSpan.resourceId === hit1.dateSpan.resourceId;
+            };
+            return _this;
+        }
+        ResourceDayTable.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var resourceDayTableModel = props.resourceDayTableModel, nextDayThreshold = props.nextDayThreshold, dateProfile = props.dateProfile;
+            var splitProps = this.splitter.splitProps(props);
+            this.slicers = mapHash(splitProps, function (split, resourceId) { return _this.slicers[resourceId] || new DayTableSlicer(); });
+            var slicedProps = mapHash(this.slicers, function (slicer, resourceId) { return slicer.sliceProps(splitProps[resourceId], dateProfile, nextDayThreshold, context, resourceDayTableModel.dayTableModel); });
+            return (createElement(Table, __assign({ forPrint: props.forPrint, ref: this.tableRef }, this.joiner.joinProps(slicedProps, resourceDayTableModel), { cells: resourceDayTableModel.cells, dateProfile: dateProfile, colGroupNode: props.colGroupNode, tableMinWidth: props.tableMinWidth, renderRowIntro: props.renderRowIntro, dayMaxEvents: props.dayMaxEvents, dayMaxEventRows: props.dayMaxEventRows, showWeekNumbers: props.showWeekNumbers, expandRows: props.expandRows, headerAlignElRef: props.headerAlignElRef, clientWidth: props.clientWidth, clientHeight: props.clientHeight, isHitComboAllowed: this.isHitComboAllowed })));
+        };
+        return ResourceDayTable;
+    }(DateComponent));
+
+    var ResourceDayTableView = /** @class */ (function (_super) {
+        __extends(ResourceDayTableView, _super);
+        function ResourceDayTableView() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.flattenResources = memoize(flattenResources);
+            _this.buildResourceDayTableModel = memoize(buildResourceDayTableModel);
+            _this.headerRef = createRef();
+            _this.tableRef = createRef();
+            return _this;
+        }
+        ResourceDayTableView.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var options = context.options;
+            var resourceOrderSpecs = options.resourceOrder || DEFAULT_RESOURCE_ORDER;
+            var resources = this.flattenResources(props.resourceStore, resourceOrderSpecs);
+            var resourceDayTableModel = this.buildResourceDayTableModel(props.dateProfile, context.dateProfileGenerator, resources, options.datesAboveResources, context);
+            var headerContent = options.dayHeaders && (createElement(ResourceDayHeader, { ref: this.headerRef, resources: resources, dateProfile: props.dateProfile, dates: resourceDayTableModel.dayTableModel.headerDates, datesRepDistinctDays: true }));
+            var bodyContent = function (contentArg) { return (createElement(ResourceDayTable, { ref: _this.tableRef, dateProfile: props.dateProfile, resourceDayTableModel: resourceDayTableModel, businessHours: props.businessHours, eventStore: props.eventStore, eventUiBases: props.eventUiBases, dateSelection: props.dateSelection, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, nextDayThreshold: options.nextDayThreshold, tableMinWidth: contentArg.tableMinWidth, colGroupNode: contentArg.tableColGroupNode, dayMaxEvents: options.dayMaxEvents, dayMaxEventRows: options.dayMaxEventRows, showWeekNumbers: options.weekNumbers, expandRows: !props.isHeightAuto, headerAlignElRef: _this.headerElRef, clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, forPrint: props.forPrint })); };
+            return options.dayMinWidth
+                ? this.renderHScrollLayout(headerContent, bodyContent, resourceDayTableModel.colCnt, options.dayMinWidth)
+                : this.renderSimpleLayout(headerContent, bodyContent);
+        };
+        return ResourceDayTableView;
+    }(TableView));
+    function buildResourceDayTableModel(dateProfile, dateProfileGenerator, resources, datesAboveResources, context) {
+        var dayTable = buildDayTableModel(dateProfile, dateProfileGenerator);
+        return datesAboveResources ?
+            new DayResourceTableModel(dayTable, resources, context) :
+            new ResourceDayTableModel(dayTable, resources, context);
+    }
+
+    var resourceDayGridPlugin = createPlugin({
+        deps: [
+            premiumCommonPlugin,
+            resourceCommonPlugin,
+            dayGridPlugin,
+        ],
+        initialView: 'resourceDayGridDay',
+        views: {
+            resourceDayGrid: {
+                type: 'dayGrid',
+                component: ResourceDayTableView,
+                needsResourceData: true,
+            },
+            resourceDayGridDay: {
+                type: 'resourceDayGrid',
+                duration: { days: 1 },
+            },
+            resourceDayGridWeek: {
+                type: 'resourceDayGrid',
+                duration: { weeks: 1 },
+            },
+            resourceDayGridMonth: {
+                type: 'resourceDayGrid',
+                duration: { months: 1 },
+                // TODO: wish we didn't have to C&P from dayGrid's file
+                monthMode: true,
+                fixedWeekCount: true,
+            },
+        },
+    });
+
+    var ResourceDayTimeColsJoiner = /** @class */ (function (_super) {
+        __extends(ResourceDayTimeColsJoiner, _super);
+        function ResourceDayTimeColsJoiner() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ResourceDayTimeColsJoiner.prototype.transformSeg = function (seg, resourceDayTable, resourceI) {
+            return [
+                __assign(__assign({}, seg), { col: resourceDayTable.computeCol(seg.col, resourceI) }),
+            ];
+        };
+        return ResourceDayTimeColsJoiner;
+    }(VResourceJoiner));
+
+    var ResourceDayTimeCols = /** @class */ (function (_super) {
+        __extends(ResourceDayTimeCols, _super);
+        function ResourceDayTimeCols() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.buildDayRanges = memoize(buildDayRanges);
+            _this.splitter = new VResourceSplitter();
+            _this.slicers = {};
+            _this.joiner = new ResourceDayTimeColsJoiner();
+            _this.timeColsRef = createRef();
+            _this.isHitComboAllowed = function (hit0, hit1) {
+                var allowAcrossResources = _this.dayRanges.length === 1;
+                return allowAcrossResources || hit0.dateSpan.resourceId === hit1.dateSpan.resourceId;
+            };
+            return _this;
+        }
+        ResourceDayTimeCols.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var dateEnv = context.dateEnv, options = context.options;
+            var dateProfile = props.dateProfile, resourceDayTableModel = props.resourceDayTableModel;
+            var dayRanges = this.dayRanges = this.buildDayRanges(resourceDayTableModel.dayTableModel, dateProfile, dateEnv);
+            var splitProps = this.splitter.splitProps(props);
+            this.slicers = mapHash(splitProps, function (split, resourceId) { return _this.slicers[resourceId] || new DayTimeColsSlicer(); });
+            var slicedProps = mapHash(this.slicers, function (slicer, resourceId) { return slicer.sliceProps(splitProps[resourceId], dateProfile, null, context, dayRanges); });
+            return ( // TODO: would move this further down hierarchy, but sliceNowDate needs it
+            createElement(NowTimer, { unit: options.nowIndicator ? 'minute' : 'day' }, function (nowDate, todayRange) { return (createElement(TimeCols, __assign({ ref: _this.timeColsRef }, _this.joiner.joinProps(slicedProps, resourceDayTableModel), { dateProfile: dateProfile, axis: props.axis, slotDuration: props.slotDuration, slatMetas: props.slatMetas, cells: resourceDayTableModel.cells[0], tableColGroupNode: props.tableColGroupNode, tableMinWidth: props.tableMinWidth, clientWidth: props.clientWidth, clientHeight: props.clientHeight, expandRows: props.expandRows, nowDate: nowDate, nowIndicatorSegs: options.nowIndicator && _this.buildNowIndicatorSegs(nowDate), todayRange: todayRange, onScrollTopRequest: props.onScrollTopRequest, forPrint: props.forPrint, onSlatCoords: props.onSlatCoords, isHitComboAllowed: _this.isHitComboAllowed }))); }));
+        };
+        ResourceDayTimeCols.prototype.buildNowIndicatorSegs = function (date) {
+            var nonResourceSegs = this.slicers[''].sliceNowDate(date, this.context, this.dayRanges);
+            return this.joiner.expandSegs(this.props.resourceDayTableModel, nonResourceSegs);
+        };
+        return ResourceDayTimeCols;
+    }(DateComponent));
+
+    var ResourceDayTimeColsView = /** @class */ (function (_super) {
+        __extends(ResourceDayTimeColsView, _super);
+        function ResourceDayTimeColsView() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.flattenResources = memoize(flattenResources);
+            _this.buildResourceTimeColsModel = memoize(buildResourceTimeColsModel);
+            _this.buildSlatMetas = memoize(buildSlatMetas);
+            return _this;
+        }
+        ResourceDayTimeColsView.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var options = context.options, dateEnv = context.dateEnv;
+            var dateProfile = props.dateProfile;
+            var splitProps = this.allDaySplitter.splitProps(props);
+            var resourceOrderSpecs = options.resourceOrder || DEFAULT_RESOURCE_ORDER;
+            var resources = this.flattenResources(props.resourceStore, resourceOrderSpecs);
+            var resourceDayTableModel = this.buildResourceTimeColsModel(dateProfile, context.dateProfileGenerator, resources, options.datesAboveResources, context);
+            var slatMetas = this.buildSlatMetas(dateProfile.slotMinTime, dateProfile.slotMaxTime, options.slotLabelInterval, options.slotDuration, dateEnv);
+            var dayMinWidth = options.dayMinWidth;
+            var hasAttachedAxis = !dayMinWidth;
+            var hasDetachedAxis = dayMinWidth;
+            var headerContent = options.dayHeaders && (createElement(ResourceDayHeader, { resources: resources, dates: resourceDayTableModel.dayTableModel.headerDates, dateProfile: dateProfile, datesRepDistinctDays: true, renderIntro: hasAttachedAxis ? this.renderHeadAxis : null }));
+            var allDayContent = (options.allDaySlot !== false) && (function (contentArg) { return (createElement(ResourceDayTable, __assign({}, splitProps.allDay, { dateProfile: dateProfile, resourceDayTableModel: resourceDayTableModel, nextDayThreshold: options.nextDayThreshold, tableMinWidth: contentArg.tableMinWidth, colGroupNode: contentArg.tableColGroupNode, renderRowIntro: hasAttachedAxis ? _this.renderTableRowAxis : null, showWeekNumbers: false, expandRows: false, headerAlignElRef: _this.headerElRef, clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, forPrint: props.forPrint }, _this.getAllDayMaxEventProps()))); });
+            var timeGridContent = function (contentArg) { return (createElement(ResourceDayTimeCols, __assign({}, splitProps.timed, { dateProfile: dateProfile, axis: hasAttachedAxis, slotDuration: options.slotDuration, slatMetas: slatMetas, resourceDayTableModel: resourceDayTableModel, tableColGroupNode: contentArg.tableColGroupNode, tableMinWidth: contentArg.tableMinWidth, clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, onSlatCoords: _this.handleSlatCoords, expandRows: contentArg.expandRows, forPrint: props.forPrint, onScrollTopRequest: _this.handleScrollTopRequest }))); };
+            return hasDetachedAxis
+                ? this.renderHScrollLayout(headerContent, allDayContent, timeGridContent, resourceDayTableModel.colCnt, dayMinWidth, slatMetas, this.state.slatCoords)
+                : this.renderSimpleLayout(headerContent, allDayContent, timeGridContent);
+        };
+        return ResourceDayTimeColsView;
+    }(TimeColsView));
+    function buildResourceTimeColsModel(dateProfile, dateProfileGenerator, resources, datesAboveResources, context) {
+        var dayTable = buildTimeColsModel(dateProfile, dateProfileGenerator);
+        return datesAboveResources ?
+            new DayResourceTableModel(dayTable, resources, context) :
+            new ResourceDayTableModel(dayTable, resources, context);
+    }
+
+    var resourceTimeGridPlugin = createPlugin({
+        deps: [
+            premiumCommonPlugin,
+            resourceCommonPlugin,
+            timeGridPlugin,
+        ],
+        initialView: 'resourceTimeGridDay',
+        views: {
+            resourceTimeGrid: {
+                type: 'timeGrid',
+                component: ResourceDayTimeColsView,
+                needsResourceData: true,
+            },
+            resourceTimeGridDay: {
+                type: 'resourceTimeGrid',
+                duration: { days: 1 },
+            },
+            resourceTimeGridWeek: {
+                type: 'resourceTimeGrid',
+                duration: { weeks: 1 },
+            },
+        },
+    });
+
+    /*
+    Renders the DOM responsible for the subrow expander area,
+    as well as the space before it (used to align expanders of similar depths)
+    */
+    function ExpanderIcon(_a) {
+        var depth = _a.depth, hasChildren = _a.hasChildren, isExpanded = _a.isExpanded, onExpanderClick = _a.onExpanderClick;
+        var nodes = [];
+        for (var i = 0; i < depth; i += 1) {
+            nodes.push(createElement("span", { className: "fc-icon" }));
+        }
+        var iconClassNames = ['fc-icon'];
+        if (hasChildren) {
+            if (isExpanded) {
+                iconClassNames.push('fc-icon-minus-square');
+            }
+            else {
+                iconClassNames.push('fc-icon-plus-square');
+            }
+        }
+        nodes.push(createElement("span", { className: 'fc-datagrid-expander' + (hasChildren ? '' : ' fc-datagrid-expander-placeholder'), onClick: onExpanderClick },
+            createElement("span", { className: iconClassNames.join(' ') })));
+        return createElement.apply(void 0, __spreadArray([Fragment, {}], nodes));
+    }
+
+    function refineHookProps$1(raw) {
+        return {
+            resource: new ResourceApi(raw.context, raw.resource),
+            fieldValue: raw.fieldValue,
+            view: raw.context.viewApi,
+        };
+    }
+
+    var SpreadsheetIndividualCellInner = /** @class */ (function (_super) {
+        __extends(SpreadsheetIndividualCellInner, _super);
+        function SpreadsheetIndividualCellInner() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        SpreadsheetIndividualCellInner.prototype.render = function () {
+            var props = this.props;
+            return (createElement(ContentHook, { hookProps: props.hookProps, content: props.colSpec.cellContent, defaultContent: renderResourceInner }, function (innerElRef, innerContent) { return (createElement("span", { className: "fc-datagrid-cell-main", ref: innerElRef }, innerContent)); }));
+        };
+        return SpreadsheetIndividualCellInner;
+    }(BaseComponent));
+    function renderResourceInner(hookProps) {
+        return hookProps.fieldValue || createElement(Fragment, null, "\u00A0");
+    }
+
+    // worth making a PureComponent? (because of innerHeight)
+    var SpreadsheetIndividualCell = /** @class */ (function (_super) {
+        __extends(SpreadsheetIndividualCell, _super);
+        function SpreadsheetIndividualCell() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.refineHookProps = memoizeObjArg(refineHookProps$1);
+            _this.normalizeClassNames = buildClassNameNormalizer();
+            _this.onExpanderClick = function (ev) {
+                var props = _this.props;
+                if (props.hasChildren) {
+                    _this.context.dispatch({
+                        type: 'SET_RESOURCE_ENTITY_EXPANDED',
+                        id: props.resource.id,
+                        isExpanded: !props.isExpanded,
+                    });
+                }
+            };
+            return _this;
+        }
+        SpreadsheetIndividualCell.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var colSpec = props.colSpec;
+            var hookProps = this.refineHookProps({
+                resource: props.resource,
+                fieldValue: props.fieldValue,
+                context: context,
+            });
+            var customClassNames = this.normalizeClassNames(colSpec.cellClassNames, hookProps);
+            return (createElement(MountHook, { hookProps: hookProps, didMount: colSpec.cellDidMount, willUnmount: colSpec.cellWillUnmount }, function (rootElRef) { return (createElement("td", { ref: rootElRef, role: "gridcell", "data-resource-id": props.resource.id, className: [
+                    'fc-datagrid-cell',
+                    'fc-resource',
+                ].concat(customClassNames).join(' ') },
+                createElement("div", { className: "fc-datagrid-cell-frame", style: { height: props.innerHeight } },
+                    createElement("div", { className: "fc-datagrid-cell-cushion fc-scrollgrid-sync-inner" },
+                        colSpec.isMain && (createElement(ExpanderIcon, { depth: props.depth, hasChildren: props.hasChildren, isExpanded: props.isExpanded, onExpanderClick: _this.onExpanderClick })),
+                        createElement(SpreadsheetIndividualCellInner, { hookProps: hookProps, colSpec: colSpec }))))); }));
+        };
+        return SpreadsheetIndividualCell;
+    }(BaseComponent));
+
+    // for VERTICAL cell grouping, in spreadsheet area
+    var SpreadsheetGroupCell = /** @class */ (function (_super) {
+        __extends(SpreadsheetGroupCell, _super);
+        function SpreadsheetGroupCell() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        SpreadsheetGroupCell.prototype.render = function () {
+            var _a = this, props = _a.props, context = _a.context;
+            var colSpec = props.colSpec;
+            var hookProps = {
+                groupValue: props.fieldValue,
+                view: context.viewApi,
+            };
+            // a grouped cell. no data that is specific to this specific resource
+            // `colSpec` is for the group. a GroupSpec :(
+            return (createElement(RenderHook, { hookProps: hookProps, classNames: colSpec.cellClassNames, content: colSpec.cellContent, defaultContent: renderGroupInner, didMount: colSpec.cellDidMount, willUnmount: colSpec.cellWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (
+            // TODO: make data-attr with group value?
+            createElement("td", { ref: rootElRef, role: "gridcell", rowSpan: props.rowSpan, className: ['fc-datagrid-cell', 'fc-resource-group'].concat(classNames).join(' ') },
+                createElement("div", { className: "fc-datagrid-cell-frame fc-datagrid-cell-frame-liquid" },
+                    createElement("div", { className: "fc-datagrid-cell-cushion fc-sticky", ref: innerElRef }, innerContent)))); }));
+        };
+        return SpreadsheetGroupCell;
+    }(BaseComponent));
+    function renderGroupInner(hookProps) {
+        return hookProps.groupValue || createElement(Fragment, null, "\u00A0");
+    }
+
+    var SpreadsheetRow = /** @class */ (function (_super) {
+        __extends(SpreadsheetRow, _super);
+        function SpreadsheetRow() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        SpreadsheetRow.prototype.render = function () {
+            var props = this.props;
+            var resource = props.resource, rowSpans = props.rowSpans, depth = props.depth;
+            var resourceFields = buildResourceFields(resource); // slightly inefficient. already done up the call stack
+            return (createElement("tr", { role: "row" }, props.colSpecs.map(function (colSpec, i) {
+                var rowSpan = rowSpans[i];
+                if (rowSpan === 0) { // not responsible for group-based rows. VRowGroup is
+                    return null;
+                }
+                if (rowSpan == null) {
+                    rowSpan = 1;
+                }
+                var fieldValue = colSpec.field ? resourceFields[colSpec.field] :
+                    (resource.title || getPublicId(resource.id));
+                if (rowSpan > 1) {
+                    return (createElement(SpreadsheetGroupCell, { key: i, colSpec: colSpec, fieldValue: fieldValue, rowSpan: rowSpan }));
+                }
+                return (createElement(SpreadsheetIndividualCell, { key: i, colSpec: colSpec, resource: resource, fieldValue: fieldValue, depth: depth, hasChildren: props.hasChildren, isExpanded: props.isExpanded, innerHeight: props.innerHeight }));
+            })));
+        };
+        return SpreadsheetRow;
+    }(BaseComponent));
+    SpreadsheetRow.addPropsEquality({
+        rowSpans: isArraysEqual,
+    });
+
+    // for HORIZONTAL cell grouping, in spreadsheet area
+    var SpreadsheetGroupRow = /** @class */ (function (_super) {
+        __extends(SpreadsheetGroupRow, _super);
+        function SpreadsheetGroupRow() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.innerInnerRef = createRef();
+            _this.onExpanderClick = function () {
+                var props = _this.props;
+                _this.context.dispatch({
+                    type: 'SET_RESOURCE_ENTITY_EXPANDED',
+                    id: props.id,
+                    isExpanded: !props.isExpanded,
+                });
+            };
+            return _this;
+        }
+        SpreadsheetGroupRow.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var hookProps = { groupValue: props.group.value, view: context.viewApi };
+            var spec = props.group.spec;
+            return (createElement("tr", { role: "row" },
+                createElement(RenderHook, { hookProps: hookProps, classNames: spec.labelClassNames, content: spec.labelContent, defaultContent: renderCellInner, didMount: spec.labelDidMount, willUnmount: spec.labelWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("th", { ref: rootElRef, 
+                    // ARIA TODO: not really a columnheader
+                    // extremely tedious to make this aria-compliant,
+                    // to assign multiple headers to each cell
+                    // https://www.w3.org/WAI/tutorials/tables/multi-level/
+                    role: "columnheader", scope: "colgroup", colSpan: props.spreadsheetColCnt, className: [
+                        'fc-datagrid-cell',
+                        'fc-resource-group',
+                        context.theme.getClass('tableCellShaded'),
+                    ].concat(classNames).join(' ') },
+                    createElement("div", { className: "fc-datagrid-cell-frame", style: { height: props.innerHeight } },
+                        createElement("div", { className: "fc-datagrid-cell-cushion fc-scrollgrid-sync-inner", ref: _this.innerInnerRef },
+                            createElement(ExpanderIcon, { depth: 0, hasChildren: true, isExpanded: props.isExpanded, onExpanderClick: _this.onExpanderClick }),
+                            createElement("span", { className: "fc-datagrid-cell-main", ref: innerElRef }, innerContent))))); })));
+        };
+        return SpreadsheetGroupRow;
+    }(BaseComponent));
+    SpreadsheetGroupRow.addPropsEquality({
+        group: isGroupsEqual,
+    });
+    function renderCellInner(hookProps) {
+        return hookProps.groupValue || createElement(Fragment, null, "\u00A0");
+    }
+
+    var SPREADSHEET_COL_MIN_WIDTH = 20;
+    var SpreadsheetHeader = /** @class */ (function (_super) {
+        __extends(SpreadsheetHeader, _super);
+        function SpreadsheetHeader() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.resizerElRefs = new RefMap(_this._handleColResizerEl.bind(_this));
+            _this.colDraggings = {};
+            return _this;
+        }
+        SpreadsheetHeader.prototype.render = function () {
+            var _this = this;
+            var _a = this.props, colSpecs = _a.colSpecs, superHeaderRendering = _a.superHeaderRendering, rowInnerHeights = _a.rowInnerHeights;
+            var hookProps = { view: this.context.viewApi };
+            var rowNodes = [];
+            rowInnerHeights = rowInnerHeights.slice(); // copy, because we're gonna pop
+            if (superHeaderRendering) {
+                var rowInnerHeight_1 = rowInnerHeights.shift();
+                rowNodes.push(createElement("tr", { key: "row-super", role: "row" },
+                    createElement(RenderHook, { hookProps: hookProps, classNames: superHeaderRendering.headerClassNames, content: superHeaderRendering.headerContent, didMount: superHeaderRendering.headerDidMount, willUnmount: superHeaderRendering.headerWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("th", { ref: rootElRef, role: "columnheader", scope: "colgroup", colSpan: colSpecs.length, className: [
+                            'fc-datagrid-cell',
+                            'fc-datagrid-cell-super',
+                        ].concat(classNames).join(' ') },
+                        createElement("div", { className: "fc-datagrid-cell-frame", style: { height: rowInnerHeight_1 } },
+                            createElement("div", { className: "fc-datagrid-cell-cushion fc-scrollgrid-sync-inner", ref: innerElRef }, innerContent)))); })));
+            }
+            var rowInnerHeight = rowInnerHeights.shift();
+            rowNodes.push(createElement("tr", { key: "row", role: "row" }, colSpecs.map(function (colSpec, i) {
+                var isLastCol = i === (colSpecs.length - 1);
+                // need empty inner div for abs positioning for resizer
+                return (createElement(RenderHook, { key: i, hookProps: hookProps, classNames: colSpec.headerClassNames, content: colSpec.headerContent, didMount: colSpec.headerDidMount, willUnmount: colSpec.headerWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("th", { ref: rootElRef, role: "columnheader", className: ['fc-datagrid-cell'].concat(classNames).join(' ') },
+                    createElement("div", { className: "fc-datagrid-cell-frame", style: { height: rowInnerHeight } },
+                        createElement("div", { className: "fc-datagrid-cell-cushion fc-scrollgrid-sync-inner" },
+                            colSpec.isMain && (createElement("span", { className: "fc-datagrid-expander fc-datagrid-expander-placeholder" },
+                                createElement("span", { className: "fc-icon" }))),
+                            createElement("span", { className: "fc-datagrid-cell-main", ref: innerElRef }, innerContent)),
+                        !isLastCol &&
+                            createElement("div", { className: "fc-datagrid-cell-resizer", ref: _this.resizerElRefs.createRef(i) })))); }));
+            })));
+            return (createElement(Fragment, null, rowNodes));
+        };
+        SpreadsheetHeader.prototype._handleColResizerEl = function (resizerEl, index) {
+            var colDraggings = this.colDraggings;
+            if (!resizerEl) {
+                var dragging = colDraggings[index];
+                if (dragging) {
+                    dragging.destroy();
+                    delete colDraggings[index];
+                }
+            }
+            else {
+                var dragging = this.initColResizing(resizerEl, parseInt(index, 10));
+                if (dragging) {
+                    colDraggings[index] = dragging;
+                }
+            }
+        };
+        SpreadsheetHeader.prototype.initColResizing = function (resizerEl, index) {
+            var _a = this.context, pluginHooks = _a.pluginHooks, isRtl = _a.isRtl;
+            var onColWidthChange = this.props.onColWidthChange;
+            var ElementDraggingImpl = pluginHooks.elementDraggingImpl;
+            if (ElementDraggingImpl) {
+                var dragging = new ElementDraggingImpl(resizerEl);
+                var startWidth_1; // of just the single column
+                var currentWidths_1; // of all columns
+                dragging.emitter.on('dragstart', function () {
+                    var allCells = findElements(elementClosest(resizerEl, 'tr'), 'th');
+                    currentWidths_1 = allCells.map(function (cellEl) { return (cellEl.getBoundingClientRect().width); });
+                    startWidth_1 = currentWidths_1[index];
+                });
+                dragging.emitter.on('dragmove', function (pev) {
+                    currentWidths_1[index] = Math.max(startWidth_1 + pev.deltaX * (isRtl ? -1 : 1), SPREADSHEET_COL_MIN_WIDTH);
+                    if (onColWidthChange) {
+                        onColWidthChange(currentWidths_1.slice()); // send a copy since currentWidths continues to be mutated
+                    }
+                });
+                dragging.setAutoScrollEnabled(false); // because gets weird with auto-scrolling time area
+                return dragging;
+            }
+            return null;
+        };
+        return SpreadsheetHeader;
+    }(BaseComponent));
+
+    var ResourceTimelineLaneMisc = /** @class */ (function (_super) {
+        __extends(ResourceTimelineLaneMisc, _super);
+        function ResourceTimelineLaneMisc() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ResourceTimelineLaneMisc.prototype.render = function () {
+            var _a = this, props = _a.props, context = _a.context;
+            var hookProps = { resource: new ResourceApi(context, props.resource) }; // just easier to make directly
+            return (createElement(ContentHook, { hookProps: hookProps, content: context.options.resourceLaneContent }, function (innerElRef, innerContent) { return (innerContent && // TODO: test how this would interfere with height
+                createElement("div", { className: "fc-timeline-lane-misc", ref: innerElRef }, innerContent)); }));
+        };
+        return ResourceTimelineLaneMisc;
+    }(BaseComponent));
+
+    var ResourceTimelineLane = /** @class */ (function (_super) {
+        __extends(ResourceTimelineLane, _super);
+        function ResourceTimelineLane() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.refineHookProps = memoizeObjArg(refineHookProps);
+            _this.normalizeClassNames = buildClassNameNormalizer();
+            _this.handleHeightChange = function (innerEl, isStable) {
+                if (_this.props.onHeightChange) {
+                    _this.props.onHeightChange(
+                    // would want to use own <tr> ref, but not guaranteed to be ready when this fires
+                    elementClosest(innerEl, 'tr'), isStable);
+                }
+            };
+            return _this;
+        }
+        ResourceTimelineLane.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, context = _a.context;
+            var options = context.options;
+            var hookProps = this.refineHookProps({ resource: props.resource, context: context });
+            var customClassNames = this.normalizeClassNames(options.resourceLaneClassNames, hookProps);
+            return (createElement("tr", { ref: props.elRef },
+                createElement(MountHook, { hookProps: hookProps, didMount: options.resourceLaneDidMount, willUnmount: options.resourceLaneWillUnmount }, function (rootElRef) { return (createElement("td", { ref: rootElRef, className: ['fc-timeline-lane', 'fc-resource'].concat(customClassNames).join(' '), "data-resource-id": props.resource.id },
+                    createElement("div", { className: "fc-timeline-lane-frame", style: { height: props.innerHeight } },
+                        createElement(ResourceTimelineLaneMisc, { resource: props.resource }),
+                        createElement(TimelineLane, { dateProfile: props.dateProfile, tDateProfile: props.tDateProfile, nowDate: props.nowDate, todayRange: props.todayRange, nextDayThreshold: props.nextDayThreshold, businessHours: props.businessHours, eventStore: props.eventStore, eventUiBases: props.eventUiBases, dateSelection: props.dateSelection, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, timelineCoords: props.timelineCoords, onHeightChange: _this.handleHeightChange, resourceId: props.resource.id })))); }))); // important NOT to do liquid-height. dont want to shrink height smaller than content
+        };
+        return ResourceTimelineLane;
+    }(BaseComponent));
+    function refineHookProps(raw) {
+        return {
+            resource: new ResourceApi(raw.context, raw.resource),
+        };
+    }
+
+    /*
+    parallels the SpreadsheetGroupRow
+    */
+    var DividerRow = /** @class */ (function (_super) {
+        __extends(DividerRow, _super);
+        function DividerRow() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        DividerRow.prototype.render = function () {
+            var _this = this;
+            var props = this.props;
+            var renderingHooks = this.props.renderingHooks;
+            var hookProps = { groupValue: props.groupValue, view: this.context.viewApi };
+            return (createElement("tr", { ref: props.elRef },
+                createElement(RenderHook, { hookProps: hookProps, classNames: renderingHooks.laneClassNames, content: renderingHooks.laneContent, didMount: renderingHooks.laneDidMount, willUnmount: renderingHooks.laneWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("td", { ref: rootElRef, className: [
+                        'fc-timeline-lane',
+                        'fc-resource-group',
+                        _this.context.theme.getClass('tableCellShaded'),
+                    ].concat(classNames).join(' ') },
+                    createElement("div", { style: { height: props.innerHeight }, ref: innerElRef }, innerContent))); })));
+        };
+        return DividerRow;
+    }(BaseComponent));
+
+    var ResourceTimelineLanesBody = /** @class */ (function (_super) {
+        __extends(ResourceTimelineLanesBody, _super);
+        function ResourceTimelineLanesBody() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ResourceTimelineLanesBody.prototype.render = function () {
+            var _a = this, props = _a.props, context = _a.context;
+            var rowElRefs = props.rowElRefs, innerHeights = props.innerHeights;
+            return (createElement("tbody", null, props.rowNodes.map(function (node, index) {
+                if (node.group) {
+                    return (createElement(DividerRow, { key: node.id, elRef: rowElRefs.createRef(node.id), groupValue: node.group.value, renderingHooks: node.group.spec, innerHeight: innerHeights[index] || '' }));
+                }
+                if (node.resource) {
+                    var resource = node.resource;
+                    return (createElement(ResourceTimelineLane, __assign({ key: node.id, elRef: rowElRefs.createRef(node.id) }, props.splitProps[resource.id], { resource: resource, dateProfile: props.dateProfile, tDateProfile: props.tDateProfile, nowDate: props.nowDate, todayRange: props.todayRange, nextDayThreshold: context.options.nextDayThreshold, businessHours: resource.businessHours || props.fallbackBusinessHours, innerHeight: innerHeights[index] || '', timelineCoords: props.slatCoords, onHeightChange: props.onRowHeightChange })));
+                }
+                return null;
+            })));
+        };
+        return ResourceTimelineLanesBody;
+    }(BaseComponent));
+
+    var ResourceTimelineLanes = /** @class */ (function (_super) {
+        __extends(ResourceTimelineLanes, _super);
+        function ResourceTimelineLanes() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.rootElRef = createRef();
+            _this.rowElRefs = new RefMap();
+            return _this;
+        }
+        ResourceTimelineLanes.prototype.render = function () {
+            var _a = this, props = _a.props, context = _a.context;
+            return (createElement("table", { ref: this.rootElRef, "aria-hidden": true, className: 'fc-scrollgrid-sync-table ' + context.theme.getClass('table'), style: {
+                    minWidth: props.tableMinWidth,
+                    width: props.clientWidth,
+                    height: props.minHeight,
+                } },
+                createElement(ResourceTimelineLanesBody, { rowElRefs: this.rowElRefs, rowNodes: props.rowNodes, dateProfile: props.dateProfile, tDateProfile: props.tDateProfile, nowDate: props.nowDate, todayRange: props.todayRange, splitProps: props.splitProps, fallbackBusinessHours: props.fallbackBusinessHours, slatCoords: props.slatCoords, innerHeights: props.innerHeights, onRowHeightChange: props.onRowHeightChange })));
+        };
+        ResourceTimelineLanes.prototype.componentDidMount = function () {
+            this.updateCoords();
+        };
+        ResourceTimelineLanes.prototype.componentDidUpdate = function () {
+            this.updateCoords();
+        };
+        ResourceTimelineLanes.prototype.componentWillUnmount = function () {
+            if (this.props.onRowCoords) {
+                this.props.onRowCoords(null);
+            }
+        };
+        ResourceTimelineLanes.prototype.updateCoords = function () {
+            var props = this.props;
+            if (props.onRowCoords && props.clientWidth !== null) { // a populated clientWidth means sizing has stabilized
+                this.props.onRowCoords(new PositionCache(this.rootElRef.current, collectRowEls(this.rowElRefs.currentMap, props.rowNodes), false, true));
+            }
+        };
+        return ResourceTimelineLanes;
+    }(BaseComponent));
+    function collectRowEls(elMap, rowNodes) {
+        return rowNodes.map(function (rowNode) { return elMap[rowNode.id]; });
+    }
+
+    var ResourceTimelineGrid = /** @class */ (function (_super) {
+        __extends(ResourceTimelineGrid, _super);
+        function ResourceTimelineGrid() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.computeHasResourceBusinessHours = memoize(computeHasResourceBusinessHours);
+            _this.resourceSplitter = new ResourceSplitter(); // doesn't let it do businessHours tho
+            _this.bgSlicer = new TimelineLaneSlicer();
+            _this.slatsRef = createRef(); // needed for Hit creation :(
+            _this.state = {
+                slatCoords: null,
+            };
+            _this.handleEl = function (el) {
+                if (el) {
+                    _this.context.registerInteractiveComponent(_this, { el: el });
+                }
+                else {
+                    _this.context.unregisterInteractiveComponent(_this);
+                }
+            };
+            _this.handleSlatCoords = function (slatCoords) {
+                _this.setState({ slatCoords: slatCoords });
+                if (_this.props.onSlatCoords) {
+                    _this.props.onSlatCoords(slatCoords);
+                }
+            };
+            _this.handleRowCoords = function (rowCoords) {
+                _this.rowCoords = rowCoords;
+                if (_this.props.onRowCoords) {
+                    _this.props.onRowCoords(rowCoords);
+                }
+            };
+            return _this;
+        }
+        ResourceTimelineGrid.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, state = _a.state, context = _a.context;
+            var dateProfile = props.dateProfile, tDateProfile = props.tDateProfile;
+            var timerUnit = greatestDurationDenominator(tDateProfile.slotDuration).unit;
+            var hasResourceBusinessHours = this.computeHasResourceBusinessHours(props.rowNodes);
+            var splitProps = this.resourceSplitter.splitProps(props);
+            var bgLaneProps = splitProps[''];
+            var bgSlicedProps = this.bgSlicer.sliceProps(bgLaneProps, dateProfile, tDateProfile.isTimeScale ? null : props.nextDayThreshold, context, // wish we didn't need to pass in the rest of these args...
+            dateProfile, context.dateProfileGenerator, tDateProfile, context.dateEnv);
+            // WORKAROUND: make ignore slatCoords when out of sync with dateProfile
+            var slatCoords = state.slatCoords && state.slatCoords.dateProfile === props.dateProfile ? state.slatCoords : null;
+            return (createElement("div", { ref: this.handleEl, className: [
+                    'fc-timeline-body',
+                    props.expandRows ? 'fc-timeline-body-expandrows' : '',
+                ].join(' '), style: { minWidth: props.tableMinWidth } },
+                createElement(NowTimer, { unit: timerUnit }, function (nowDate, todayRange) { return (createElement(Fragment, null,
+                    createElement(TimelineSlats, { ref: _this.slatsRef, dateProfile: dateProfile, tDateProfile: tDateProfile, nowDate: nowDate, todayRange: todayRange, clientWidth: props.clientWidth, tableColGroupNode: props.tableColGroupNode, tableMinWidth: props.tableMinWidth, onCoords: _this.handleSlatCoords, onScrollLeftRequest: props.onScrollLeftRequest }),
+                    createElement(TimelineLaneBg, { businessHourSegs: hasResourceBusinessHours ? null : bgSlicedProps.businessHourSegs, bgEventSegs: bgSlicedProps.bgEventSegs, timelineCoords: slatCoords, 
+                        // empty array will result in unnecessary rerenders?
+                        eventResizeSegs: (bgSlicedProps.eventResize ? bgSlicedProps.eventResize.segs : []), dateSelectionSegs: bgSlicedProps.dateSelectionSegs, nowDate: nowDate, todayRange: todayRange }),
+                    createElement(ResourceTimelineLanes, { rowNodes: props.rowNodes, dateProfile: dateProfile, tDateProfile: props.tDateProfile, nowDate: nowDate, todayRange: todayRange, splitProps: splitProps, fallbackBusinessHours: hasResourceBusinessHours ? props.businessHours : null, clientWidth: props.clientWidth, minHeight: props.expandRows ? props.clientHeight : '', tableMinWidth: props.tableMinWidth, innerHeights: props.rowInnerHeights, slatCoords: slatCoords, onRowCoords: _this.handleRowCoords, onRowHeightChange: props.onRowHeightChange }),
+                    (context.options.nowIndicator && slatCoords && slatCoords.isDateInRange(nowDate)) && (createElement("div", { className: "fc-timeline-now-indicator-container" },
+                        createElement(NowIndicatorRoot, { isAxis: false, date: nowDate }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("div", { ref: rootElRef, className: ['fc-timeline-now-indicator-line'].concat(classNames).join(' '), style: coordToCss(slatCoords.dateToCoord(nowDate), context.isRtl) }, innerContent)); }))))); })));
+        };
+        // Hit System
+        // ------------------------------------------------------------------------------------------
+        ResourceTimelineGrid.prototype.queryHit = function (positionLeft, positionTop) {
+            var rowCoords = this.rowCoords;
+            var rowIndex = rowCoords.topToIndex(positionTop);
+            if (rowIndex != null) {
+                var resource = this.props.rowNodes[rowIndex].resource;
+                if (resource) { // not a group
+                    var slatHit = this.slatsRef.current.positionToHit(positionLeft);
+                    if (slatHit) {
+                        return {
+                            dateProfile: this.props.dateProfile,
+                            dateSpan: {
+                                range: slatHit.dateSpan.range,
+                                allDay: slatHit.dateSpan.allDay,
+                                resourceId: resource.id,
+                            },
+                            rect: {
+                                left: slatHit.left,
+                                right: slatHit.right,
+                                top: rowCoords.tops[rowIndex],
+                                bottom: rowCoords.bottoms[rowIndex],
+                            },
+                            dayEl: slatHit.dayEl,
+                            layer: 0,
+                        };
+                    }
+                }
+            }
+            return null;
+        };
+        return ResourceTimelineGrid;
+    }(DateComponent));
+    function computeHasResourceBusinessHours(rowNodes) {
+        for (var _i = 0, rowNodes_1 = rowNodes; _i < rowNodes_1.length; _i++) {
+            var node = rowNodes_1[_i];
+            var resource = node.resource;
+            if (resource && resource.businessHours) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    var MIN_RESOURCE_AREA_WIDTH = 30; // definitely bigger than scrollbars
+    // RENAME?
+    var ResourceTimelineViewLayout = /** @class */ (function (_super) {
+        __extends(ResourceTimelineViewLayout, _super);
+        function ResourceTimelineViewLayout() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.scrollGridRef = createRef();
+            _this.timeBodyScrollerElRef = createRef();
+            _this.spreadsheetHeaderChunkElRef = createRef();
+            _this.rootElRef = createRef();
+            _this.ensureScrollGridResizeId = 0;
+            _this.state = {
+                resourceAreaWidthOverride: null,
+            };
+            /*
+            ghetto debounce. don't race with ScrollGrid's resizing delay. solves #6140
+            */
+            _this.ensureScrollGridResize = function () {
+                if (_this.ensureScrollGridResizeId) {
+                    clearTimeout(_this.ensureScrollGridResizeId);
+                }
+                _this.ensureScrollGridResizeId = setTimeout(function () {
+                    _this.scrollGridRef.current.handleSizing(false);
+                }, config.SCROLLGRID_RESIZE_INTERVAL + 1);
+            };
+            return _this;
+        }
+        ResourceTimelineViewLayout.prototype.render = function () {
+            var _a = this, props = _a.props, state = _a.state, context = _a.context;
+            var options = context.options;
+            var stickyHeaderDates = !props.forPrint && getStickyHeaderDates(options);
+            var stickyFooterScrollbar = !props.forPrint && getStickyFooterScrollbar(options);
+            var sections = [
+                {
+                    type: 'header',
+                    key: 'header',
+                    syncRowHeights: true,
+                    isSticky: stickyHeaderDates,
+                    chunks: [
+                        {
+                            key: 'datagrid',
+                            elRef: this.spreadsheetHeaderChunkElRef,
+                            // TODO: allow the content to specify this. have general-purpose 'content' with obj with keys
+                            tableClassName: 'fc-datagrid-header',
+                            rowContent: props.spreadsheetHeaderRows,
+                        },
+                        {
+                            key: 'divider',
+                            outerContent: (createElement("td", { role: "presentation", className: 'fc-resource-timeline-divider ' + context.theme.getClass('tableCellShaded') })),
+                        },
+                        {
+                            key: 'timeline',
+                            content: props.timeHeaderContent,
+                        },
+                    ],
+                },
+                {
+                    type: 'body',
+                    key: 'body',
+                    syncRowHeights: true,
+                    liquid: true,
+                    expandRows: Boolean(options.expandRows),
+                    chunks: [
+                        {
+                            key: 'datagrid',
+                            tableClassName: 'fc-datagrid-body',
+                            rowContent: props.spreadsheetBodyRows,
+                        },
+                        {
+                            key: 'divider',
+                            outerContent: (createElement("td", { role: "presentation", className: 'fc-resource-timeline-divider ' + context.theme.getClass('tableCellShaded') })),
+                        },
+                        {
+                            key: 'timeline',
+                            scrollerElRef: this.timeBodyScrollerElRef,
+                            content: props.timeBodyContent,
+                        },
+                    ],
+                },
+            ];
+            if (stickyFooterScrollbar) {
+                sections.push({
+                    type: 'footer',
+                    key: 'footer',
+                    isSticky: true,
+                    chunks: [
+                        {
+                            key: 'datagrid',
+                            content: renderScrollShim,
+                        },
+                        {
+                            key: 'divider',
+                            outerContent: (createElement("td", { role: "presentation", className: 'fc-resource-timeline-divider ' + context.theme.getClass('tableCellShaded') })),
+                        },
+                        {
+                            key: 'timeline',
+                            content: renderScrollShim,
+                        },
+                    ],
+                });
+            }
+            var resourceAreaWidth = state.resourceAreaWidthOverride != null
+                ? state.resourceAreaWidthOverride
+                : options.resourceAreaWidth;
+            return (createElement(ScrollGrid, { ref: this.scrollGridRef, elRef: this.rootElRef, liquid: !props.isHeightAuto && !props.forPrint, collapsibleWidth: false, colGroups: [
+                    { cols: props.spreadsheetCols, width: resourceAreaWidth },
+                    { cols: [] },
+                    { cols: props.timeCols },
+                ], sections: sections }));
+        };
+        ResourceTimelineViewLayout.prototype.forceTimeScroll = function (left) {
+            var scrollGrid = this.scrollGridRef.current;
+            scrollGrid.forceScrollLeft(2, left); // 2 = the time area
+        };
+        ResourceTimelineViewLayout.prototype.forceResourceScroll = function (top) {
+            var scrollGrid = this.scrollGridRef.current;
+            scrollGrid.forceScrollTop(1, top); // 1 = the body
+        };
+        ResourceTimelineViewLayout.prototype.getResourceScroll = function () {
+            var timeBodyScrollerEl = this.timeBodyScrollerElRef.current;
+            return timeBodyScrollerEl.scrollTop;
+        };
+        // Resource Area Resizing
+        // ------------------------------------------------------------------------------------------
+        // NOTE: a callback Ref for the resizer was firing multiple times with same elements (Preact)
+        // that's why we use spreadsheetResizerElRef instead
+        ResourceTimelineViewLayout.prototype.componentDidMount = function () {
+            this.initSpreadsheetResizing();
+        };
+        ResourceTimelineViewLayout.prototype.componentWillUnmount = function () {
+            this.destroySpreadsheetResizing();
+        };
+        ResourceTimelineViewLayout.prototype.initSpreadsheetResizing = function () {
+            var _this = this;
+            var _a = this.context, isRtl = _a.isRtl, pluginHooks = _a.pluginHooks;
+            var ElementDraggingImpl = pluginHooks.elementDraggingImpl;
+            var spreadsheetHeadEl = this.spreadsheetHeaderChunkElRef.current;
+            if (ElementDraggingImpl) {
+                var rootEl_1 = this.rootElRef.current;
+                var dragging = this.spreadsheetResizerDragging = new ElementDraggingImpl(rootEl_1, '.fc-resource-timeline-divider');
+                var dragStartWidth_1;
+                var viewWidth_1;
+                dragging.emitter.on('dragstart', function () {
+                    dragStartWidth_1 = spreadsheetHeadEl.getBoundingClientRect().width;
+                    viewWidth_1 = rootEl_1.getBoundingClientRect().width;
+                });
+                dragging.emitter.on('dragmove', function (pev) {
+                    var newWidth = dragStartWidth_1 + pev.deltaX * (isRtl ? -1 : 1);
+                    newWidth = Math.max(newWidth, MIN_RESOURCE_AREA_WIDTH);
+                    newWidth = Math.min(newWidth, viewWidth_1 - MIN_RESOURCE_AREA_WIDTH);
+                    // scrollgrid will ignore resize requests if there are too many :|
+                    _this.setState({
+                        resourceAreaWidthOverride: newWidth,
+                    }, _this.ensureScrollGridResize);
+                });
+                dragging.setAutoScrollEnabled(false); // because gets weird with auto-scrolling time area
+            }
+        };
+        ResourceTimelineViewLayout.prototype.destroySpreadsheetResizing = function () {
+            if (this.spreadsheetResizerDragging) {
+                this.spreadsheetResizerDragging.destroy();
+            }
+        };
+        return ResourceTimelineViewLayout;
+    }(BaseComponent));
+
+    var ResourceTimelineView = /** @class */ (function (_super) {
+        __extends(ResourceTimelineView, _super);
+        function ResourceTimelineView(props, context) {
+            var _this = _super.call(this, props, context) || this;
+            _this.processColOptions = memoize(processColOptions);
+            _this.buildTimelineDateProfile = memoize(buildTimelineDateProfile);
+            _this.hasNesting = memoize(hasNesting);
+            _this.buildRowNodes = memoize(buildRowNodes);
+            _this.layoutRef = createRef();
+            _this.rowNodes = [];
+            _this.renderedRowNodes = [];
+            _this.buildRowIndex = memoize(buildRowIndex);
+            _this.handleSlatCoords = function (slatCoords) {
+                _this.setState({ slatCoords: slatCoords });
+            };
+            _this.handleRowCoords = function (rowCoords) {
+                _this.rowCoords = rowCoords;
+                _this.scrollResponder.update(false); // TODO: could eliminate this if rowCoords lived in state
+            };
+            _this.handleMaxCushionWidth = function (slotCushionMaxWidth) {
+                _this.setState({
+                    slotCushionMaxWidth: Math.ceil(slotCushionMaxWidth), // for less rerendering TODO: DRY
+                });
+            };
+            // Scrolling
+            // ------------------------------------------------------------------------------------------------------------------
+            // this is useful for scrolling prev/next dates while resource is scrolled down
+            _this.handleScrollLeftRequest = function (scrollLeft) {
+                var layout = _this.layoutRef.current;
+                layout.forceTimeScroll(scrollLeft);
+            };
+            _this.handleScrollRequest = function (request) {
+                var rowCoords = _this.rowCoords;
+                var layout = _this.layoutRef.current;
+                var rowId = request.rowId || request.resourceId;
+                if (rowCoords) {
+                    if (rowId) {
+                        var rowIdToIndex = _this.buildRowIndex(_this.renderedRowNodes);
+                        var index = rowIdToIndex[rowId];
+                        if (index != null) {
+                            var scrollTop = (request.fromBottom != null ?
+                                rowCoords.bottoms[index] - request.fromBottom : // pixels from bottom edge
+                                rowCoords.tops[index] // just use top edge
+                            );
+                            layout.forceResourceScroll(scrollTop);
+                        }
+                    }
+                    return true;
+                }
+                return null;
+            };
+            // Resource INDIVIDUAL-Column Area Resizing
+            // ------------------------------------------------------------------------------------------
+            _this.handleColWidthChange = function (colWidths) {
+                _this.setState({
+                    spreadsheetColWidths: colWidths,
+                });
+            };
+            _this.state = {
+                resourceAreaWidth: context.options.resourceAreaWidth,
+                spreadsheetColWidths: [],
+            };
+            return _this;
+        }
+        ResourceTimelineView.prototype.render = function () {
+            var _this = this;
+            var _a = this, props = _a.props, state = _a.state, context = _a.context;
+            var options = context.options, viewSpec = context.viewSpec;
+            var _b = this.processColOptions(context.options), superHeaderRendering = _b.superHeaderRendering, groupSpecs = _b.groupSpecs, orderSpecs = _b.orderSpecs, isVGrouping = _b.isVGrouping, colSpecs = _b.colSpecs;
+            var tDateProfile = this.buildTimelineDateProfile(props.dateProfile, context.dateEnv, options, context.dateProfileGenerator);
+            var rowNodes = this.rowNodes = this.buildRowNodes(props.resourceStore, groupSpecs, orderSpecs, isVGrouping, props.resourceEntityExpansions, options.resourcesInitiallyExpanded);
+            var extraClassNames = [
+                'fc-resource-timeline',
+                this.hasNesting(rowNodes) ? '' : 'fc-resource-timeline-flat',
+                'fc-timeline',
+                options.eventOverlap === false ? 'fc-timeline-overlap-disabled' : 'fc-timeline-overlap-enabled',
+            ];
+            var slotMinWidth = options.slotMinWidth;
+            var slatCols = buildSlatCols(tDateProfile, slotMinWidth || this.computeFallbackSlotMinWidth(tDateProfile));
+            return (createElement(ViewRoot, { viewSpec: viewSpec }, function (rootElRef, classNames) { return (createElement("div", { ref: rootElRef, className: extraClassNames.concat(classNames).join(' ') },
+                createElement(ResourceTimelineViewLayout, { ref: _this.layoutRef, forPrint: props.forPrint, isHeightAuto: props.isHeightAuto, spreadsheetCols: buildSpreadsheetCols(colSpecs, state.spreadsheetColWidths, ''), spreadsheetHeaderRows: function (contentArg) { return (createElement(SpreadsheetHeader // TODO: rename to SpreadsheetHeaderRows
+                    , { superHeaderRendering: superHeaderRendering, colSpecs: colSpecs, onColWidthChange: _this.handleColWidthChange, rowInnerHeights: contentArg.rowSyncHeights })); }, spreadsheetBodyRows: function (contentArg) { return (createElement(Fragment, null, _this.renderSpreadsheetRows(rowNodes, colSpecs, contentArg.rowSyncHeights))); }, timeCols: slatCols, timeHeaderContent: function (contentArg) { return (createElement(TimelineHeader, { clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, tableMinWidth: contentArg.tableMinWidth, tableColGroupNode: contentArg.tableColGroupNode, dateProfile: props.dateProfile, tDateProfile: tDateProfile, slatCoords: state.slatCoords, rowInnerHeights: contentArg.rowSyncHeights, onMaxCushionWidth: slotMinWidth ? null : _this.handleMaxCushionWidth })); }, timeBodyContent: function (contentArg) { return (createElement(ResourceTimelineGrid, { dateProfile: props.dateProfile, clientWidth: contentArg.clientWidth, clientHeight: contentArg.clientHeight, tableMinWidth: contentArg.tableMinWidth, tableColGroupNode: contentArg.tableColGroupNode, expandRows: contentArg.expandRows, tDateProfile: tDateProfile, rowNodes: rowNodes, businessHours: props.businessHours, dateSelection: props.dateSelection, eventStore: props.eventStore, eventUiBases: props.eventUiBases, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, resourceStore: props.resourceStore, nextDayThreshold: context.options.nextDayThreshold, rowInnerHeights: contentArg.rowSyncHeights, onSlatCoords: _this.handleSlatCoords, onRowCoords: _this.handleRowCoords, onScrollLeftRequest: _this.handleScrollLeftRequest, onRowHeightChange: contentArg.reportRowHeightChange })); } }))); }));
+        };
+        ResourceTimelineView.prototype.renderSpreadsheetRows = function (nodes, colSpecs, rowSyncHeights) {
+            return nodes.map(function (node, index) {
+                if (node.group) {
+                    return (createElement(SpreadsheetGroupRow, { key: node.id, id: node.id, spreadsheetColCnt: colSpecs.length, isExpanded: node.isExpanded, group: node.group, innerHeight: rowSyncHeights[index] || '' }));
+                }
+                if (node.resource) {
+                    return (createElement(SpreadsheetRow, { key: node.id, colSpecs: colSpecs, rowSpans: node.rowSpans, depth: node.depth, isExpanded: node.isExpanded, hasChildren: node.hasChildren, resource: node.resource, innerHeight: rowSyncHeights[index] || '' }));
+                }
+                return null;
+            });
+        };
+        ResourceTimelineView.prototype.componentDidMount = function () {
+            this.renderedRowNodes = this.rowNodes;
+            this.scrollResponder = this.context.createScrollResponder(this.handleScrollRequest);
+        };
+        ResourceTimelineView.prototype.getSnapshotBeforeUpdate = function () {
+            if (!this.props.forPrint) { // because print-view is always zero?
+                return { resourceScroll: this.queryResourceScroll() };
+            }
+            return {};
+        };
+        ResourceTimelineView.prototype.componentDidUpdate = function (prevProps, prevState, snapshot) {
+            this.renderedRowNodes = this.rowNodes;
+            this.scrollResponder.update(prevProps.dateProfile !== this.props.dateProfile);
+            if (snapshot.resourceScroll) {
+                this.handleScrollRequest(snapshot.resourceScroll); // TODO: this gets triggered too often
+            }
+        };
+        ResourceTimelineView.prototype.componentWillUnmount = function () {
+            this.scrollResponder.detach();
+        };
+        ResourceTimelineView.prototype.computeFallbackSlotMinWidth = function (tDateProfile) {
+            return Math.max(30, ((this.state.slotCushionMaxWidth || 0) / tDateProfile.slotsPerLabel));
+        };
+        ResourceTimelineView.prototype.queryResourceScroll = function () {
+            var _a = this, rowCoords = _a.rowCoords, renderedRowNodes = _a.renderedRowNodes;
+            if (rowCoords) {
+                var layout = this.layoutRef.current;
+                var trBottoms = rowCoords.bottoms;
+                var scrollTop = layout.getResourceScroll();
+                var scroll_1 = {};
+                for (var i = 0; i < trBottoms.length; i += 1) {
+                    var rowNode = renderedRowNodes[i];
+                    var elBottom = trBottoms[i] - scrollTop; // from the top of the scroller
+                    if (elBottom > 0) {
+                        scroll_1.rowId = rowNode.id;
+                        scroll_1.fromBottom = elBottom;
+                        break;
+                    }
+                }
+                return scroll_1;
+            }
+            return null;
+        };
+        return ResourceTimelineView;
+    }(BaseComponent));
+    ResourceTimelineView.addStateEquality({
+        spreadsheetColWidths: isArraysEqual,
+    });
+    function buildRowIndex(rowNodes) {
+        var rowIdToIndex = {};
+        for (var i = 0; i < rowNodes.length; i += 1) {
+            rowIdToIndex[rowNodes[i].id] = i;
+        }
+        return rowIdToIndex;
+    }
+    function buildSpreadsheetCols(colSpecs, forcedWidths, fallbackWidth) {
+        if (fallbackWidth === void 0) { fallbackWidth = ''; }
+        return colSpecs.map(function (colSpec, i) { return ({
+            className: colSpec.isMain ? 'fc-main-col' : '',
+            width: forcedWidths[i] || colSpec.width || fallbackWidth,
+        }); });
+    }
+    function hasNesting(nodes) {
+        for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
+            var node = nodes_1[_i];
+            if (node.group) {
+                return true;
+            }
+            if (node.resource) {
+                if (node.hasChildren) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    function processColOptions(options) {
+        var allColSpecs = options.resourceAreaColumns || [];
+        var superHeaderRendering = null;
+        if (!allColSpecs.length) {
+            allColSpecs.push({
+                headerClassNames: options.resourceAreaHeaderClassNames,
+                headerContent: options.resourceAreaHeaderContent || 'Resources',
+                headerDidMount: options.resourceAreaHeaderDidMount,
+                headerWillUnmount: options.resourceAreaHeaderWillUnmount,
+            });
+        }
+        else if (options.resourceAreaHeaderContent) { // weird way to determine if content
+            superHeaderRendering = {
+                headerClassNames: options.resourceAreaHeaderClassNames,
+                headerContent: options.resourceAreaHeaderContent,
+                headerDidMount: options.resourceAreaHeaderDidMount,
+                headerWillUnmount: options.resourceAreaHeaderWillUnmount,
+            };
+        }
+        var plainColSpecs = [];
+        var groupColSpecs = []; // part of the colSpecs, but filtered out in order to put first
+        var groupSpecs = [];
+        var isVGrouping = false;
+        for (var _i = 0, allColSpecs_1 = allColSpecs; _i < allColSpecs_1.length; _i++) {
+            var colSpec = allColSpecs_1[_i];
+            if (colSpec.group) {
+                groupColSpecs.push(__assign(__assign({}, colSpec), { cellClassNames: colSpec.cellClassNames || options.resourceGroupLabelClassNames, cellContent: colSpec.cellContent || options.resourceGroupLabelContent, cellDidMount: colSpec.cellDidMount || options.resourceGroupLabelDidMount, cellWillUnmount: colSpec.cellWillUnmount || options.resourceGroupLaneWillUnmount }));
+            }
+            else {
+                plainColSpecs.push(colSpec);
+            }
+        }
+        // BAD: mutates a user-supplied option
+        var mainColSpec = plainColSpecs[0];
+        mainColSpec.isMain = true;
+        mainColSpec.cellClassNames = mainColSpec.cellClassNames || options.resourceLabelClassNames;
+        mainColSpec.cellContent = mainColSpec.cellContent || options.resourceLabelContent;
+        mainColSpec.cellDidMount = mainColSpec.cellDidMount || options.resourceLabelDidMount;
+        mainColSpec.cellWillUnmount = mainColSpec.cellWillUnmount || options.resourceLabelWillUnmount;
+        if (groupColSpecs.length) {
+            groupSpecs = groupColSpecs;
+            isVGrouping = true;
+        }
+        else {
+            var hGroupField = options.resourceGroupField;
+            if (hGroupField) {
+                groupSpecs.push({
+                    field: hGroupField,
+                    labelClassNames: options.resourceGroupLabelClassNames,
+                    labelContent: options.resourceGroupLabelContent,
+                    labelDidMount: options.resourceGroupLabelDidMount,
+                    labelWillUnmount: options.resourceGroupLabelWillUnmount,
+                    laneClassNames: options.resourceGroupLaneClassNames,
+                    laneContent: options.resourceGroupLaneContent,
+                    laneDidMount: options.resourceGroupLaneDidMount,
+                    laneWillUnmount: options.resourceGroupLaneWillUnmount,
+                });
+            }
+        }
+        var allOrderSpecs = options.resourceOrder || DEFAULT_RESOURCE_ORDER;
+        var plainOrderSpecs = [];
+        for (var _a = 0, allOrderSpecs_1 = allOrderSpecs; _a < allOrderSpecs_1.length; _a++) {
+            var orderSpec = allOrderSpecs_1[_a];
+            var isGroup = false;
+            for (var _b = 0, groupSpecs_1 = groupSpecs; _b < groupSpecs_1.length; _b++) {
+                var groupSpec = groupSpecs_1[_b];
+                if (groupSpec.field === orderSpec.field) {
+                    groupSpec.order = orderSpec.order; // -1, 0, 1
+                    isGroup = true;
+                    break;
+                }
+            }
+            if (!isGroup) {
+                plainOrderSpecs.push(orderSpec);
+            }
+        }
+        return {
+            superHeaderRendering: superHeaderRendering,
+            isVGrouping: isVGrouping,
+            groupSpecs: groupSpecs,
+            colSpecs: groupColSpecs.concat(plainColSpecs),
+            orderSpecs: plainOrderSpecs,
+        };
+    }
+
+    var resourceTimelinePlugin = createPlugin({
+        deps: [
+            premiumCommonPlugin,
+            resourceCommonPlugin,
+            timelinePlugin,
+        ],
+        initialView: 'resourceTimelineDay',
+        views: {
+            resourceTimeline: {
+                type: 'timeline',
+                component: ResourceTimelineView,
+                needsResourceData: true,
+                resourceAreaWidth: '30%',
+                resourcesInitiallyExpanded: true,
+                eventResizableFromStart: true, // TODO: not DRY with this same setting in the main timeline config
+            },
+            resourceTimelineDay: {
+                type: 'resourceTimeline',
+                duration: { days: 1 },
+            },
+            resourceTimelineWeek: {
+                type: 'resourceTimeline',
+                duration: { weeks: 1 },
+            },
+            resourceTimelineMonth: {
+                type: 'resourceTimeline',
+                duration: { months: 1 },
+            },
+            resourceTimelineYear: {
+                type: 'resourceTimeline',
+                duration: { years: 1 },
+            },
+        },
+    });
+
+    globalPlugins.push(interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, plugin, googleCalendarPlugin, scrollGridPlugin, adaptivePlugin, timelinePlugin, resourceCommonPlugin, resourceDayGridPlugin, resourceTimeGridPlugin, resourceTimelinePlugin);
+
+    exports.AbstractResourceDayTableModel = AbstractResourceDayTableModel;
     exports.BASE_OPTION_DEFAULTS = BASE_OPTION_DEFAULTS;
     exports.BASE_OPTION_REFINERS = BASE_OPTION_REFINERS;
     exports.BaseComponent = BaseComponent;
@@ -14718,6 +19991,7 @@ var FullCalendar = (function (exports) {
     exports.Component = Component;
     exports.ContentHook = ContentHook;
     exports.CustomContentRenderContext = CustomContentRenderContext;
+    exports.DEFAULT_RESOURCE_ORDER = DEFAULT_RESOURCE_ORDER;
     exports.DateComponent = DateComponent;
     exports.DateEnv = DateEnv;
     exports.DateProfileGenerator = DateProfileGenerator;
@@ -14725,6 +19999,7 @@ var FullCalendar = (function (exports) {
     exports.DayCellRoot = DayCellRoot;
     exports.DayGridView = DayTableView;
     exports.DayHeader = DayHeader;
+    exports.DayResourceTableModel = DayResourceTableModel;
     exports.DaySeriesModel = DaySeriesModel;
     exports.DayTable = DayTable;
     exports.DayTableModel = DayTableModel;
@@ -14753,13 +20028,26 @@ var FullCalendar = (function (exports) {
     exports.PositionCache = PositionCache;
     exports.RefMap = RefMap;
     exports.RenderHook = RenderHook;
+    exports.ResourceApi = ResourceApi;
+    exports.ResourceDayHeader = ResourceDayHeader;
+    exports.ResourceDayTable = ResourceDayTable;
+    exports.ResourceDayTableModel = ResourceDayTableModel;
+    exports.ResourceDayTableView = ResourceDayTableView;
+    exports.ResourceDayTimeCols = ResourceDayTimeCols;
+    exports.ResourceDayTimeColsView = ResourceDayTimeColsView;
+    exports.ResourceLabelRoot = ResourceLabelRoot;
+    exports.ResourceSplitter = ResourceSplitter;
+    exports.ResourceTimelineLane = ResourceTimelineLane;
+    exports.ResourceTimelineView = ResourceTimelineView;
     exports.ScrollController = ScrollController;
+    exports.ScrollGrid = ScrollGrid;
     exports.ScrollResponder = ScrollResponder;
     exports.Scroller = Scroller;
     exports.SegHierarchy = SegHierarchy;
     exports.SimpleScrollGrid = SimpleScrollGrid;
     exports.Slicer = Slicer;
     exports.Splitter = Splitter;
+    exports.SpreadsheetRow = SpreadsheetRow;
     exports.StandardEvent = StandardEvent;
     exports.Table = Table;
     exports.TableDateCell = TableDateCell;
@@ -14770,6 +20058,16 @@ var FullCalendar = (function (exports) {
     exports.TimeCols = TimeCols;
     exports.TimeColsSlatsCoords = TimeColsSlatsCoords;
     exports.TimeColsView = TimeColsView;
+    exports.TimelineCoords = TimelineCoords;
+    exports.TimelineHeader = TimelineHeader;
+    exports.TimelineHeaderRows = TimelineHeaderRows;
+    exports.TimelineLane = TimelineLane;
+    exports.TimelineLaneBg = TimelineLaneBg;
+    exports.TimelineLaneSlicer = TimelineLaneSlicer;
+    exports.TimelineSlats = TimelineSlats;
+    exports.TimelineView = TimelineView;
+    exports.VResourceJoiner = VResourceJoiner;
+    exports.VResourceSplitter = VResourceSplitter;
     exports.ViewApi = ViewApi;
     exports.ViewContextType = ViewContextType;
     exports.ViewRoot = ViewRoot;
@@ -14798,10 +20096,14 @@ var FullCalendar = (function (exports) {
     exports.buildHashFromArray = buildHashFromArray;
     exports.buildIsoString = buildIsoString;
     exports.buildNavLinkAttrs = buildNavLinkAttrs;
+    exports.buildResourceFields = buildResourceFields;
+    exports.buildRowNodes = buildRowNodes;
     exports.buildSegCompareObj = buildSegCompareObj;
     exports.buildSegTimeText = buildSegTimeText;
+    exports.buildSlatCols = buildSlatCols;
     exports.buildSlatMetas = buildSlatMetas;
     exports.buildTimeColsModel = buildTimeColsModel;
+    exports.buildTimelineDateProfile = buildTimelineDateProfile;
     exports.collectFromHash = collectFromHash;
     exports.combineEventUis = combineEventUis;
     exports.compareByFieldSpec = compareByFieldSpec;
@@ -14822,6 +20124,8 @@ var FullCalendar = (function (exports) {
     exports.computeVisibleDayRange = computeVisibleDayRange;
     exports.config = config;
     exports.constrainPoint = constrainPoint;
+    exports.coordToCss = coordToCss;
+    exports.coordsToCss = coordsToCss;
     exports.createAriaClickAttrs = createAriaClickAttrs;
     exports.createContext = createContext;
     exports.createDuration = createDuration;
@@ -14849,6 +20153,7 @@ var FullCalendar = (function (exports) {
     exports.filterHash = filterHash;
     exports.findDirectChildren = findDirectChildren;
     exports.findElements = findElements;
+    exports.flattenResources = flattenResources;
     exports.flexibleCompare = flexibleCompare;
     exports.flushToDom = flushToDom;
     exports.formatDate = formatDate;
@@ -14867,6 +20172,7 @@ var FullCalendar = (function (exports) {
     exports.getEventClassNames = getEventClassNames;
     exports.getEventTargetViaRoot = getEventTargetViaRoot;
     exports.getIsRtlScrollbarOnLeft = getIsRtlScrollbarOnLeft;
+    exports.getPublicId = getPublicId;
     exports.getRectCenter = getRectCenter;
     exports.getRelevantEvents = getRelevantEvents;
     exports.getScrollGridClassNames = getScrollGridClassNames;
@@ -14897,12 +20203,13 @@ var FullCalendar = (function (exports) {
     exports.isColPropsEqual = isColPropsEqual;
     exports.isDateSelectionValid = isDateSelectionValid;
     exports.isDateSpansEqual = isDateSpansEqual;
+    exports.isGroupsEqual = isGroupsEqual;
     exports.isInt = isInt;
     exports.isInteractionValid = isInteractionValid;
     exports.isMultiDayRange = isMultiDayRange;
     exports.isPropsEqual = isPropsEqual;
     exports.isPropsValid = isPropsValid;
-    exports.isValidDate = isValidDate;
+    exports.isValidDate = isValidDate$1;
     exports.joinSpans = joinSpans;
     exports.listenBySelector = listenBySelector;
     exports.mapHash = mapHash;
@@ -14940,6 +20247,7 @@ var FullCalendar = (function (exports) {
     exports.sanitizeShrinkWidth = sanitizeShrinkWidth;
     exports.setElSeg = setElSeg;
     exports.setRef = setRef;
+    exports.setScrollFromLeftEdge = setScrollFromLeftEdge;
     exports.sliceEventStore = sliceEventStore;
     exports.sliceEvents = sliceEvents;
     exports.sortEventSegs = sortEventSegs;

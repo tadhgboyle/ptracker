@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {
+    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
     initialDate: startDate.toISOString().split('T')[0],
     fixedWeekCount: false,
     editable: true,
