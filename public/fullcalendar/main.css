@@ -578,7 +578,7 @@ A HORIZONTAL event
   border: 1px solid #3788d8;
   border: 1px solid var(--fc-event-border-color, #3788d8);
   background-color: #3788d8;
-  background-color: var(--fc-event-bg-color, #3788d8)
+  background-color: var(--fc-event-bg-color, #3788d8);
 
 }
 .fc-h-event .fc-event-main {
@@ -593,6 +593,8 @@ A HORIZONTAL event
     overflow: hidden;
   }
 .fc-h-event .fc-event-title-container { /* serves as a container for the sticky cushion */
+    display: flex;
+    justify-content: center;
     flex-grow: 1;
     flex-shrink: 1;
     min-width: 0; /* important for allowing to shrink all the way */
