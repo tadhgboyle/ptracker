@@ -10,9 +10,10 @@ const ejsLayouts = require('express-ejs-layouts');
 
 // middleware and routes
 const passport = require('./auth/passport');
-const passUser = require('./middleware/passUser')
+const passUser = require('./middleware/passUser');
 const authRouter = require('./routes/authRoutes');
-const indexRouter = require('./routes/indexRoutes')
+const indexRouter = require('./routes/indexRoutes');
+const shiftRouter = require('./routes/shiftRoutes');
 
 // Loggers and cors
 const logger = require('morgan');
@@ -53,6 +54,7 @@ app.use(passport.session());
 app.use(passUser);
 
 app.use('/', indexRouter);
+app.use('/shifts', shiftRouter);
 app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
