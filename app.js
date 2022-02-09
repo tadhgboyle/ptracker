@@ -14,6 +14,7 @@ const passUser = require('./middleware/passUser');
 const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/indexRoutes');
 const shiftRouter = require('./routes/shiftRoutes');
+const userRouter = require('./routes/userRoutes')
 
 // Loggers and cors
 const logger = require('morgan');
@@ -56,6 +57,7 @@ app.use(passUser);
 app.use('/', indexRouter);
 app.use('/shifts', shiftRouter);
 app.use('/auth', authRouter);
+app.use('/user', userRouter)
 
 app.use((req, res, next) => {
     next(createError(404));
