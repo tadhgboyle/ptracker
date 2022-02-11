@@ -51,7 +51,7 @@ async function main() {
     });
 
     const sites = [];
-    const siteNames = ['RCH', 'SMH', 'RH']
+    const siteNames = ['RCH', 'SMH', 'RH'];
 
     for (let i = 1; i <= siteNames.length; i++) {
         sites.push({

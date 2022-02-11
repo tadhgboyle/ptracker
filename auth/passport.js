@@ -38,7 +38,19 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    done(null, await User.find(id));
+    const checkUser = await User.prisma.user.findUnique({
+        where: { id: parseInt(id) },
+        include: {
+            section: true,
+            shift: true,
+        },
+    })
+    if (checkUser) {
+        done(null, await User.find(id))
+    } else {
+        // This line of code is for users that didn't exist previously in the database
+        done(null, checkUser);
+    }
 
 });
 

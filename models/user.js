@@ -38,13 +38,13 @@ module.exports = class User {
     }
 
     static find = async (id) => {
-        return await User.prisma.user.findUnique({
+        return new User(await User.prisma.user.findUnique({
             where: { id: parseInt(id) },
             include: {
                 section: true,
                 shift: true,
             },
-        });
+        }));
     }
 
     static all = async () => {

@@ -5,24 +5,38 @@ const getShifts = (user) => {
     // return user.shifts
 }
 
-const displayUsers = (user) => {
-    return;
-    // const allUsersInSection = [];
-    // if (user.role === 'STUDENT') {
-    //     allUsersInSection.push({id: user.googleId, name: user.name, site: user.})
-    // }
+const displayUsers = async() => {
+    const user = await getUser()
+    const allUsersInSection = [];
+    if (user.role === 'STUDENT') {
+        allUsersInSection.push({id: user.googleId, name: user.name, site: convertSiteID(user.shifts[0].siteId), dayshifts: countShifts(user.shifts, 'DAY'), nightshifts: countShifts(user.shifts, 'NIGHT'), totalshifts: user.shifts.length})
+    }
+    return allUsersInSection
 }
 
-const getUser = (callback) => {
-    const http = new XMLHttpRequest();
-    const url = 'http://localhost:3000/user'
-    http.open("GET", url);
-    http.send();
+const getUser = () => {
+    return new Promise((resolve, reject) => {
+        const http = new XMLHttpRequest();
+        const url = 'http://localhost:3000/user'
+        http.open("GET", url);
+        http.send();
 
-    http.onreadystatechange = (e) => {
-        const currentUser = JSON.parse(http.responseText);
-        callback(currentUser)
+        http.onreadystatechange = (e) => {
+            const currentUser = JSON.parse(http.responseText);
+            resolve(currentUser)
+        }
+    })
+}
+
+const countShifts = (shifts, shiftType) => {
+    let shiftCounter = 0;
+    for (const shift of shifts) {
+        if (shift.type == shiftType) {
+            shiftCounter += 1
+        }
     }
+    return shiftCounter
+
 }
 
 const convertShiftType = (type) => {
@@ -37,6 +51,18 @@ const convertShiftType = (type) => {
     }
     else if (type === 'SICK') {
         return 'S'
+    }
+}
+
+const convertSiteID = (site) => {
+    if (site === 1) {
+        return 'RCH'
+    }
+    else if (site === 2) {
+        return 'SMH'
+    }
+    else if (site === 3) {
+        return 'RH'
     }
 }
 
@@ -98,8 +124,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 width: '95px'
             }
         ],
-        resources: getUser(displayUsers),
-            // [
+        resources: [displayUsers()]
+        //     [
         //     { id: '1', name: 'Emanuel Meadows', site: 'RCH' , dayshifts: 2, nightshifts: 1, totalshifts: 3},
         //     { id: '2', name: 'Braelyn Knapp', site: 'RCH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
         //     { id: '3', name: 'Boston Peck', site: 'RCH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
