@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        height: 'auto',
+        contentHeight: 'auto',
         // googleCalendarApiKey: ,
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         initialView: 'resourceTimelineMonth',
@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'resourceTimelineMonth'
         },
-        aspectRatio: 1.5,
         resourceAreaWidth:'35%',
         resourceAreaColumns: [
             {
