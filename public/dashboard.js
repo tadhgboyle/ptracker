@@ -1,86 +1,4 @@
 
-const getShifts = (user) => {
-    const shiftEvents = []
-    const date = user.shifts[0].date('T')[0]
-    // return user.shifts
-}
-
-const displayUsers = async() => {
-    const user = await getUser()
-    const allUsersInSection = [];
-    if (user.role === 'STUDENT') {
-        allUsersInSection.push({id: user.googleId, name: user.name, site: convertSiteID(user.shifts[0].siteId), dayshifts: countShifts(user.shifts, 'DAY'), nightshifts: countShifts(user.shifts, 'NIGHT'), totalshifts: user.shifts.length})
-    }
-    return allUsersInSection
-}
-
-const getUser = () => {
-    return new Promise((resolve, reject) => {
-        const http = new XMLHttpRequest();
-        const url = 'http://localhost:3000/user'
-        http.open("GET", url);
-        http.send();
-
-        http.onreadystatechange = (e) => {
-            const currentUser = JSON.parse(http.responseText);
-            resolve(currentUser)
-        }
-    })
-}
-
-const countShifts = (shifts, shiftType) => {
-    let shiftCounter = 0;
-    for (const shift of shifts) {
-        if (shift.type == shiftType) {
-            shiftCounter += 1
-        }
-    }
-    return shiftCounter
-
-}
-
-const convertShiftType = (type) => {
-    if (type === 'NIGHT') {
-        return 'N'
-    }
-    else if (type === 'EVENING') {
-        return 'E'
-    }
-    else if (type === 'DAY') {
-        return 'D'
-    }
-    else if (type === 'SICK') {
-        return 'S'
-    }
-}
-
-const convertSiteID = (site) => {
-    if (site === 1) {
-        return 'RCH'
-    }
-    else if (site === 2) {
-        return 'SMH'
-    }
-    else if (site === 3) {
-        return 'RH'
-    }
-}
-
-const shiftColor = (shift) => {
-    if (shift === 'NIGHT') {
-        return '#744468'
-    }
-    else if (shift === 'EVENING') {
-        return '#016BB7'
-    }
-    else if (shift === 'DAY') {
-        return '#ECA446'
-    }
-    else if (shift === 'SICK') {
-        return '#D05353'
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
@@ -124,77 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 width: '95px'
             }
         ],
-        resources: [displayUsers()]
-        //     [
-        //     { id: '1', name: 'Emanuel Meadows', site: 'RCH' , dayshifts: 2, nightshifts: 1, totalshifts: 3},
-        //     { id: '2', name: 'Braelyn Knapp', site: 'RCH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        //     { id: '3', name: 'Boston Peck', site: 'RCH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        //     { id: '4', name: 'Vanessa Thomas', site: 'SMH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        //     { id: '5', name: 'Camryn Mack', site: 'SMH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        //     { id: '6', name: 'Zaniyah Vincent', site: 'SMH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        //     { id: '7', name: 'Marc Beard', site: 'RH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        //     { id: '8', name: 'Annie Khan', site: 'RH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        //     { id: '9', name: 'Iliana Bradford', site: 'RCH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        //     { id: '10', name: 'Marianna Jefferson', site: 'RCH', dayshifts: 2, nightshifts: 1, totalshifts: 3 },
-        // ],
-        // events: getUser(getShifts)
-        //   [
-        //   {
-        //     title: 'D',
-        //     start: '2022-02-04',
-        //     resourceId: '1',
-        //     color: '#ECA446',
-        //   },
-        //   {
-        //       title: 'E',
-        //       start: '2022-02-05',
-        //       resourceId: '2',
-        //       color: '#016BB7'
-        //   },
-        //   {
-        //     title: 'E',
-        //     start: '2022-02-15',
-        //     resourceId: '2',
-        //     color: '#016BB7'
-        //   },
-        //   {
-        //     title: 'E',
-        //     start: '2022-02-06',
-        //     resourceId: '3',
-        //     color: '#016BB7'
-        //   },
-        //   {
-        //       title: 'D',
-        //       start: '2022-02-14',
-        //       resourceId: '4',
-        //       color: '#ECA446',
-        //   },
-        //   {
-        //     title: 'E',
-        //     start: '2022-02-04',
-        //     resourceId: '4',
-        //     color: '#016BB7'
-        //   },
-        //   {
-        //     title: 'N',
-        //     start: '2022-02-04',
-        //     resourceId: '5',
-        //     color: '#744468'
-        //   },
-        //   {
-        //     title: 'S',
-        //     start: '2022-02-14',
-        //     resourceId: '6',
-        //     color: '#D05353'
-        //   },
-        //   {
-        //     title: 'Holiday or Event',
-        //     resourceId: '1',
-        //     start: '2022-02-07',
-        //     end: '2022-02-10',
-        //     color: '#577590'
-        //   },
-        // ]
+        resources: {
+            url: 'http://localhost:3000/data/resources'
+        },
+        events: {
+            url: 'http://localhost:3000/data/events'
+        }
     });
 
     calendar.render();

@@ -8,29 +8,10 @@ const router = express.Router();
 const Role = require('../models/Role');
 const User = require('../models/User');
 
-// Datetime
-let dt = new Date();
-let currentDays = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
-
 router.get('/dashboard', ensureAuthenticated, async (req,res) => {
-    if (req.user.role === Role.INSTRUCTOR) {
-        res.render('dashboard/dashboardProf', {
-            page: 'dashboard',
-            days: currentDays,
-            monthYear: `${dt.toLocaleString('default', { month: 'long' })}, ${dt.getFullYear()}`,
-            year: dt.getFullYear(),
-            date: dt,
-            students: await User.all(),
-        });
-    } else {
-        res.render('dashboard/dashboard', {
-            page: 'dashboard',
-            days: currentDays,
-            monthYear: `${dt.toLocaleString('default', { month: 'long' })}, ${dt.getFullYear()}`,
-            year: dt.getFullYear(),
-            date: dt
-        });
-    }
+    res.render('dashboard/dashboard', {
+        page: 'dashboard',
+    });
 });
 
 router.get('/calendar', ensureAuthenticated, (req,res) => {
