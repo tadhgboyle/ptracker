@@ -9,7 +9,7 @@
   - and add your password after "root"
   - ![Screenshot 2022-01-29 211150](https://user-images.githubusercontent.com/77702776/151687551-8560152e-aedc-4d8e-a3dc-5c9becf17037.png)
       -  By default it assumes that the user `root` has no password.
-- You should then seed the database with `npx primsa migrate reset` (from the `backend` folder)
+- You should then seed the database with `npx prisma migrate reset` (from the `backend` folder)
   - If you see an error about google client id, follow this tutorial to create a google client id: https://www.balbooa.com/gridbox-documentation/how-to-get-google-client-id-and-client-secret
     -  add these urls once you are at the last page for signing up for a google client id
     -  ![Screenshot 2022-01-31 210326](https://user-images.githubusercontent.com/77702776/151915311-1d54ac6b-aa47-46c0-90aa-f1a3962dafdc.png)
