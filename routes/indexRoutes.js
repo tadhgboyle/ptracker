@@ -20,9 +20,11 @@ router.get('/calendar', ensureAuthenticated, (req,res) => {
     });
 });
 
-router.get('/section', isInstructor, (req,res) => {
+router.get('/section', isInstructor, async(req,res) => {
     res.render('section/overview', {
         page: 'section',
+        students: await User.all(),
+
     });
 });
 

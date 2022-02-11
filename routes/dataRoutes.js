@@ -1,8 +1,11 @@
-// This route is mainly used to fetch data to the calendar using JSON
+// This route page is mainly used to fetch data to the calendar in the dashboard page using JSON
 
 const express = require('express');
 
 const router = express.Router();
+
+// Authentication of Instructor
+const {isInstructor} = require('../middleware/checkAuth')
 
 // User Class
 const User = require('../models/User');
@@ -74,7 +77,7 @@ router.get("/resources", async (req,res) => {
             nightshifts: countShifts(req.user.shifts, 'NIGHT'),
             totalshifts: req.user.shifts.length
         })
-    } else {
+    } else if (req.user.role === 'INSTRUCTOR') {
         const allStudents = await User.all();
         for (let student of allStudents) {
             if (student.sectionId == req.user.section.id && student.shift.length >= 1) {
@@ -84,6 +87,7 @@ router.get("/resources", async (req,res) => {
                     site: convertSiteID(student.shift[0].siteId),
                     dayshifts: countShifts(student.shift, 'DAY'),
                     nightshifts: countShifts(student.shift, 'NIGHT'),
+                    eveningshifts: countShifts(student.shift, 'EVENING'),
                     totalshifts: student.shift.length
                 })
             }

@@ -1,1 +1,25 @@
-Here the instructor will see a list of the students in this section with links to edit the users & stats about session
+<div>
+    <table class="table-auto w-auto mr-auto ml-auto border border-solid border-black border-collapse">
+        <tr>
+            <th class="text-center text-lg w-60 border border-solid border-black border-collapse">Student Name</th>
+            <th class="text-center text-lg w-48 h-16 border border-solid border-black border-collapse">Delete Student</th>
+        </tr>
+
+        <tbody>
+            <% for (const student of students) { %>
+                <tr>
+                <% if (student.sectionId == user.section.id) { %>
+                    <th class="text-left border border-solid border-black border-collapse"><%= student.name %></th>
+                    <td class="flex justify-center border-2 border-solid border-rose-500 border-collapse">
+                        <% if (student.id === user.id) {%>
+                            <button class="my-2.5 bg-red-500 hover:bg-red-400 text-white text-center font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded" disabled>Delete</button>
+                        <% } else { %>
+                        <a class="my-2.5 bg-red-500 hover:bg-red-400 text-white text-center font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded" href="<%= "/delete/" + student.id %>">Delete</a>
+                        <% }%>
+                    </td>
+                <% } %>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>

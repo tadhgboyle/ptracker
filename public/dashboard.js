@@ -37,12 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             },
             {
+                headerContent: 'Evening',
+                field: 'eveningshifts',
+                width: '60px'
+
+            },
+            {
                 headerContent: 'Total Shifts',
                 field: 'totalshifts',
                 width: '95px'
             }
         ],
-        resources: {
+        resources:
+            {
             url: 'http://localhost:3000/data/resources'
         },
         events: {
