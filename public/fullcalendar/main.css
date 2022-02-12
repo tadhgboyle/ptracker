@@ -1630,7 +1630,7 @@ vertical slots in both the header AND the body
   padding: 2px 1px;
   margin-bottom: 1px;
   font-size: .85em;
-  font-size: var(--fc-small-font-size, .85em)
+  font-size: var(--fc-small-font-size, .76em)
 
   /* time and title spacing */
   /* ---------------------------------------------------------------------------------------------------- */
