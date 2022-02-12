@@ -17,21 +17,16 @@ const countShifts = (shifts, shiftType) => {
     const currentMonthYear = `${convertMonth(date.getMonth())} ${date.getFullYear()}`
     if (shifts.length === 0) {
         return;
-    }
-    else if (shiftType === 'ALL') {
-        for (const shift of shifts) {
-            const shiftMonth = new Date(shift.date)
-            const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
-            if (monthYear === currentMonthYear) {
-                shiftCounter += 1
-            }
-        }
-        return shiftCounter;
     } else {
         for (const shift of shifts) {
             const shiftMonth = new Date(shift.date)
             const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
-            if (monthYear === currentMonthYear && shift.type == shiftType) {
+            if (shiftType === 'ALL') {
+                if (monthYear === currentMonthYear) {
+                    shiftCounter += 1
+                }
+            }
+            else if (monthYear === currentMonthYear && shift.type == shiftType) {
                 shiftCounter += 1
             }
         }
