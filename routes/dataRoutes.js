@@ -10,6 +10,7 @@ const {isInstructor} = require('../middleware/checkAuth')
 // User Class
 const User = require('../models/User');
 
+// All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
 const countShifts = (shifts, shiftType) => {
     let shiftCounter = 0;
     const date = new Date()
@@ -129,6 +130,7 @@ const shiftColor = (shift) => {
 }
 
 const convertMonth = (monthNum) => {
+    // Returns the correct month, used in countShifts()
     if (monthNum == 0) {
         return "January"
     }
@@ -215,7 +217,7 @@ router.get("/events", async(req,res) => {
             for (let shift of student.shift) {
                 if (student.sectionId == req.user.section.id && student.shift.length >= 1) {
                     shiftDays.push({
-                        title: convertShiftType(shift.type, student.shift),
+                        title: convertShiftType(shift.type, student.shift, shift),
                         start: shift.date.toISOString().split("T")[0],
                         resourceId: student.id,
                         color: shiftColor(shift.type)
