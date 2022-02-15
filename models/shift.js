@@ -44,4 +44,14 @@ module.exports = class Shift {
         });
     }
 
+    static allForLoggedInUser = (userId) => {
+        return Shift.prisma.shift.findMany({
+            where: { userId },
+            include: {
+                user: true,
+                site: true
+            }
+        });
+    }
+
 }

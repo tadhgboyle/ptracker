@@ -5,7 +5,7 @@ const Shift = require('../models/shift');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    res.json(await Shift.all());
+    res.json(await Shift.allForLoggedInUser(req.user.id));
 });
 
 router.post(
