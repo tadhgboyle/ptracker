@@ -4,8 +4,31 @@ const Shift = require('../models/shift');
 
 const router = express.Router();
 
+const shiftColor = (shift) => {
+    if (shift === 'NIGHT') {
+        return '#744468'
+    }
+    else if (shift === 'EVENING') {
+        return '#016BB7'
+    }
+    else if (shift === 'DAY') {
+        return '#ECA446'
+    }
+    else if (shift === 'SICK') {
+        return '#D05353'
+    }
+}
+
 router.get('/', async (req, res) => {
-    res.json(await Shift.allForLoggedInUser(req.user.id));
+    const allShifts = [];
+    for (const shift of await Shift.allForLoggedInUser(req.user.id)) {
+        allShifts.push({
+            title: shift.type,
+            start: shift.date.toISOString().split('T')[0],
+            color: shiftColor(shift.type)
+        })
+    }
+    res.json(allShifts);
 });
 
 router.post(

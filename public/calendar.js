@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
     initialDate: new Date().toISOString().split('T')[0],
     fixedWeekCount: false,
-    editable: true,
+    // editable: true,
     selectable: true,
     businessHours: true,
     dayMaxEvents: true,
