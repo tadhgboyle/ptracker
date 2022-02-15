@@ -1,5 +1,5 @@
 <div id='calendar'>
-    
+
 </div>
 
 <dialog id="addShiftModal" class="bg-transparent z-0 relative w-screen h-screen">
@@ -17,7 +17,7 @@
                 </div>
 
                 <!-- Beginning of Form content -->
-                <form id="addForm" action="/shifts/" method="POST" class="px-7 overflow-x-hidden overflow-y-auto" style="max-height: 40vh;">
+                <form id="addForm" action="/shifts" method="POST" class="px-7 overflow-x-hidden overflow-y-auto" style="max-height: 40vh;">
                     <div id="date-container" class="flex flex-col pb-4">
                         <label class="text-gray-800" for="shiftDatePicker">Shift date:</label>
                         <input type="date" id="shiftDatePicker" name="date" value="2022-01-01">
@@ -39,24 +39,24 @@
                           ease-in-out
                           m-0
                           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                        <option disabled selected value>Select a Site</option>
-                        <option value="1">RCH</option>
-                        <option value="2">RH</option>
-                        <option value="3">SMH</option>
-                        </div>
+                            <option disabled selected>Select a Site</option>
+                            <option value="1">RCH</option>
+                            <option value="2">RH</option>
+                            <option value="3">SMH</option>
+                          </select>
                     </div>
                     <div id="radio-container">
                         <% for( const shift of ["Day","Evening","Night"] ) { %>
                             <div class="form-check">
                                 <input checked value="<%= shift[0] %>" class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="type" id="flexRadioDefault<%= shift %>">
                                 <label class="form-check-label inline-block text-gray-800" for="flexRadioDefault<%= shift %>">
-                                    <%= shift %> 
+                                    <%= shift %>
                                 </label>
                             </div>
-                         <% } %> 
+                         <% } %>
                     </div>
                     <input style="display: none;visibility: hidden;" name="userId" value="<%= user.id %>">
-                    </input>     
+                    </input>
                 </form>
                 <!-- Bottom of modal -->
                 <div class="p-7 flex justify-start items-center w-full">
