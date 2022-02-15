@@ -26,7 +26,9 @@ router.post(
             });
         }
 
-        res.json(await Shift.create(req.body));
+        await Shift.create(req.body);
+
+        res.redirect('/calendar');
     }
 );
 
@@ -46,10 +48,12 @@ router.put(
             });
         }
 
-        res.json(await Shift.update(
+        await Shift.update(
             req.params.id,
             req.body
-        ));
+        );
+
+        res.redirect('/calendar');
     }
 );
 

@@ -18,7 +18,12 @@ module.exports = class Shift {
     static update = (id, data) => {
         Shift.prisma.shift.update({
             where: { id },
-            data
+            data: {
+                user: { connect: { id: parseInt(data.userId) } },
+                site: { connect: { id: parseInt(data.siteId) } },
+                date: new Date(data.date),
+                type: data.type,
+            }
         });
 
         return Shift.prisma.shift.findOne({

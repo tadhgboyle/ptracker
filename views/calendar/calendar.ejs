@@ -46,9 +46,9 @@
                           </select>
                     </div>
                     <div id="radio-container">
-                        <% for( const shift of ["Day","Evening","Night"] ) { %>
+                        <% for (const shift of ["DAY", "EVENING", "NIGHT"]) { %>
                             <div class="form-check">
-                                <input checked value="<%= shift[0] %>" class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="type" id="flexRadioDefault<%= shift %>">
+                                <input checked value="<%= shift %>" class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="type" id="flexRadioDefault<%= shift %>">
                                 <label class="form-check-label inline-block text-gray-800" for="flexRadioDefault<%= shift %>">
                                     <%= shift %>
                                 </label>
@@ -60,7 +60,6 @@
                 <!-- Bottom of modal -->
                 <div class="p-7 flex justify-start items-center w-full">
                     <input type="submit" form="addForm" value="Save" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
-                    </input>
                     <button type="button" onclick="modalClose('addShiftModal')" class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                         Cancel
                     </button>
