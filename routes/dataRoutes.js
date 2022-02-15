@@ -173,6 +173,7 @@ router.get("/resources", async (req,res) => {
             site: findMainSite(req.user.shifts),
             dayshifts: countShifts(req.user.shifts, 'DAY'),
             nightshifts: countShifts(req.user.shifts, 'NIGHT'),
+            eveningshifts: countShifts(req.user.shifts, 'EVENING'),
             totalshifts: countShifts(req.user.shifts, 'ALL')
         })
     } else if (req.user.role === 'INSTRUCTOR') {
