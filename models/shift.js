@@ -4,8 +4,15 @@ module.exports = class Shift {
 
     static prisma = new PrismaClient();
 
-    static create = data => {
-        return Shift.prisma.shift.create(data);
+    static create = (data) => {
+        return Shift.prisma.shift.create({
+            data: {
+                user: { connect: { id: parseInt(data.userId) } },
+                site: { connect: { id: parseInt(data.siteId) } },
+                date: new Date(data.date),
+                type: data.type,
+            }
+        });
     }
 
     static update = (id, data) => {

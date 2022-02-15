@@ -1,10 +1,6 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    const calendar = new FullCalendar.Calendar( document.getElementById('calendar'), {
         contentHeight: 'auto',
-        // googleCalendarApiKey: ,
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         initialView: 'resourceTimelineMonth',
         header: {
@@ -48,13 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 width: '95px'
             }
         ],
-        resources:
-            {
+        resources: {
             url: 'http://localhost:3000/data/resources'
         },
         events: {
             url: 'http://localhost:3000/data/events'
-        }
+        },
     });
 
     calendar.render();

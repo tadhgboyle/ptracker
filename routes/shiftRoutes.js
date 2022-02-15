@@ -13,8 +13,10 @@ router.post(
     [
         check('userId').isInt(),
         check('siteId').isInt(),
-        check('date').isDate(),
-        check('type').isIn(['D', 'E', 'N']),
+        check('date').isDate({
+            format: 'YYYY-MM-DD'
+        }),
+        check('type').isIn(['DAY', 'EVENING', 'NIGHT']),
     ],
     async (req, res) => {
         const errors = validationResult(req)
