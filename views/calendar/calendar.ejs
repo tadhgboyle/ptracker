@@ -23,7 +23,7 @@
                         <input type="date" id="shiftDatePicker" name="date" value="2022-01-01">
                     </div>
                     <div id="site-container">
-                          <select required name="siteId" class="form-select appearance-none
+                          <select required onclick="stopSubmit()" id="siteId" name="siteId" class="form-select appearance-none
                           block
                           w-full
                           px-3
@@ -59,7 +59,7 @@
                 </form>
                 <!-- Bottom of modal -->
                 <div class="p-7 flex justify-start items-center w-full">
-                    <input type="submit" form="addForm" value="Save" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
+                    <input id="saveButton" type="submit" form="addForm" value="Save" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
                     <button type="button" onclick="modalClose('addShiftModal')" class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                         Cancel
                     </button>
