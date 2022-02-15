@@ -2,7 +2,7 @@
 // Functions for open/closing modals
 // Pass DOM element id as argument
 function openModal(key) {
-  document.getElementById(key).showModal(); 
+  document.getElementById(key).style.display = "block";
   document.getElementById(key).children[0].scrollTop = 0; 
   document.getElementById(key).children[0].classList.remove('opacity-0'); 
   document.getElementById(key).children[0].classList.add('opacity-100')
@@ -12,7 +12,7 @@ function modalClose(key) {
   document.getElementById(key).children[0].classList.remove('opacity-100');
   document.getElementById(key).children[0].classList.add('opacity-0');
   setTimeout(function () {
-      document.getElementById(key).close();
+      document.getElementById(key).style.display = "none";
       document.body.removeAttribute('style');
   }, 100);
 }
