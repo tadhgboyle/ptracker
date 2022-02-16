@@ -27,13 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dateClick: function(info) {
       openModal('addShiftModal')
       document.getElementById('shiftDatePicker').value = info.dateStr
-
-      let random = document.getElementById("siteId").value
-      let save = document.getElementById("saveButton")
-      if (random === "Select a Site") {
-        save.disabled = true
-      }
-
     },
     eventClick: function(info) {
 
