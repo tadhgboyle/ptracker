@@ -14,17 +14,6 @@ function modalClose(key) {
   }, 100);
 }
 
-function stopSubmit() {
-  // This function disables the save button until they input a shift
-  let random = document.getElementById("siteId").value
-  let save = document.getElementById("saveButton")
-  if (random === "Select a Site") {
-    save.disabled = true
-  } else {
-    save.disabled = false
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
