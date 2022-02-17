@@ -4,6 +4,11 @@ const express = require('express');
 
 const router = express.Router();
 
+// Holidays, Date, and Emojis
+const date = new Date()
+const Holidays = require('date-holidays')
+const hd = new Holidays('CA', 'BC')
+
 // Authentication of Instructor
 const {isInstructor} = require('../middleware/checkAuth')
 
@@ -13,7 +18,6 @@ const User = require('../models/User');
 // All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
 const countShifts = (shifts, shiftType) => {
     let shiftCounter = 0;
-    const date = new Date()
     const currentMonthYear = `${convertMonth(date.getMonth())} ${date.getFullYear()}`
     if (shifts.length === 0) {
         return;
@@ -197,6 +201,7 @@ router.get("/resources", async (req,res) => {
 
 router.get("/events", async(req,res) => {
     const shiftDays = [];
+    // console.log(hd.getHolidays(date.getFullYear()))
     if (req.user.role === 'STUDENT') {
         for (const shift of req.user.shifts) {
             shiftDays.push({

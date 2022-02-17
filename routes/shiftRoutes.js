@@ -1,6 +1,13 @@
 const express = require('express');
+
+// Validaton and shifts
 const { check, validationResult } = require('express-validator')
 const Shift = require('../models/shift');
+
+// Holidays
+const date = new Date()
+const Holidays = require('date-holidays')
+const hd = new Holidays('CA', 'BC')
 
 const router = express.Router();
 
@@ -26,6 +33,14 @@ router.get('/', async (req, res) => {
             title: shift.type,
             start: shift.date.toISOString().split('T')[0],
             color: shiftColor(shift.type)
+        })
+    }
+    for (let holiday of hd.getHolidays(date.getFullYear())) {
+        allShifts.push({
+            title: holiday.name,
+            start: holiday.start.toISOString().split("T")[0],
+            resourceId: req.user.id,
+            color: '#577590'
         })
     }
     res.json(allShifts);
