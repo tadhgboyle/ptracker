@@ -57,50 +57,22 @@ const findMainSite = (shifts) => {
     }
 }
 
-const convertSiteId = (shift) => {
-    // Used by the function convertShiftType() to get the site name
-    if (shift.siteId === 1) {
-        return 'RCH';
-    }
-    else if (shift.siteId === 2) {
-        return 'SMH';
-    }
-    else if (shift.siteId === 3) {
-        return 'RH';
-    }
-}
-
 const convertShiftType = (type, allShifts, shift) => {
     const site = findMainSite(allShifts)
     if (allShifts.length === 0) {
         return 0
     } else {
-        if (convertSiteId(shift) === site) {
-            if (type === 'NIGHT') {
-                return 'N'
-            }
-            else if (type === 'EVENING') {
-                return 'E'
-            }
-            else if (type === 'DAY') {
-                return 'D'
-            }
-            else if (type === 'SICK') {
-                return 'S'
-            }
-        } else {
-            if (type === 'NIGHT') {
-                return `N, ${convertSiteId(shift)}`
-            }
-            else if (type === 'EVENING') {
-                return `E, ${convertSiteId(shift)}`
-            }
-            else if (type === 'DAY') {
-                return `D, ${convertSiteId(shift)}`
-            }
-            else if (type === 'SICK') {
-                return `S, ${convertSiteId(shift)}`
-            }
+        if (type === 'NIGHT') {
+            return 'N'
+        }
+        else if (type === 'EVENING') {
+            return 'E'
+        }
+        else if (type === 'DAY') {
+            return 'D'
+        }
+        else if (type === 'SICK') {
+            return 'S'
         }
     }
 }
