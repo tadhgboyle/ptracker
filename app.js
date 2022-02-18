@@ -30,7 +30,7 @@ app.use(logger('dev'));
 
 app.use(ejsLayouts)
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.set('view engine', 'ejs');
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
@@ -40,14 +40,15 @@ app.use(cookieSession({
 app.use(cors());
 
 app.use(session({
-    secret: 'melody hensley is my spirit animal',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        secure: false,
-        maxAge: 24 * 60 * 60 * 1000
-    }}
+        secret: 'melody hensley is my spirit animal',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            secure: false,
+            maxAge: 24 * 60 * 60 * 1000
+        }
+    }
 ));
 
 app.use(passport.initialize());

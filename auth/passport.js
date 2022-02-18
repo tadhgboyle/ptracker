@@ -1,6 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { PrismaClient } = require('@prisma/client');
+const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const User = require('../models/user');
 
@@ -42,7 +42,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     const checkUser = await prisma.user.findUnique({
-        where: { id: parseInt(id) },
+        where: {id: parseInt(id)},
         include: {
             section: true,
             shift: true,

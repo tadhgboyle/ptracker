@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>PTracker</title>
-        <link href="../stylesheets/tailwind.css" rel="stylesheet" type="text/css">
-        <link rel="icon" href="../img/favicon.ico">
-        <script src="../theme.js"></script> 
-        <% if (locals.page) { %>
-            <% if (page === 'calendar') { %>
-                <script src="calendar.js" defer></script>    
-                <link href='fullcalendar/main.css' rel='stylesheet' />
-                <script src='fullcalendar/main.js'></script>
-                <% } %>
-            <% if (page === 'dashboard') { %>
-                <script src="dashboard.js" defer></script>
-                <link href='fullcalendar/main.css' rel='stylesheet' />
-                <script src='fullcalendar/main.js'></script>
-                <% } %>
+<head>
+    <meta charset="utf-8">
+    <title>PTracker</title>
+    <link href="../stylesheets/tailwind.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="../img/favicon.ico">
+    <script src="../theme.js"></script>
+    <% if (locals.page) { %>
+        <% if (page === 'calendar') { %>
+            <script src="calendar.js" defer></script>
+            <link href='fullcalendar/main.css' rel='stylesheet'/>
+            <script src='fullcalendar/main.js'></script>
         <% } %>
-    </head>
-    <body class="dark:bg-gray-800 dark:text-white">
-        <%- include("./partials/navbar") %>
-        <div class="container mx-auto pt-8">
-            <%- body %>
-        </div>
-        <!-- <%- include("./partials/footer") %> -->
-    </body>
+        <% if (page === 'dashboard') { %>
+            <script src="dashboard.js" defer></script>
+            <link href='fullcalendar/main.css' rel='stylesheet'/>
+            <script src='fullcalendar/main.js'></script>
+        <% } %>
+    <% } %>
+</head>
+<body class="dark:bg-gray-800 dark:text-white">
+<%- include("./partials/navbar") %>
+<div class="container mx-auto pt-8">
+    <%- body %>
+</div>
+<!-- <%- include("./partials/footer") %> -->
+</body>
 </html>

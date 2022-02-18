@@ -1,6 +1,4 @@
-
-
-window.addEventListener("load", ()=>{
+window.addEventListener("load", () => {
     document.getElementById('darkMode').addEventListener('click', () => {
         if (document.documentElement.classList.contains('dark')) {
             document.documentElement.classList.remove('dark');

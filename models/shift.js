@@ -7,8 +7,8 @@ module.exports = class Shift {
     static create = (data) => {
         return Shift.prisma.shift.create({
             data: {
-                user: { connect: { id: parseInt(data.userId) } },
-                site: { connect: { id: parseInt(data.siteId) } },
+                user: {connect: {id: parseInt(data.userId)}},
+                site: {connect: {id: parseInt(data.siteId)}},
                 date: new Date(data.date),
                 type: data.type,
             }
@@ -17,17 +17,17 @@ module.exports = class Shift {
 
     static update = (id, data) => {
         Shift.prisma.shift.update({
-            where: { id },
+            where: {id},
             data: {
-                user: { connect: { id: parseInt(data.userId) } },
-                site: { connect: { id: parseInt(data.siteId) } },
+                user: {connect: {id: parseInt(data.userId)}},
+                site: {connect: {id: parseInt(data.siteId)}},
                 date: new Date(data.date),
                 type: data.type,
             }
         });
 
         return Shift.prisma.shift.findOne({
-            where: { id },
+            where: {id},
             include: {
                 user: true,
                 site: true
@@ -46,7 +46,7 @@ module.exports = class Shift {
 
     static allForLoggedInUser = (userId) => {
         return Shift.prisma.shift.findMany({
-            where: { userId },
+            where: {userId},
             include: {
                 user: true,
                 site: true
