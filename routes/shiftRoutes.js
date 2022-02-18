@@ -47,6 +47,7 @@ router.get('/', async (req, res) => {
     const allShifts = [];
     for (const shift of await Shift.allForLoggedInUser(req.user.id)) {
         allShifts.push({
+            id: shift.id,
             title: shift.type,
             start: shift.date.toISOString().split('T')[0],
             color: shiftColor(shift.type)
@@ -92,7 +93,7 @@ router.put(
         check('userId').isInt(),
         check('siteId').isInt(),
         check('date').isDate(),
-        check('type').isIn(['D', 'E', 'N']),
+        check('type').isIn(['DAY', 'EVENING', 'NIGHT']),
     ],
     async (req, res) => {
         const errors = validationResult(req)

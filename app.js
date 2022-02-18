@@ -15,7 +15,7 @@ const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/indexRoutes');
 const shiftRouter = require('./routes/shiftRoutes');
 const dataRouter = require('./routes/dataRoutes')
-
+const methodOverride = require('method-override')
 // Loggers and cors
 const logger = require('morgan');
 const cors = require('cors');
@@ -23,7 +23,7 @@ const cors = require('cors');
 const app = express();
 
 require('./auth/passport');
-
+app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(logger('dev'));

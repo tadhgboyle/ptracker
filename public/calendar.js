@@ -26,10 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dateClick: function(info) {
       openModal('addShiftModal')
-      document.getElementById('shiftDatePicker').value = info.dateStr
+      document.getElementById('addDatePicker').value = info.dateStr
     },
     eventClick: function(info) {
-
+      date = info.event.start.toISOString().split('T')[0]
+      openModal('editShiftModal')
+      document.getElementById('editDatePicker').value = date
+      document.getElementById('editForm').action = `/shifts/${info.event.id}?_method=PUT`
     },
     events: {
       url: 'http://localhost:3000/shifts',
