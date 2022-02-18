@@ -8,13 +8,13 @@
         <tbody>
             <% for (const student of students) { %>
                 <tr>
-                <% if (student.sectionId == user.section.id) { %>
-                        <% if (student.id !== user.id) {%>
-                            <td class="text-left pl-5 border bg-inherit border-gray-200"><%= student.name %></td>
-                            <td class="flex justify-center border-b border-gray-200">
-                                <a class="my-2.5 bg-red-500 hover:bg-red-400 text-white text-center font-semibold py-1.5 px-4 hover:border-red-500 rounded" href="<%= "/delete/" + student.id %>">Delete</a>
-                            </td>
-                        <% }%>    
+                <% if (student.sectionId === user.section.id) { %>
+                    <% if (student.id !== user.id) {%>
+                        <td class="text-left pl-5 border bg-inherit border-gray-200"><%= student.name %></td>
+                        <td class="flex justify-center border-b border-gray-200">
+                            <a class="my-2.5 bg-red-500 hover:bg-red-400 text-white text-center font-semibold py-1.5 px-4 hover:border-red-500 rounded" href="<%= "/delete/" + student.id %>">Delete</a>
+                        </td>
+                    <% }%>
                 <% } %>
                 </tr>
             <% } %>

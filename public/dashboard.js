@@ -1,3 +1,6 @@
+//const URL = 'http://localhost:3000';
+const URL = 'http://463a-2604-3d08-527f-e4a0-1c36-2d5-6952-d1fb.ngrok.io';
+
 document.addEventListener('DOMContentLoaded', function() {
     const calendar = new FullCalendar.Calendar( document.getElementById('calendar'), {
         contentHeight: 'auto',
@@ -44,11 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 width: '95px'
             }
         ],
-        resources: {
-            url: 'http://localhost:3000/data/resources'
-        },
         events: {
-            url: 'http://localhost:3000/data/events'
+            url: URL + '/data/events'
         },
     });
 
