@@ -57,21 +57,16 @@
                             </div>
                         </label>
                     </div>
-                    <span class="bg-<%= user.notificationsColour() %>-100 px-3 py-2 rounded-md text-sm font-medium dark:text-black"
-                          title="Notifications">
-                            🚨 <%= user.notifications.length %>
-                        </span>
+                    <span class="bg-<%= user.notificationsColour() %>-100 px-3 py-2 rounded-md text-sm font-medium dark:text-black" title="Notifications">
+                        🚨 <%= user.notifications.length %>
+                    </span>
                     <span class="px-3 py-2 text-blue-500 underline dark:text-white">
-                            <%= user.name %>
-                        </span>
-                    <% if (user.picture) { %>
-                        <div class="pr-2">
-                            <img class="h-8 rounded-full mt-1 shadow-sm" src="<%= user.picture %>"
-                                 referrerPolicy="no-referrer" alt="">
-                        </div>
-                    <% } %>
-                    <a href="/auth/logout"
-                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                        <%= user.name %>
+                    </span>
+                    <div class="pr-2">
+                        <img class="h-8 rounded-full mt-1 shadow-sm" src="<%= user.picture %>" referrerPolicy="no-referrer" alt="">
+                    </div>
+                    <a href="/auth/logout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                         Logout
                     </a>
                 </div>

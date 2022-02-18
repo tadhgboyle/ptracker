@@ -15,6 +15,7 @@ const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/indexRoutes');
 const shiftRouter = require('./routes/shiftRoutes');
 const dataRouter = require('./routes/dataRoutes')
+const adminRouter = require('./routes/adminRoutes');
 const methodOverride = require('method-override')
 // Loggers and cors
 const logger = require('morgan');
@@ -59,6 +60,7 @@ app.use('/', indexRouter);
 app.use('/shifts', shiftRouter);
 app.use('/auth', authRouter);
 app.use('/data', dataRouter)
+app.use('/admin', adminRouter)
 
 app.use((req, res, next) => {
     next(createError(404));

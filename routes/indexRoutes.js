@@ -21,13 +21,14 @@ router.get('/calendar', ensureAuthenticated, (req, res) => {
 router.get('/section', isInstructor, async (req, res) => {
     res.render('section/overview', {
         page: 'section',
-        students: await User.all(),
+        students: await User.allInSection(req.user.section.id),
     });
 });
 
-router.get('/admin', isAdmin, (req, res) => {
+router.get('/admin', isAdmin, async (req, res) => {
     res.render('admin/overview', {
         page: 'admin',
+        users: await User.all(),
     });
 });
 

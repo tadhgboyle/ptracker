@@ -57,15 +57,20 @@ module.exports = class User {
         });
     }
 
+    static allInSection = async (sectionId) => {
+        return await User.prisma.user.findMany({
+            where: {sectionId: parseInt(sectionId)},
+            include: {
+                section: true,
+                shift: true,
+            },
+        });
+    }
+
     static update = async (id, data) => {
         return await User.prisma.user.update({
             where: {id: parseInt(id)},
-            data: {
-                name: data.name,
-                email: data.email,
-                password: data.password,
-                role: data.role
-            }
+            data: data,
         });
     }
 }
