@@ -6,6 +6,7 @@ const router = express.Router();
 const date = new Date()
 
 const User = require('../models/User');
+const Role = require('../models/Role');
 
 // All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
 const countShifts = (shifts, shiftType) => {
@@ -128,7 +129,7 @@ const convertMonth = (monthNum) => {
 
 router.get("/resources", async (req,res) => {
     const allUsersInSection = [];
-    if (req.user.role === 'STUDENT' && req.user.shifts.length >= 1) {
+    if (req.user.role === Role.STUDENT && req.user.shifts.length >= 1) {
         allUsersInSection.push({
             id: req.user.id,
             name: req.user.name,
@@ -138,7 +139,7 @@ router.get("/resources", async (req,res) => {
             eveningshifts: countShifts(req.user.shifts, 'EVENING'),
             totalshifts: countShifts(req.user.shifts, 'ALL')
         })
-    } else if (req.user.role === 'INSTRUCTOR') {
+    } else if (req.user.role === Role.INSTRUCTOR) {
         const allStudents = await User.all();
         for (let student of allStudents) {
             if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
@@ -159,7 +160,7 @@ router.get("/resources", async (req,res) => {
 
 router.get("/events", async(req,res) => {
     const shiftDays = [];
-    if (req.user.role === 'STUDENT') {
+    if (req.user.role === Role.STUDENT) {
         for (const shift of req.user.shifts) {
             shiftDays.push({
                 title: convertShiftType(shift.type, req.user.shifts, shift),
