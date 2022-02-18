@@ -69,26 +69,14 @@ const convertShiftType = (type, allShifts, shift) => {
     if (allShifts.length === 0) {
         return 0
     } else {
-        if (convertSiteId(shift) === site) {
-            if (type === 'NIGHT') {
-                return 'N'
-            } else if (type === 'EVENING') {
-                return 'E'
-            } else if (type === 'DAY') {
-                return 'D'
-            } else if (type === 'SICK') {
-                return 'S'
-            }
-        } else {
-            if (type === 'NIGHT') {
-                return `N, ${convertSiteId(shift)}`
-            } else if (type === 'EVENING') {
-                return `E, ${convertSiteId(shift)}`
-            } else if (type === 'DAY') {
-                return `D, ${convertSiteId(shift)}`
-            } else if (type === 'SICK') {
-                return `S, ${convertSiteId(shift)}`
-            }
+        if (type === 'NIGHT') {
+            return 'N'
+        } else if (type === 'EVENING') {
+            return 'E'
+        } else if (type === 'DAY') {
+            return 'D'
+        } else if (type === 'SICK') {
+            return 'S'
         }
     }
 }
