@@ -6,6 +6,7 @@ const router = express.Router();
 const date = new Date()
 
 const User = require('../models/User');
+const Role = require('../models/Role');
 
 // All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
 const countShifts = (shifts, shiftType) => {
@@ -22,8 +23,7 @@ const countShifts = (shifts, shiftType) => {
             if (monthYear === currentMonthYear) {
                 shiftCounter += 1
             }
-        }
-        else if (monthYear === currentMonthYear && shift.type === shiftType) {
+        } else if (monthYear === currentMonthYear && shift.type === shiftType) {
             shiftCounter += 1
         }
     }
@@ -38,22 +38,29 @@ const findMainSite = (shifts) => {
     for (const shift of shifts) {
         if (shift.siteId === 1) {
             RCH.push(shift)
-        }
-        else if (shift.siteId === 2) {
+        } else if (shift.siteId === 2) {
             SMH.push(shift)
-        }
-        else if (shift.siteId === 3) {
+        } else if (shift.siteId === 3) {
             RH.push(shift)
         }
     }
     if (RCH.length > SMH.length && RCH.length > RH.length) {
         return 'RCH'
-    }
-    else if (SMH.length > RCH.length && SMH.length > RH.length) {
+    } else if (SMH.length > RCH.length && SMH.length > RH.length) {
         return 'SMH'
-    }
-    else if (RH.length > RCH.length && RH.length > SMH.length){
+    } else if (RH.length > RCH.length && RH.length > SMH.length) {
         return 'RH'
+    }
+}
+
+const convertSiteId = (shift) => {
+    // Used by the function convertShiftType() to get the site name
+    if (shift.siteId === 1) {
+        return 'RCH';
+    } else if (shift.siteId === 2) {
+        return 'SMH';
+    } else if (shift.siteId === 3) {
+        return 'RH';
     }
 }
 
@@ -62,17 +69,26 @@ const convertShiftType = (type, allShifts, shift) => {
     if (allShifts.length === 0) {
         return 0
     } else {
-        if (type === 'NIGHT') {
-            return 'N'
-        }
-        else if (type === 'EVENING') {
-            return 'E'
-        }
-        else if (type === 'DAY') {
-            return 'D'
-        }
-        else if (type === 'SICK') {
-            return 'S'
+        if (convertSiteId(shift) === site) {
+            if (type === 'NIGHT') {
+                return 'N'
+            } else if (type === 'EVENING') {
+                return 'E'
+            } else if (type === 'DAY') {
+                return 'D'
+            } else if (type === 'SICK') {
+                return 'S'
+            }
+        } else {
+            if (type === 'NIGHT') {
+                return `N, ${convertSiteId(shift)}`
+            } else if (type === 'EVENING') {
+                return `E, ${convertSiteId(shift)}`
+            } else if (type === 'DAY') {
+                return `D, ${convertSiteId(shift)}`
+            } else if (type === 'SICK') {
+                return `S, ${convertSiteId(shift)}`
+            }
         }
     }
 }
@@ -80,14 +96,11 @@ const convertShiftType = (type, allShifts, shift) => {
 const shiftColor = (shift) => {
     if (shift === 'NIGHT') {
         return '#744468'
-    }
-    else if (shift === 'EVENING') {
+    } else if (shift === 'EVENING') {
         return '#016BB7'
-    }
-    else if (shift === 'DAY') {
+    } else if (shift === 'DAY') {
         return '#ECA446'
-    }
-    else if (shift === 'SICK') {
+    } else if (shift === 'SICK') {
         return '#D05353'
     }
 }
@@ -98,9 +111,9 @@ const convertMonth = (monthNum) => {
     ][monthNum];
 }
 
-router.get("/resources", async (req,res) => {
+router.get("/resources", async (req, res) => {
     const allUsersInSection = [];
-    if (req.user.role === 'STUDENT' && req.user.shifts.length >= 1) {
+    if (req.user.role === Role.STUDENT && req.user.shifts.length >= 1) {
         allUsersInSection.push({
             id: req.user.id,
             name: req.user.name,
@@ -110,7 +123,7 @@ router.get("/resources", async (req,res) => {
             eveningshifts: countShifts(req.user.shifts, 'EVENING'),
             totalshifts: countShifts(req.user.shifts, 'ALL')
         })
-    } else if (req.user.role === 'INSTRUCTOR') {
+    } else if (req.user.role === Role.INSTRUCTOR) {
         const allStudents = await User.all();
         for (let student of allStudents) {
             if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
@@ -129,9 +142,9 @@ router.get("/resources", async (req,res) => {
     res.json(allUsersInSection)
 })
 
-router.get("/events", async(req,res) => {
+router.get("/events", async (req, res) => {
     const shiftDays = [];
-    if (req.user.role === 'STUDENT') {
+    if (req.user.role === Role.STUDENT) {
         for (const shift of req.user.shifts) {
             shiftDays.push({
                 title: convertShiftType(shift.type, req.user.shifts, shift),

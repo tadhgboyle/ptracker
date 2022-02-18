@@ -1,7 +1,7 @@
 const express = require('express');
 
 // Validaton and shifts
-const { check, validationResult } = require('express-validator')
+const {check, validationResult} = require('express-validator')
 const Shift = require('../models/shift');
 
 // Holidays
@@ -14,14 +14,11 @@ const router = express.Router();
 const shiftColor = (shift) => {
     if (shift === 'NIGHT') {
         return '#744468'
-    }
-    else if (shift === 'EVENING') {
+    } else if (shift === 'EVENING') {
         return '#016BB7'
-    }
-    else if (shift === 'DAY') {
+    } else if (shift === 'DAY') {
         return '#ECA446'
-    }
-    else if (shift === 'SICK') {
+    } else if (shift === 'SICK') {
         return '#D05353'
     }
 }
@@ -32,11 +29,9 @@ const convertTimeFormat = (holidayDate) => {
     const dateSplit = splitDateTime.split("/")
     if (parseInt(dateSplit[0]) <= 9 && parseInt(dateSplit[1]) <= 9) {
         return `${dateSplit[2]}-0${dateSplit[0]}-0${dateSplit[1]}`
-    }
-    else if (parseInt(dateSplit[0]) >= 10 && parseInt(dateSplit[1]) <= 9) {
+    } else if (parseInt(dateSplit[0]) >= 10 && parseInt(dateSplit[1]) <= 9) {
         return `${dateSplit[2]}-${dateSplit[0]}-0${dateSplit[1]}`
-    }
-    else if (parseInt(dateSplit[0]) <= 9 && parseInt(dateSplit[1]) >= 10) {
+    } else if (parseInt(dateSplit[0]) <= 9 && parseInt(dateSplit[1]) >= 10) {
         return `${dateSplit[2]}-0${dateSplit[0]}-${dateSplit[1]}`
     } else {
         return `${dateSplit[2]}-${dateSplit[0]}-${dateSplit[1]}`

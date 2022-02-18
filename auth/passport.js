@@ -1,10 +1,10 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { PrismaClient } = require('@prisma/client');
+const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const User = require('../models/user');
 
-// const URL = 'http://463a-2604-3d08-527f-e4a0-1c36-2d5-6952-d1fb.ngrok.io';
+//const URL = 'http://288b-2604-3d08-527f-e4a0-1c36-2d5-6952-d1fb.ngrok.io';
 const URL = 'http://localhost:3000';
 
 const GOOGLE_CALLBACK_URL = URL + '/auth/google/callback';
@@ -42,7 +42,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     const checkUser = await prisma.user.findUnique({
-        where: { id: parseInt(id) },
+        where: {id: parseInt(id)},
         include: {
             section: true,
             shift: true,

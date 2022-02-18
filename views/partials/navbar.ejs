@@ -7,16 +7,19 @@
                 </div>
                 <% if (user) { %>
                     <div class="ml-10 flex items-center space-x-4">
-                        <a href="/dashboard" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'dashboard') { %> border <% } %>">
+                        <a href="/dashboard"
+                           class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'dashboard') { %> border <% } %>">
                             🏡 Dashboard
                         </a>
 
-                        <a href="/calendar" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
+                        <a href="/calendar"
+                           class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
                             🗓️ Calendar
                         </a>
 
                         <% if (user.isInstructor()) { %>
-                            <a href="/section" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'section') { %> border <% } %>">
+                            <a href="/section"
+                               class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'section') { %> border <% } %>">
                                 👥 Section
                             </a>
 
@@ -27,48 +30,52 @@
                             -->
 
                             <% if (user.isAdmin()) { %>
-                                <a href="/admin" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'admin') { %> border <% } %>">
+                                <a href="/admin"
+                                   class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'admin') { %> border <% } %>">
                                     👮 Adminland
                                 </a>
                             <% } %>
                         <% } %>
 
                     </div>
-                </div>
-                <div class="flex items-center">
-                    <div class="ml-10 flex space-x-1">
-                        <!-- Dark Toggle -->
-                        <div class="flex items-center justify-center">
-                            <label for="darkMode" class="flex items-center cursor-pointer">
-                              <!-- label -->
-                              <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
+            </div>
+            <div class="flex items-center">
+                <div class="ml-10 flex space-x-1">
+                    <!-- Dark Toggle -->
+                    <div class="flex items-center justify-center">
+                        <label for="darkMode" class="flex items-center cursor-pointer">
+                            <!-- label -->
+                            <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
                                 Dark Mode
-                              </div>
-                              <!-- toggle -->
-                              <div class="relative">
+                            </div>
+                            <!-- toggle -->
+                            <div class="relative">
                                 <input type="checkbox" id="darkMode" class="sr-only">
                                 <!-- line -->
                                 <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"></div>
                                 <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
-                              </div>
-                            </label>    
-                        </div>
-                        <span class="bg-<%= user.notificationsColour() %>-100 px-3 py-2 rounded-md text-sm font-medium dark:text-black" title="Notifications">
+                            </div>
+                        </label>
+                    </div>
+                    <span class="bg-<%= user.notificationsColour() %>-100 px-3 py-2 rounded-md text-sm font-medium dark:text-black"
+                          title="Notifications">
                             🚨 <%= user.notifications.length %>
                         </span>
-                        <span class="px-3 py-2 text-blue-500 underline dark:text-white">
+                    <span class="px-3 py-2 text-blue-500 underline dark:text-white">
                             <%= user.name %>
                         </span>
-                        <% if (user.picture) { %>
-                            <div class="pr-2">
-                                <img class="h-8 rounded-full mt-1 shadow-sm" src="<%= user.picture %>" referrerPolicy="no-referrer" alt="">
-                            </div>
-                        <% } %>
-                        <a href="/auth/logout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                            Logout
-                        </a>
-                    </div>
+                    <% if (user.picture) { %>
+                        <div class="pr-2">
+                            <img class="h-8 rounded-full mt-1 shadow-sm" src="<%= user.picture %>"
+                                 referrerPolicy="no-referrer" alt="">
+                        </div>
+                    <% } %>
+                    <a href="/auth/logout"
+                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                        Logout
+                    </a>
                 </div>
+            </div>
             <% } %>
         </div>
     </div>

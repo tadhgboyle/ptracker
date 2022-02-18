@@ -11,19 +11,22 @@
                     <!-- Title -->
                     <div class="text-gray-900 font-bold text-lg">Add a Shift</div>
                     <!-- X button -->
-                    <svg onclick="modalClose('addShiftModal')" class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+                    <svg onclick="modalClose('addShiftModal')"
+                         class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                     </svg>
                 </div>
 
                 <!-- Beginning of Form content -->
-                <form id="addForm" action="/shifts" method="POST" class="px-7 overflow-x-hidden overflow-y-auto" style="max-height: 40vh;">
+                <form id="addForm" action="/shifts" method="POST" class="px-7 overflow-x-hidden overflow-y-auto"
+                      style="max-height: 40vh;">
                     <div class="date-container flex flex-col pb-4 ">
                         <label class="text-gray-800" for="addDatePicker">Shift date:</label>
                         <input type="date" id="addDatePicker" name="date" value="2022-01-01">
                     </div>
                     <div class="site-container">
-                          <select required  name="siteId" class="form-select appearance-none
+                        <select required name="siteId" class="form-select appearance-none
                           block
                           w-full
                           px-3
@@ -43,24 +46,29 @@
                             <option value="1">RCH</option>
                             <option value="2">SMH</option>
                             <option value="3">RH</option>
-                          </select>
+                        </select>
                     </div>
                     <div class="radio-container">
                         <% for (const shift of ["DAY", "EVENING", "NIGHT"]) { %>
                             <div class="form-check">
-                                <input checked type="radio" name="type" id="addRadioDefault<%= shift %>" value="<%= shift %>" class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" >
-                                <label class="form-check-label inline-block text-gray-800" for="addRadioDefault<%= shift %>">
+                                <input checked type="radio" name="type" id="addRadioDefault<%= shift %>"
+                                       value="<%= shift %>"
+                                       class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
+                                <label class="form-check-label inline-block text-gray-800"
+                                       for="addRadioDefault<%= shift %>">
                                     <%= shift %>
                                 </label>
                             </div>
-                         <% } %>
+                        <% } %>
                     </div>
                     <input type="hidden" name="userId" value="<%= user.id %>">
                 </form>
                 <!-- Bottom of modal -->
                 <div class="p-7 flex justify-start items-center w-full">
-                    <input type="submit" form="addForm" value="Add Shift" class="save-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
-                    <button type="button" onclick="modalClose('addShiftModal')" class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    <input type="submit" form="addForm" value="Add Shift"
+                           class="save-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
+                    <button type="button" onclick="modalClose('addShiftModal')"
+                            class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                         Cancel
                     </button>
                 </div>
@@ -78,20 +86,23 @@
                     <!-- Title -->
                     <div class="text-gray-900 font-bold text-lg">Edit a Shift</div>
                     <!-- X button -->
-                    <svg onclick="modalClose('editShiftModal')" class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+                    <svg onclick="modalClose('editShiftModal')"
+                         class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                     </svg>
                 </div>
 
                 <!-- Beginning of Form content -->
-                <form id="editForm" action="/shifts" method="POST" class="px-7 overflow-x-hidden overflow-y-auto" style="max-height: 40vh;">
+                <form id="editForm" action="/shifts" method="POST" class="px-7 overflow-x-hidden overflow-y-auto"
+                      style="max-height: 40vh;">
                     <div class="date-container flex flex-col pb-4 text-gray-400">
                         <label class="text-gray-800" for="editDatePicker">Shift date:</label>
-                        <input type="hidden"  name="date" value="2022-01-01">
+                        <input type="hidden" name="date" value="2022-01-01">
                         <input disabled type="date" id="editDatePicker" class="text-gray-400" value="2022-01-01">
                     </div>
                     <div class="site-container">
-                          <select required  name="siteId" class="form-select appearance-none
+                        <select required name="siteId" class="form-select appearance-none
                           block
                           w-full
                           px-3
@@ -111,24 +122,29 @@
                             <option value="1">RCH</option>
                             <option value="2">SMH</option>
                             <option value="3">RH</option>
-                          </select>
+                        </select>
                     </div>
                     <div class="radio-container">
                         <% for (const shift of ["DAY", "EVENING", "NIGHT"]) { %>
                             <div class="form-check">
-                                <input checked type="radio" name="type" id="addRadioDefault<%= shift %>" value="<%= shift %>" class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" >
-                                <label class="form-check-label inline-block text-gray-800" for="addRadioDefault<%= shift %>">
+                                <input checked type="radio" name="type" id="addRadioDefault<%= shift %>"
+                                       value="<%= shift %>"
+                                       class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
+                                <label class="form-check-label inline-block text-gray-800"
+                                       for="addRadioDefault<%= shift %>">
                                     <%= shift %>
                                 </label>
                             </div>
-                         <% } %>
+                        <% } %>
                     </div>
                     <input type="hidden" name="userId" value="<%= user.id %>">
                 </form>
                 <!-- Bottom of modal -->
                 <div class="p-7 flex justify-start items-center w-full">
-                    <input type="submit" form="editForm" value="Save Changes" class="save-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
-                    <button type="button" onclick="modalClose('editShiftModal')" class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    <input type="submit" form="editForm" value="Save Changes"
+                           class="save-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
+                    <button type="button" onclick="modalClose('editShiftModal')"
+                            class="bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                         Cancel
                     </button>
                 </div>

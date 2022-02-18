@@ -1,6 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
+const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
-const { faker } = require('@faker-js/faker');
+const {faker} = require('@faker-js/faker');
 const Role = require('../models/Role');
 
 async function main() {
@@ -33,7 +33,7 @@ async function main() {
             id: i,
             name: faker.name.firstName() + ' ' + faker.name.lastName(),
             email: faker.internet.email(),
-            googleId: faker.datatype.number({ min: 11491216591676147997, max: 12691216591676147997 }).toString(),
+            googleId: faker.datatype.number({min: 11491216591676147997, max: 12691216591676147997}).toString(),
             role: i <= 4 ? Role.INSTRUCTOR : faker.random.arrayElement([
                 Role.STUDENT,
                 Role.INSTRUCTOR,
@@ -78,9 +78,9 @@ async function main() {
     }
 
     await prisma.shift.createMany({
-       data: [
-           ...shifts
-       ],
+        data: [
+            ...shifts
+        ],
     });
 }
 

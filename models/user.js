@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const {PrismaClient} = require('@prisma/client');
 const Role = require('./role');
 
 module.exports = class User {
@@ -40,7 +40,7 @@ module.exports = class User {
 
     static find = async (id) => {
         return new User(await User.prisma.user.findUnique({
-            where: { id: parseInt(id) },
+            where: {id: parseInt(id)},
             include: {
                 section: true,
                 shift: true,
@@ -59,7 +59,7 @@ module.exports = class User {
 
     static update = async (id, data) => {
         return await User.prisma.user.update({
-            where: { id: parseInt(id) },
+            where: {id: parseInt(id)},
             data: {
                 name: data.name,
                 email: data.email,
