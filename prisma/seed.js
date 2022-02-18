@@ -51,11 +51,12 @@ async function main() {
     });
 
     const sites = [];
+    const siteNames = ['RCH', 'SMH', 'RH'];
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= siteNames.length; i++) {
         sites.push({
             id: i,
-            name: faker.company.companyName(),
+            name: siteNames[i - 1],
         });
     }
 

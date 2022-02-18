@@ -6,6 +6,7 @@ module.exports = class User {
     static prisma = new PrismaClient();
 
     constructor(data) {
+        this.id = data.id;
         this.name = data.name;
         this.email = data.email;
         this.picture = data.picture;

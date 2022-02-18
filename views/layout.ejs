@@ -3,14 +3,27 @@
     <head>
         <meta charset="utf-8">
         <title>PTracker</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="icon" href="../favicon.ico">
+        <link href="../stylesheets/tailwind.css" rel="stylesheet" type="text/css">
+        <link rel="icon" href="../img/favicon.ico">
+        <script src="../theme.js"></script> 
+        <% if (locals.page) { %>
+            <% if (page === 'calendar') { %>
+                <script src="calendar.js" defer></script>    
+                <link href='fullcalendar/main.css' rel='stylesheet' />
+                <script src='fullcalendar/main.js'></script>
+                <% } %>
+            <% if (page === 'dashboard') { %>
+                <script src="dashboard.js" defer></script>
+                <link href='fullcalendar/main.css' rel='stylesheet' />
+                <script src='fullcalendar/main.js'></script>
+                <% } %>
+        <% } %>
     </head>
-    <body>
+    <body class="dark:bg-gray-800 dark:text-white">
         <%- include("./partials/navbar") %>
         <div class="container mx-auto pt-8">
             <%- body %>
         </div>
-        <%- include("./partials/footer") %>
+        <!-- <%- include("./partials/footer") %> -->
     </body>
 </html>

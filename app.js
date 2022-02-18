@@ -10,10 +10,12 @@ const ejsLayouts = require('express-ejs-layouts');
 
 // middleware and routes
 const passport = require('./auth/passport');
-const passUser = require('./middleware/passUser')
+const passUser = require('./middleware/passUser');
 const authRouter = require('./routes/authRoutes');
-const indexRouter = require('./routes/indexRoutes')
-
+const indexRouter = require('./routes/indexRoutes');
+const shiftRouter = require('./routes/shiftRoutes');
+const dataRouter = require('./routes/dataRoutes')
+const methodOverride = require('method-override')
 // Loggers and cors
 const logger = require('morgan');
 const cors = require('cors');
@@ -21,7 +23,7 @@ const cors = require('cors');
 const app = express();
 
 require('./auth/passport');
-
+app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(logger('dev'));
@@ -53,7 +55,9 @@ app.use(passport.session());
 app.use(passUser);
 
 app.use('/', indexRouter);
+app.use('/shifts', shiftRouter);
 app.use('/auth', authRouter);
+app.use('/data', dataRouter)
 
 app.use((req, res, next) => {
     next(createError(404));

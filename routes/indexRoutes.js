@@ -1,13 +1,14 @@
 const express = require('express');
 
-let dt = new Date();
-let currentMonth = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
-
+// Authenication measures
 const {ensureAuthenticated, isInstructor, isAdmin} = require('../middleware/checkAuth')
 
 const router = express.Router();
 
-router.get('/dashboard', ensureAuthenticated, (req,res) => {
+const Role = require('../models/Role');
+const User = require('../models/User');
+
+router.get('/dashboard', ensureAuthenticated, async (req,res) => {
     res.render('dashboard/dashboard', {
         page: 'dashboard',
     });
@@ -16,13 +17,14 @@ router.get('/dashboard', ensureAuthenticated, (req,res) => {
 router.get('/calendar', ensureAuthenticated, (req,res) => {
     res.render('calendar/calendar', {
         page: 'calendar',
-        date: currentMonth
     });
 });
 
-router.get('/section', isInstructor, (req,res) => {
+router.get('/section', isInstructor, async(req,res) => {
     res.render('section/overview', {
         page: 'section',
+        students: await User.all(),
+
     });
 });
 

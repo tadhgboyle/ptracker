@@ -1,1 +1,23 @@
-Here the instructor will see a list of the students in this section with links to edit the users & stats about session
+<div>
+    <table class="table-auto w-auto mr-auto ml-auto border border-solid border-gray-200 border-collapse">
+        <tr>
+            <th class="text-left pl-5 text-lg w-72 border border-solid border-gray-200 border-collapse">Student Name</th>
+            <th class="text-center text-lg w-48 h-14 border border-solid border-gray-200 border-collapse">Delete Student</th>
+        </tr>
+
+        <tbody>
+            <% for (const student of students) { %>
+                <tr>
+                <% if (student.sectionId == user.section.id) { %>
+                        <% if (student.id !== user.id) {%>
+                            <td class="text-left pl-5 border bg-inherit border-gray-200"><%= student.name %></td>
+                            <td class="flex justify-center border-b border-gray-200">
+                                <a class="my-2.5 bg-red-500 hover:bg-red-400 text-white text-center font-semibold py-1.5 px-4 hover:border-red-500 rounded" href="<%= "/delete/" + student.id %>">Delete</a>
+                            </td>
+                        <% }%>    
+                <% } %>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
