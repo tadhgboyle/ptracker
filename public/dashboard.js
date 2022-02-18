@@ -1,4 +1,4 @@
-//const URL = 'http://localhost:3000';
+// const URL = 'http://localhost:3000';
 const URL = 'http://463a-2604-3d08-527f-e4a0-1c36-2d5-6952-d1fb.ngrok.io';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 width: '95px'
             }
         ],
+        resources: {
+            url: URL + '/data/resources'
+        },
         events: {
             url: URL + '/data/events'
         },
