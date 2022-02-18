@@ -87,7 +87,8 @@
                 <form id="editForm" action="/shifts" method="POST" class="px-7 overflow-x-hidden overflow-y-auto" style="max-height: 40vh;">
                     <div class="date-container flex flex-col pb-4 text-gray-400">
                         <label class="text-gray-800" for="editDatePicker">Shift date:</label>
-                        <input restricted type="date" id="editDatePicker" name="date" value="2022-01-01">
+                        <input type="hidden"  name="date" value="2022-01-01">
+                        <input disabled type="date" id="editDatePicker" class="text-gray-400" value="2022-01-01">
                     </div>
                     <div class="site-container">
                           <select required  name="siteId" class="form-select appearance-none
@@ -123,7 +124,6 @@
                          <% } %>
                     </div>
                     <input type="hidden" name="userId" value="<%= user.id %>">
-                    <!-- <input type="hidden" name="_method" value="PUT"> -->
                 </form>
                 <!-- Bottom of modal -->
                 <div class="p-7 flex justify-start items-center w-full">
