@@ -26,6 +26,23 @@ const shiftColor = (shift) => {
     }
 }
 
+const convertTimeFormat = (holidayDate) => {
+    // Converts the dates for holidays
+    const splitDateTime = holidayDate.split(",")[0]
+    const dateSplit = splitDateTime.split("/")
+    if (parseInt(dateSplit[0]) <= 9 && parseInt(dateSplit[1]) <= 9) {
+        return `${dateSplit[2]}-0${dateSplit[0]}-0${dateSplit[1]}`
+    }
+    else if (parseInt(dateSplit[0]) >= 10 && parseInt(dateSplit[1]) <= 9) {
+        return `${dateSplit[2]}-${dateSplit[0]}-0${dateSplit[1]}`
+    }
+    else if (parseInt(dateSplit[0]) <= 9 && parseInt(dateSplit[1]) >= 10) {
+        return `${dateSplit[2]}-0${dateSplit[0]}-${dateSplit[1]}`
+    } else {
+        return `${dateSplit[2]}-${dateSplit[0]}-${dateSplit[1]}`
+    }
+}
+
 router.get('/', async (req, res) => {
     const allShifts = [];
     for (const shift of await Shift.allForLoggedInUser(req.user.id)) {
@@ -35,11 +52,10 @@ router.get('/', async (req, res) => {
             color: shiftColor(shift.type)
         })
     }
-    for (let holiday of hd.getHolidays(date.getFullYear())) {
+    for (const holiday of hd.getHolidays(date.getFullYear())) {
         allShifts.push({
             title: holiday.name,
-            start: holiday.start.toISOString().split("T")[0],
-            resourceId: req.user.id,
+            start: convertTimeFormat(holiday.start.toLocaleString()),
             color: '#577590'
         })
     }

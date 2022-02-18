@@ -7,7 +7,7 @@ const router = express.Router();
 // Holidays, Date, and Emojis
 const date = new Date()
 const Holidays = require('date-holidays')
-const hd = new Holidays('CA', 'BC')
+const hd = new Holidays('CA')
 
 // Authentication of Instructor
 const {isInstructor} = require('../middleware/checkAuth')
@@ -201,7 +201,7 @@ router.get("/resources", async (req,res) => {
 
 router.get("/events", async(req,res) => {
     const shiftDays = [];
-    // console.log(hd.getHolidays(date.getFullYear()))
+    console.log(hd.getHolidays(date.getFullYear()))
     if (req.user.role === 'STUDENT') {
         for (const shift of req.user.shifts) {
             shiftDays.push({
