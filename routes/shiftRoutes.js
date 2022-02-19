@@ -23,21 +23,6 @@ const shiftColor = (shift) => {
     }
 }
 
-// const convertTimeFormat = (holidayDate) => {
-//     // Converts the dates for holidays
-//     const splitDateTime = holidayDate.split(",")[0]
-//     const dateSplit = splitDateTime.split("/")
-//     if (parseInt(dateSplit[0]) <= 9 && parseInt(dateSplit[1]) <= 9) {
-//         return `${dateSplit[2]}-0${dateSplit[0]}-0${dateSplit[1]}`
-//     } else if (parseInt(dateSplit[0]) >= 10 && parseInt(dateSplit[1]) <= 9) {
-//         return `${dateSplit[2]}-${dateSplit[0]}-0${dateSplit[1]}`
-//     } else if (parseInt(dateSplit[0]) <= 9 && parseInt(dateSplit[1]) >= 10) {
-//         return `${dateSplit[2]}-0${dateSplit[0]}-${dateSplit[1]}`
-//     } else {
-//         return `${dateSplit[2]}-${dateSplit[0]}-${dateSplit[1]}`
-//     }
-// }
-
 router.get('/', async (req, res) => {
     const allShifts = [];
     const allHolidays = hd.getHolidays(date.getFullYear())
@@ -49,7 +34,7 @@ router.get('/', async (req, res) => {
             color: shiftColor(shift.type)
         })
     }
-    for (holiday of allHolidays) {
+    for (const holiday of allHolidays) {
         allShifts.push({
             title: holiday.name,
             start: holiday.date.split(" ")[0],
