@@ -16,6 +16,8 @@ module.exports = class Shift {
     }
 
     static update = (id, data) => {
+        id = parseInt(id);
+
         Shift.prisma.shift.update({
             where: {id},
             data: {
@@ -26,7 +28,7 @@ module.exports = class Shift {
             }
         });
 
-        return Shift.prisma.shift.findOne({
+        return Shift.prisma.shift.findUnique({
             where: {id},
             include: {
                 user: true,

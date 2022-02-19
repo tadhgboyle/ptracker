@@ -57,12 +57,20 @@ router.post(
     async (req, res) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(422).json({
-                errors: errors.array()
-            });
+
+            let err = '';
+            for (const error of errors.array()) {
+                err += `invalid value for ${error.param}`
+            }
+
+            req.session.error_message = `Invalid shift data: ${err}!`;
+
+            return res.redirect('/calendar');
         }
 
         await Shift.create(req.body);
+
+        req.session.success_message = `Shift created successfully on ${req.body.date}!`;
 
         res.redirect('/calendar');
     }
@@ -79,15 +87,23 @@ router.put(
     async (req, res) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(422).json({
-                errors: errors.array()
-            });
+
+            let err = '';
+            for (const error of errors.array()) {
+                err += `invalid value for ${error.param}`
+            }
+
+            req.session.error_message = `Invalid shift data: ${err}!`;
+
+            return res.redirect('/calendar');
         }
 
         await Shift.update(
             req.params.id,
             req.body
         );
+
+        req.session.success_message = `Shift updated successfully on ${req.body.date}!`;
 
         res.redirect('/calendar');
     }
