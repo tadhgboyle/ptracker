@@ -1,30 +1,32 @@
 <div class="text-3xl font-bold pb-8">
-    Admin
+    Adminland
 </div>
 
-<div class="grid grid-cols-3 divide-x-4">
+<div class="grid grid-cols-3 divide-x-2 divide-black">
     <div>
         <span class="text-2xl font-bold">
             Users
         </span>
 
-        <table class="table-auto w-auto mr-auto ml-auto border border-solid border-gray-200 border-collapse">
-            <tr>
-                <th class="text-left pl-5 text-lg w-72 border border-solid border-gray-200 border-collapse">
-                    Name
-                </th>
-                <th class="text-left pl-5 text-lg w-72 border border-solid border-gray-200 border-collapse">
-                    Role
-                </th>
-            </tr>
+        <table id="user_table" class="stripe">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Role
+                    </th>
+                </tr>
+            </thead>
 
             <tbody>
             <% for (const siteUser of users) { %>
                 <tr>
-                    <td class="text-left pl-5 border bg-inherit border-gray-200">
+                    <td>
                         <%= siteUser.name %>
                     </td>
-                    <td class="flex justify-center border-b border-gray-200">
+                    <td>
                         <form action="" method="post">
                             <input type="hidden" value="<%= siteUser.id %>" name="userId">
                             <select required name="role" onchange="submit(this);" class="form-select appearance-none
@@ -78,9 +80,12 @@
 </div>
 
 <script>
-    function submit(select) {
+    submit = (select) => {
         const form = select.form;
         form.submit();
     }
-</script>
 
+    $(document).ready( function () {
+        $('#user_table').DataTable();
+    });
+</script>
