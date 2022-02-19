@@ -5,6 +5,7 @@ const {ensureAuthenticated, isInstructor, isAdmin} = require('../middleware/chec
 const router = express.Router();
 
 const User = require('../models/User');
+const Section = require('../models/Section');
 
 router.get('/dashboard', ensureAuthenticated, async (req, res) => {
     res.render('dashboard/dashboard', {
@@ -29,6 +30,7 @@ router.get('/admin', isAdmin, async (req, res) => {
     res.render('admin/overview', {
         page: 'admin',
         users: await User.all(),
+        sections: await Section.all(),
     });
 });
 

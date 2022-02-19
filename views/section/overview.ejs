@@ -39,7 +39,16 @@
 </div>
 
 <script>
-    $(document).ready( function () {
-        $('#user_table').DataTable();
+    $(document).ready(() => {
+        $('#user_table').DataTable({
+            lengthChange: false,
+            columnDefs: [
+                {
+                    searchable: false,
+                    sortable: false,
+                    targets: 1
+                },
+            ],
+        });
     });
 </script>
