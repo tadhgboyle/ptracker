@@ -1,0 +1,21 @@
+<% if (locals.success_message) { %>
+    <div id="success_message" class="p-4 mb-4 w-1/2 m-auto text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+        <span class="font-medium">Success!</span> <%= success_message %>
+    </div>
+    <script>
+        setTimeout(function() {
+            document.getElementById('success_message').remove();
+        }, 2500);
+    </script>
+<% } %>
+
+<% if (locals.error_message) { %>
+    <div id="error_message" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+        <span class="font-medium">Error!</span> <%= error_message %>
+    </div>
+    <script>
+        setTimeout(function() {
+            document.getElementById('error_message').remove();
+        }, 2500);
+    </script>
+<% } %>

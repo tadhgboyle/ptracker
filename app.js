@@ -11,6 +11,7 @@ const ejsLayouts = require('express-ejs-layouts');
 // middleware and routes
 const passport = require('./auth/passport');
 const passUser = require('./middleware/passUser');
+const flashMessages = require('./middleware/flashMessages');
 const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/indexRoutes');
 const shiftRouter = require('./routes/shiftRoutes');
@@ -55,6 +56,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passUser);
+app.use(flashMessages);
 
 app.use('/', indexRouter);
 app.use('/shifts', shiftRouter);
