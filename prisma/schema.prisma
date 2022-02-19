@@ -42,6 +42,7 @@ model user {
   role               user_role @default(STUDENT)
   sectionId          Int
   emailNotifications Boolean   @default(true)
+  acceptedNda        Boolean   @default(false)
   section            section   @relation(fields: [sectionId], references: [id], map: "User_sectionId_fkey")
   shift              shift[]
 

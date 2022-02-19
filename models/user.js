@@ -15,6 +15,7 @@ module.exports = class User {
         this.shifts = data.shift;
         this.role = data.role;
         this.notifications = [];
+        this.acceptedNda = data.acceptedNda;
     }
 
     notificationsColour() {

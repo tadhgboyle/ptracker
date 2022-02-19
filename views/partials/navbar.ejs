@@ -1,4 +1,4 @@
-<nav>
+<nav class="border-b">
     <div class="max-w-7xl mx-auto">
         <div class="flex items-center h-16">
             <div class="flex flex-1 items-center">
@@ -6,38 +6,39 @@
                     PTracker
                 </div>
                 <% if (user) { %>
-                    <div class="ml-10 flex items-center space-x-4">
-                        <a href="/dashboard"
-                           class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'dashboard') { %> border <% } %>">
-                            🏡 Dashboard
-                        </a>
-
-                        <a href="/calendar"
-                           class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
-                            🗓️ Calendar
-                        </a>
-
-                        <% if (user.isInstructor()) { %>
-                            <a href="/section"
-                               class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'section') { %> border <% } %>">
-                                👥 Section
+                    <% if (user.acceptedNda) { %>
+                        <div class="ml-10 flex items-center space-x-4">
+                            <a href="/dashboard"
+                               class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'dashboard') { %> border <% } %>">
+                                🏡 Dashboard
                             </a>
 
-                            <!--
-                            <a href="/reports" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
-                                📝 Reports
+                            <a href="/calendar"
+                               class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
+                                🗓️ Calendar
                             </a>
-                            -->
 
-                            <% if (user.isAdmin()) { %>
-                                <a href="/admin"
-                                   class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'admin') { %> border <% } %>">
-                                    👮 Adminland
+                            <% if (user.isInstructor()) { %>
+                                <a href="/section"
+                                   class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'section') { %> border <% } %>">
+                                    👥 Section
                                 </a>
-                            <% } %>
-                        <% } %>
 
-                    </div>
+                                <!--
+                                <a href="/reports" class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium">
+                                    📝 Reports
+                                </a>
+                                -->
+
+                                <% if (user.isAdmin()) { %>
+                                    <a href="/admin"
+                                       class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'admin') { %> border <% } %>">
+                                        👮 Adminland
+                                    </a>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    <% } %>
             </div>
             <div class="flex items-center">
                 <div class="ml-10 flex space-x-1">
@@ -75,4 +76,3 @@
         </div>
     </div>
 </nav>
-<hr/>

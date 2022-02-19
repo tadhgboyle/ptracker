@@ -7,6 +7,18 @@ const router = express.Router();
 const User = require('../models/User');
 const Section = require('../models/Section');
 
+router.post('/nda', ensureAuthenticated, (req, res) => {
+    if (req.body.secret_nda_thing === 'yes-i-actually-used-the-button') {
+        User.update(req.user.id, {
+            acceptedNda: true
+        });
+
+        req.session.success_message = 'Thanks for accepting the NDA!';
+    }
+
+    res.redirect('/dashboard');
+});
+
 router.get('/dashboard', ensureAuthenticated, async (req, res) => {
     res.render('dashboard/dashboard', {
         page: 'dashboard',

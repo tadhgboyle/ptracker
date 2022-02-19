@@ -5,7 +5,9 @@ const flashMessages = (req, res, next) => {
     }
     if (req.session.error_message) {
         res.locals.error_message = req.session.error_message;
+        res.locals.error_perm = req.session.error_perm;
         delete req.session.error_message;
+        delete req.session.error_perm;
     }
     next();
 };

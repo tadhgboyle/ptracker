@@ -39,6 +39,7 @@ async function main() {
                 Role.INSTRUCTOR,
                 Role.ADMIN
             ]),
+            acceptedNda: true,
             sectionId: faker.random.arrayElement(sections.map(s => s.id)),
             emailNotifications: faker.datatype.boolean(),
         });
