@@ -3,14 +3,15 @@ const darkToggle = document.getElementById('darkMode')
 
 //Check default localStorage settings
 window.addEventListener('load', () => {
+    const darkToggle = document.getElementById('darkMode')
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
         //check dark Toggle if localStorage had dark mode enabled in the last page
-        document.getElementById('darkMode').checked = true;
+        darkToggle.checked = true;
     } else {
         document.documentElement.classList.remove('dark');
         console.log("light")
-        document.getElementById('darkMode').checked = false;
+        darkToggle.checked = false;
     }
   });
 
