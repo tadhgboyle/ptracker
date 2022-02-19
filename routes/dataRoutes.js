@@ -1,10 +1,13 @@
 // This route page is mainly used to fetch data to the calendar in the dashboard page using JSON
 
+// Express and Rounter
 const express = require('express');
 const router = express.Router();
 
+// Date
 const date = new Date()
 
+// User and Role Classes
 const User = require('../models/User');
 const Role = require('../models/Role');
 
