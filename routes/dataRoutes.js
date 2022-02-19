@@ -111,7 +111,7 @@ router.get("/resources", async (req, res) => {
             eveningshifts: countShifts(req.user.shifts, 'EVENING'),
             totalshifts: countShifts(req.user.shifts, 'ALL')
         })
-    } else if (req.user.role === Role.INSTRUCTOR) {
+    } else if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
         const allStudents = await User.all();
         for (let student of allStudents) {
             if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
