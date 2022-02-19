@@ -15,9 +15,15 @@ router.post(
     async (req, res) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(422).json({
-                errors: errors.array()
-            });
+
+            let err = '';
+            for (const error of errors.array()) {
+                err += `invalid value for ${error.param}`
+            }
+
+            req.session.error_message = `Invalid input: ${err}!`;
+
+            return res.redirect('/admin');
         }
 
         await User.update(req.body.userId, {
@@ -38,15 +44,21 @@ router.post(
     async (req, res) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            return res.status(422).json({
-                errors: errors.array()
-            });
+
+            let err = '';
+            for (const error of errors.array()) {
+                err += `invalid value for ${error.param}`
+            }
+
+            req.session.error_message = `Invalid input: ${err}!`;
+
+            return res.redirect('/admin');
         }
 
         const section = await Section.find(req.body.section);
 
         if (!section) {
-            req.session.error_message = `Section ${req.body.section} does not exist`;
+            req.session.error_message = `Section #${req.body.section} does not exist`;
             return res.redirect('/admin');
         }
 
@@ -58,6 +70,52 @@ router.post(
         });
 
         req.session.success_message = `Set section of user #${req.body.userId} to ${section.name}`;
+
+        res.redirect('/admin');
+    }
+);
+
+router.post(
+    '/changeSectionInstructor',
+    [
+        check('sectionId').isInt(),
+        check('instructor').isInt(),
+    ],
+    async (req, res) => {
+        console.log(req.body);
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+
+            let err = '';
+            for (const error of errors.array()) {
+                err += `invalid value for ${error.param}`
+            }
+
+            req.session.error_message = `Invalid input: ${err}!`;
+
+            return res.redirect('/admin');
+        }
+
+        const section = await Section.find(req.body.sectionId);
+
+        if (!section) {
+            req.session.error_message = `Section #${req.body.sectionId} does not exist`;
+            return res.redirect('/admin');
+        }
+
+        try {
+            await Section.prisma.section.update({
+                where: {id: parseInt(req.body.sectionId)},
+                data: {
+                    instructorId: parseInt(req.body.instructor)
+                }
+            });
+        } catch (e) {
+            req.session.error_message = `Instructor #${req.body.instructor} is already assigned another section`;
+            return res.redirect('/admin');
+        }
+
+        req.session.success_message = `Set instructor of section ${section.name} to #${req.body.instructor}`;
 
         res.redirect('/admin');
     }

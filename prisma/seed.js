@@ -7,6 +7,12 @@ async function main() {
     const sections = [];
 
     sections.push({
+        id: 0,
+        name: 'Pending Users Section',
+        instructorId: 0,
+    });
+
+    sections.push({
         id: 1,
         name: 'Default Section',
         instructorId: 1,

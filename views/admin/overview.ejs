@@ -25,6 +25,7 @@
 
             <tbody>
             <% for (const siteUser of users) { %>
+                <% if (siteUser.id === user.id) continue; %>
                 <tr>
                     <td>
                         <%= siteUser.name %>
@@ -105,7 +106,64 @@
         <span class="text-2xl font-bold">
             Sections 👥
         </span>
-        <!-- - List of sections and button to make a new one-->
+
+        <table id="section_table" class="stripe">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Instructor
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% for (const section of sections) { %>
+                <% if (section.id === 0) continue; %>
+                <tr>
+                    <td>
+                        <%= section.name %>
+                    </td>
+                    <td>
+                        <form action="admin/changeSectionInstructor" method="post">
+                            <input type="hidden" value="<%= section.id %>" name="sectionId">
+                            <select required name="instructor" onchange="submit(this);" class="form-select appearance-none
+                                  block
+                                  w-full
+                                  py-1.5
+                                  mb-3
+                                  text-base
+                                  font-normal
+                                  text-gray-700
+                                  bg-white bg-clip-padding bg-no-repeat
+                                  border border-solid border-gray-300
+                                  rounded
+                                  transition
+                                  ease-in-out
+                                  m-0
+                                  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                                <% for (const siteUser of users) { %>
+                                    <% if (siteUser.role === 'INSTRUCTOR' || siteUser.role === 'ADMIN') { %>
+                                        <option value="<%= siteUser.id %>" <% if (section.instructorId === siteUser.id) { %> selected <% } %>>
+                                            <%= siteUser.name %>
+                                        </option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+
     </div>
 </div>
 
@@ -117,6 +175,17 @@
 
     $(document).ready(() => {
         $('#user_table').DataTable({
+            lengthChange: false,
+            columnDefs: [
+                {
+                    searchable: false,
+                    sortable: false,
+                    targets: [1, 2]
+                },
+            ],
+        });
+
+        $('#section_table').DataTable({
             lengthChange: false,
             columnDefs: [
                 {
