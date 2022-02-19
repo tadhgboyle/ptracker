@@ -42,25 +42,27 @@
             </div>
             <div class="flex items-center">
                 <div class="ml-10 flex space-x-1">
-                    <!-- Dark Toggle -->
-                    <div class="flex items-center justify-center">
-                        <label for="darkMode" class="flex items-center cursor-pointer">
-                            <!-- label -->
-                            <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
-                                Dark Mode
-                            </div>
-                            <!-- toggle -->
-                            <div class="relative">
-                                <input type="checkbox" id="darkMode" class="sr-only">
-                                <!-- line -->
-                                <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"></div>
-                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
-                            </div>
-                        </label>
-                    </div>
-                    <span class="bg-<%= user.notificationsColour() %>-100 px-3 py-2 rounded-md text-sm font-medium dark:text-black" title="Notifications">
-                        🚨 <%= user.notifications.length %>
-                    </span>
+                    <% if (user.acceptedNda) { %>
+                        <!-- Dark Toggle -->
+                        <div class="flex items-center justify-center">
+                            <label for="darkMode" class="flex items-center cursor-pointer">
+                                <!-- label -->
+                                <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
+                                    Dark Mode
+                                </div>
+                                <!-- toggle -->
+                                <div class="relative">
+                                    <input type="checkbox" id="darkMode" class="sr-only">
+                                    <!-- line -->
+                                    <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"></div>
+                                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                </div>
+                            </label>
+                        </div>
+                        <span class="bg-<%= user.notificationsColour() %>-100 px-3 py-2 rounded-md text-sm font-medium dark:text-black" title="Notifications">
+                            🚨 <%= user.notifications.length %>
+                        </span>
+                    <% } %>
                     <span class="px-3 py-2 text-blue-500 underline dark:text-white">
                         <%= user.name %>
                     </span>

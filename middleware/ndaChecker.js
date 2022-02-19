@@ -1,5 +1,4 @@
 const ndaChecker = (req, res, next) => {
-    console.log(req.user);
     if (!req.user || req.user.acceptedNda || req.path.includes('nda') || req.path.includes('auth')) {
         return next();
     } else {

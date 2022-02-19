@@ -10,7 +10,7 @@
 <% } %>
 
 <% if (locals.error_message) { %>
-    <div id="error_message" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+    <div id="error_message" class="p-4 mb-4 w-1/2 m-auto text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
         <span class="font-medium">❌ Error!</span> <%= error_message %>
     </div>
     <% if (!locals.error_perm) { %>
