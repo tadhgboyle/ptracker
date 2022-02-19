@@ -6,11 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
         contentHeight: 'auto',
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         initialView: 'resourceTimelineMonth',
-        header: {
-            left: 'today prev,next',
-            center: 'title',
-            right: 'resourceTimelineMonth'
-        },
         aspectRatio: 1.5,
         resourceAreaWidth: '35%',
         resourceAreaColumns: [
