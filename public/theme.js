@@ -1,4 +1,3 @@
-
 const darkToggle = document.getElementById('darkMode')
 
 //Check default localStorage settings
