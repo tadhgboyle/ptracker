@@ -1,26 +1,90 @@
+<% include ('../section/sectionFunctions') %>
+
 <table class="table-auto w-auto mr-auto ml-auto border border-solid border-black border-collapse">
     <h1 class="font-bold text-3xl text-center pb-1.5">Shifts for: <%= student.name %></h1>
     <tr>
-        <th class="text-left w-auto border-collapse">
-            Shift Date
+        <th class="text-left border border-solid border-black border-collapse">
+            ShiftID
         </th>
         <th class="text-left w-fit border border-solid border-black border-collapse">
+            Shift Date
+        </th>
+        <th class="text-left w-40 border border-solid border-black border-collapse">
             Shift Type
         </th>
     </tr>
 
-    <form>
-        <% for (const shift of shifts) { %>
-            <tr class="text-left w-52 border border-solid border-black border-collapse">
-                    <td class="border border-solid border-black border-collapse"> <input class="form-control" type="text" id="datepicker" name="date" value="<%= shift.date.toISOString().split('T')[0] %>"> </td>
-                <td class="w-fit text-center border border-solid border-black border-collapse"> <%= shift.type %> </td>
-            </tr>
+    <form id="addForm" action="<%= "/update/" + student.id %>" method="POST">
+        <% for (const num in student.shifts) { %>
+            <% if (checkShiftDay(student.shifts[num])) { %>
+                <tr class="text-left w-52 border border-solid border-black border-collapse">
+                    <td class="border border-solid border-black border-collapse"><input name="shiftID" value="<%= student.shifts[num].id %>" readonly></td>
+                    <td class="border border-solid border-black border-collapse"> <input class="datepick" type="text" id="<%= "datepicker" + num %>" name="date" value="<%= student.shifts[num].date.toISOString().split('T')[0] %>"> </td>
+                    <td class="w-fit text-center border border-solid border-black border-collapse">
+                        <select value="<%= student.shifts[num].type %>" name="shiftType" class="form-select appearance-none
+                          block
+                          w-full
+                          px-3
+                          py-1.5
+                          mb-3
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding bg-no-repeat
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          m-0
+                          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                            <% if (student.shifts[num].type === 'DAY') { %>
+                                <option value="<%= student.shifts[num].type %>"> <%= student.shifts[num].type %> </option>
+                                <option value="EVENING">EVENING</option>
+                                <option value="NIGHT">NIGHT</option>
+                                <option value="SICK">SICK</option>
+                            <% } %>
+                            <% if (student.shifts[num].type === 'EVENING') { %>
+                                 <option value="<%= student.shifts[num].type %>"> <%= student.shifts[num].type %> </option>
+                                 <option value="DAY">DAY</option>
+                                 <option value="NIGHT">NIGHT</option>
+                                 <option value="SICK">SICK</option>
+                             <% } %>
+                             <% if (student.shifts[num].type === 'NIGHT') { %>
+                                 <option value="<%= student.shifts[num].type %>"> <%= student.shifts[num].type %> </option>
+                                 <option value="DAY">DAY</option>
+                                 <option value="EVENING">EVENING</option>
+                                 <option value="SICK">SICK</option>
+                             <% } %>
+                             <% if (student.shifts[num].type === 'SICK') { %>
+                                 <option value="<%= student.shifts[num].type %>"> <%= student.shifts[num].type %> </option>
+                                 <option value="DAY">DAY</option>
+                                 <option value="NIGHT">NIGHT</option>
+                                 <option value="EVENING">EVENING</option>
+                             <% } %>
+                        </select>
+                    </td>
+                </tr>
+            <% } %>
         <% } %>
     </form>
 </table>
 
+<div class="flex items-center justify-center pt-2.5">
+    <input type="submit" form="addForm" value="<%= "Update Shifts" %>"
+           class="save-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-3">
+</div>
+
 <script type="text/javascript">
-    $("#datepicker").datepicker({
+    $('.datepick').each(function(){
+        $(this).datepicker({
+            format: "yyyy-mm-dd",
+        });
     });
 
 </script>
+
+<style>
+    input{
+        border: none;
+    }
+</style>

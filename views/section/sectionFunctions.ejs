@@ -1,0 +1,23 @@
+<%
+
+convertMonth = function(monthNum) {
+    return [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+    ][monthNum];
+}
+checkShiftDay = function(shift) {
+    const date = new Date()
+    const shiftMonth = new Date(shift.date)
+    const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
+
+    const currentMonthYear = `${convertMonth(date.getMonth())} ${date.getFullYear()}`
+    if (monthYear === currentMonthYear) {
+        return true
+    } else {
+        return false
+    }
+
+
+}
+
+%>

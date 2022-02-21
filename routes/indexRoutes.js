@@ -1,5 +1,9 @@
 const express = require('express');
 
+// Prisma
+const {PrismaClient} = require("@prisma/client");
+const prisma = new PrismaClient();
+
 // Authentication
 const {ensureAuthenticated, isInstructor, isAdmin} = require('../middleware/checkAuth')
 
@@ -93,6 +97,23 @@ router.get('/update/:id', ensureAuthenticated, async (req, res) => {
         student: findUser,
         shifts: allShifts,
     });
+})
+
+router.post('/update/:id', async (req, res) => {
+    const studentId = parseInt(req.params.id)
+    const findUser = await User.find(studentId)
+    for (const num in req.body.shiftID) {
+        await prisma.shift.update({
+            where: {
+                id: parseInt(req.body.shiftID[num])
+            },
+            data: {
+                date: new Date(req.body.date[num]),
+                type: req.body.shiftType[num],
+            }
+        })
+    }
+    res.redirect('/section')
 })
 
 module.exports = router;
