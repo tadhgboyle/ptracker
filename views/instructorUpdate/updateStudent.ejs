@@ -1,0 +1,26 @@
+<table class="table-auto w-auto mr-auto ml-auto border border-solid border-black border-collapse">
+    <h1 class="font-bold text-3xl text-center pb-1.5">Shifts for: <%= student.name %></h1>
+    <tr>
+        <th class="text-left w-auto border-collapse">
+            Shift Date
+        </th>
+        <th class="text-left w-fit border border-solid border-black border-collapse">
+            Shift Type
+        </th>
+    </tr>
+
+    <form>
+        <% for (const shift of shifts) { %>
+            <tr class="text-left w-52 border border-solid border-black border-collapse">
+                    <td class="border border-solid border-black border-collapse"> <input class="form-control" type="text" id="datepicker" name="date" value="<%= shift.date.toISOString().split('T')[0] %>"> </td>
+                <td class="w-fit text-center border border-solid border-black border-collapse"> <%= shift.type %> </td>
+            </tr>
+        <% } %>
+    </form>
+</table>
+
+<script type="text/javascript">
+    $("#datepicker").datepicker({
+    });
+
+</script>

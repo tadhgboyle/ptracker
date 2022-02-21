@@ -1,11 +1,40 @@
 const express = require('express');
 
+// Authentication
 const {ensureAuthenticated, isInstructor, isAdmin} = require('../middleware/checkAuth')
 
-const router = express.Router();
+// Date
+const date = new Date()
 
+// User and Section classes
 const User = require('../models/User');
 const Section = require('../models/Section');
+
+// Router
+const router = express.Router();
+
+const getShifts = (shifts) => {
+    const shiftsPerMonth = [];
+    const currentMonthYear = `${convertMonth(date.getMonth())} ${date.getFullYear()}`
+    if (shifts.length === 0) {
+        return 0;
+    }
+
+    for (const shift of shifts) {
+        const shiftMonth = new Date(shift.date)
+        const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
+        if (monthYear === currentMonthYear) {
+            shiftsPerMonth.push(shift)
+        }
+    }
+    return shiftsPerMonth;
+}
+
+const convertMonth = (monthNum) => {
+    return [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+    ][monthNum];
+}
 
 router.get('/nda', ensureAuthenticated, (req, res) => {
     req.session.error_message = 'You must accept the NDA to continue.';
@@ -54,5 +83,16 @@ router.get('/admin', isAdmin, async (req, res) => {
         sections: await Section.all(),
     });
 });
+
+router.get('/update/:id', ensureAuthenticated, async (req, res) => {
+    const studentId = parseInt(req.params.id)
+    const findUser = await User.find(studentId)
+    const allShifts = getShifts(findUser.shifts)
+    res.render('instructorUpdate/updateStudent', {
+        page: 'section',
+        student: findUser,
+        shifts: allShifts,
+    });
+})
 
 module.exports = router;
