@@ -20,7 +20,8 @@ const countShifts = (shifts, shiftType) => {
     }
 
     for (const shift of shifts) {
-        const shiftMonth = new Date(shift.date)
+        const splitDate = shift.date.toISOString().split('T')[0].split('-')
+        const shiftMonth = new Date(splitDate[0],splitDate[1] - 1,splitDate[2])
         const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
         if (shiftType === 'ALL') {
             if (monthYear === currentMonthYear) {
