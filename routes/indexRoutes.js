@@ -103,16 +103,33 @@ router.post('/update/:id', async (req, res) => {
     const studentId = parseInt(req.params.id)
     const findUser = await User.find(studentId)
     for (const num in req.body.shiftID) {
-        await prisma.shift.update({
-            where: {
-                id: parseInt(req.body.shiftID[num])
-            },
-            data: {
-                date: new Date(req.body.date[num]),
-                type: req.body.shiftType[num],
-            }
-        })
+        // Checks if there is only one element in req.body
+        if (typeof(req.body.shiftID) === "string") {
+            await prisma.shift.update({
+                where: {
+                    id: parseInt(req.body.shiftID)
+                },
+                data: {
+                    date: new Date(req.body.date),
+                    type: req.body.shiftType,
+                }
+            })
+        } else {
+            // If it's an array, that means theres two or more shifts that needs to get updated
+            await prisma.shift.update({
+                where: {
+                    id: parseInt(req.body.shiftID[num])
+                },
+                data: {
+                    date: new Date(req.body.date[num]),
+                    type: req.body.shiftType[num],
+                }
+            })
+        }
     }
+
+    req.session.success_message = `Shift updated successfully on ${req.body.date} for ${findUser.name}!`;
+
     res.redirect('/section')
 })
 
