@@ -103,7 +103,6 @@ router.post('/update/:id', async (req, res) => {
     const studentId = parseInt(req.params.id)
     const findUser = await User.find(studentId)
     for (const num in req.body.shiftID) {
-        console.log(req.body)
         await prisma.shift.update({
             where: {
                 id: parseInt(req.body.shiftID[num])
