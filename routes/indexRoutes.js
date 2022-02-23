@@ -11,8 +11,8 @@ const {ensureAuthenticated, isInstructor, isAdmin} = require('../middleware/chec
 const date = new Date()
 
 // User and Section classes
-const User = require('../models/User');
-const Section = require('../models/Section');
+const User = require('../models/user');
+const Section = require('../models/section');
 
 // Router
 const router = express.Router();

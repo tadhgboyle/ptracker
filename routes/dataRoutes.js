@@ -8,8 +8,8 @@ const router = express.Router();
 const date = new Date()
 
 // User and Role Classes
-const User = require('../models/User');
-const Role = require('../models/Role');
+const User = require('../models/user');
+const Role = require('../models/role');
 
 // All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
 const countShifts = (shifts, shiftType) => {
