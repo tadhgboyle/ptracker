@@ -9,7 +9,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-const url = process.env.APP_URL.split(':')[0];
+const url = process.env.APP_URL;
 
 server.listen(port);
 server.on('listening', () => {
