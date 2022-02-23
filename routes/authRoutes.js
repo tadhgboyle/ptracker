@@ -5,7 +5,7 @@ const router = express.Router();
 
 const {forwardIfAuthenticated} = require('../middleware/checkAuth')
 
-const FAILURE_LOGIN_URL = 'http://localhost:3000/auth/login/error';
+const FAILURE_LOGIN_URL = process.env.APP_URL + '/auth/login/error';
 
 router.get('/logout', (req, res) => {
     req.logout();
