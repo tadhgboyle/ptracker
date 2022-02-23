@@ -1,31 +1,33 @@
-<div class="text-3xl font-bold pb-8">
+<div class="text-3xl font-bold pb-8 dark:text-white">
     Section
 </div>
 
-<div class="w-1/2 m-auto">
-    <table id="user_table" class="stripe">
+<div class="w-1/2 m-auto ">
+    <table id="user_table" class="stripe dark:text-black">
         <thead>
         <tr>
-            <th>
+            <th class="dark:text-white">
                 Name
             </th>
-            <th>
+            <th class="dark:text-white">
                 Action
             </th>
         </tr>
         </thead>
 
-        <tbody>
+        <tbody >
         <!--
             TODO: If theyre an admin, show a dropdown of each section so they can view that specific section, otherwise show their own set as an instructor
         -->
         <% for (const student of students) { %>
             <% if (student.id !== user.id) { %>
+                <tr >
+                    <td><%= student.name %>
                 <tr>
                     <td>
                         <a class="hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50" href="<%= "/update/" + student.id %>"> <%= student.name %> </a>
                     </td>
-                    <td class="flex justify-center">
+                    <td class="flex justify-center ">
                         <a class="bg-red-500 hover:bg-red-400 text-white text-center font-semibold py-1.5 px-4 hover:border-red-500 rounded"
                            href="<%= "/delete/" + student.id %>">
                             Remove
