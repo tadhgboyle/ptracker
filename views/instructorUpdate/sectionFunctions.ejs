@@ -11,15 +11,9 @@ checkShiftDay = function(shift) {
     const shiftMonth = new Date(splitDate[0],splitDate[1] - 1,splitDate[2])
     const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
 
-    const currentMonthYear = `${convertMonth(date.getMonth())} ${date.getFullYear()}`
-    console.log(splitDate)
-    if (monthYear === currentMonthYear) {
-        return true
-    } else {
-        return false
-    }
+    const currentMonthYear = `${convertMonth(date.getMonth())} ${date.getFullYear()}`;
 
-
+    return monthYear === currentMonthYear;
 }
 
 %>

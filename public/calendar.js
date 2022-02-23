@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('addDatePicker').value = info.dateStr
         },
         eventClick: function (info) {
-            console.log(info.event.start.toISOString().split('T')[0])
             openModal('editShiftModal')
             document.getElementById('editDatePicker').value = info.event.start.toISOString().split('T')[0]
             document.getElementById('editDateValue').value = info.event.start.toISOString().split('T')[0]
