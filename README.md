@@ -21,6 +21,6 @@
     - Run the command "npm i -g nodemon"
 
 - App runs on port `3000`
-    - Start with `npm run start` in a separate terminal window (they must be running at the same time)
+    - Start with `npm run dev` in a separate terminal window (they must be running at the same time)
 
 - Navigate to `http://localhost:3000`

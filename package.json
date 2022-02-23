@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
     "tailwind": "npx tailwindcss -i ./public/style.css -o ./public/stylesheets/tailwind.css --watch"
   },
   "prisma": {
