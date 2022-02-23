@@ -21,9 +21,6 @@
         -->
         <% for (const student of students) { %>
             <% if (student.id !== user.id) { %>
-                <tr >
-                    <td><%= student.name %>
-                <tr>
                     <td>
                         <a class="hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50" href="<%= "/update/" + student.id %>"> <%= student.name %> </a>
                     </td>
