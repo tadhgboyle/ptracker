@@ -1,7 +1,7 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const {faker} = require('@faker-js/faker');
-const Role = require('../models/Role');
+const Role = require('../models/role');
 
 async function main() {
     const sections = [];

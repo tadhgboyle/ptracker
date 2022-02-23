@@ -16,25 +16,19 @@ module.exports = class Shift {
     }
 
     static update = (id, data) => {
-        id = parseInt(id);
+        const shiftId = parseInt(id);
 
-        Shift.prisma.shift.update({
-            where: {id},
+         return Shift.prisma.shift.update({
+            where: {
+                id: shiftId
+            },
             data: {
-                user: {connect: {id: parseInt(data.userId)}},
-                site: {connect: {id: parseInt(data.siteId)}},
+                userId: parseInt(data.userId),
+                siteId: parseInt(data.siteId),
                 date: new Date(data.date),
-                type: data.type,
+                type: data.type
             }
-        });
-
-        return Shift.prisma.shift.findUnique({
-            where: {id},
-            include: {
-                user: true,
-                site: true
-            }
-        });
+        })
     }
 
     static all = () => {

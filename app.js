@@ -57,6 +57,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passUser);
+
 app.use(flashMessages);
 app.use(ndaChecker);
 

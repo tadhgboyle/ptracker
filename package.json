@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
     "tailwind": "npx tailwindcss -i ./public/style.css -o ./public/stylesheets/tailwind.css --watch"
   },
   "prisma": {
@@ -14,6 +15,7 @@
     "@prisma/client": "^3.8.1",
     "@tailwindcss/forms": "^0.4.0",
     "axios": "^0.25.0",
+    "bootstrap-datepicker": "^1.9.0",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
     "core-util-is": "^1.0.3",
@@ -27,13 +29,14 @@
     "express-validator": "^6.14.0",
     "google-icon": "^1.0.1",
     "http-errors": "^2.0.0",
+    "js-datepicker": "^5.18.0",
     "method-override": "^3.0.0",
     "morgan": "~1.9.1",
     "passport": "^0.5.2",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "@faker-js/faker": "^6.0.0-alpha.7"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-alpha.5",
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.6",
     "prisma": "^3.8.1",

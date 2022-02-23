@@ -1,12 +1,15 @@
 // This route page is mainly used to fetch data to the calendar in the dashboard page using JSON
 
+// Express and Rounter
 const express = require('express');
 const router = express.Router();
 
+// Date
 const date = new Date()
 
-const User = require('../models/User');
-const Role = require('../models/Role');
+// User and Role Classes
+const User = require('../models/user');
+const Role = require('../models/role');
 
 // All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
 const countShifts = (shifts, shiftType) => {
@@ -17,7 +20,8 @@ const countShifts = (shifts, shiftType) => {
     }
 
     for (const shift of shifts) {
-        const shiftMonth = new Date(shift.date)
+        const splitDate = shift.date.toISOString().split('T')[0].split('-')
+        const shiftMonth = new Date(splitDate[0],splitDate[1] - 1,splitDate[2])
         const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
         if (shiftType === 'ALL') {
             if (monthYear === currentMonthYear) {
@@ -111,10 +115,10 @@ router.get("/resources", async (req, res) => {
             eveningshifts: countShifts(req.user.shifts, 'EVENING'),
             totalshifts: countShifts(req.user.shifts, 'ALL')
         })
-    } else if (req.user.role === Role.INSTRUCTOR) {
+    } else if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
         const allStudents = await User.all();
         for (let student of allStudents) {
-            if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
+            if (student.sectionId === req.user.section.id && student.shift.length >= 1 && student.id !== req.user.id) {
                 allUsersInSection.push({
                     id: student.id,
                     name: student.name,

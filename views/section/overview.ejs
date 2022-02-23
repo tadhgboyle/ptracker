@@ -23,6 +23,9 @@
             <% if (student.id !== user.id) { %>
                 <tr >
                     <td><%= student.name %>
+                <tr>
+                    <td>
+                        <a class="hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50" href="<%= "/update/" + student.id %>"> <%= student.name %> </a>
                     </td>
                     <td class="flex justify-center ">
                         <a class="bg-red-500 hover:bg-red-400 text-white text-center font-semibold py-1.5 px-4 hover:border-red-500 rounded"
