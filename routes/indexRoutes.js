@@ -128,7 +128,9 @@ router.post('/update/:id', async (req, res) => {
         }
     }
 
-    req.session.success_message = `Shift updated successfully on ${req.body.date} for ${findUser.name}!`;
+    if (req.body.date !== undefined) {
+        req.session.success_message = `Shift updated successfully on ${req.body.date} for ${findUser.name}!`;
+    }
 
     res.redirect('/section')
 })
