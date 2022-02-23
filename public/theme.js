@@ -9,7 +9,6 @@ window.addEventListener('load', () => {
         darkToggle.checked = true;
     } else {
         document.documentElement.classList.remove('dark');
-        console.log("light")
         darkToggle.checked = false;
     }
   });
