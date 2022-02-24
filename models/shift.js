@@ -4,23 +4,22 @@ module.exports = class Shift {
 
     static prisma = new PrismaClient();
 
-    static create = (data) => {
-        return Shift.prisma.shift.create({
+    static create = async (data) => {
+        await Shift.prisma.shift.create({
             data: {
                 user: {connect: {id: parseInt(data.userId)}},
                 site: {connect: {id: parseInt(data.siteId)}},
                 date: new Date(data.date),
                 type: data.type,
+                status: 'NORMAL',
             }
         });
     }
 
-    static update = (id, data) => {
-        const shiftId = parseInt(id);
-
-         return Shift.prisma.shift.update({
+    static update = async (id, data) => {
+         await Shift.prisma.shift.update({
             where: {
-                id: shiftId
+                id: parseInt(id)
             },
             data: {
                 userId: parseInt(data.userId),
@@ -40,8 +39,8 @@ module.exports = class Shift {
         });
     }
 
-    static find = (id) => {
-        return Shift.prisma.shift.findUnique({
+    static find = async (id) => {
+        return await Shift.prisma.shift.findUnique({
             where: {
                 id: parseInt(id)
             },
@@ -52,8 +51,8 @@ module.exports = class Shift {
         });
     }
 
-    static allPending = () => {
-        return Shift.prisma.shift.findMany({
+    static allPending = async () => {
+        return await Shift.prisma.shift.findMany({
             where: {
                 status: "PENDING"
             },
@@ -64,8 +63,8 @@ module.exports = class Shift {
         });
     }
 
-    static allForLoggedInUser = (userId) => {
-        return Shift.prisma.shift.findMany({
+    static allForLoggedInUser = async (userId) => {
+        return await Shift.prisma.shift.findMany({
             where: {userId},
             include: {
                 user: true,

@@ -163,7 +163,8 @@
                 <!-- Top of modal -->
                 <div class="px-7 pt-7 flex flex-row items-center w-full">
                     <!-- Title -->
-                    <div class="text-gray-900 font-bold text-lg">Delete Shift Confirmation
+                    <div class="text-gray-900 font-bold text-lg">
+                        Delete Shift Confirmation
                     </div>
                     <!-- X button -->
                     <svg onclick="modalClose('deleteShiftModal')"
@@ -174,17 +175,17 @@
                 </div>
                 <div class="px-7 pb-3 flex justify-start items-center w-full">
                     <p class="whitespace-pre-line text-gray-500">
-                        Are you sure you want to delete this shift? 
+                        Are you sure you want to delete this shift?
                         Your request will be sent to your instructor for confirmation.
                     </p>
                 </div>
                 <!-- Beginning of Form content -->
-                <form id="deleteForm" action="/shifts" method="POST">                   
+                <form id="deleteForm" action="/shifts" method="POST">
                 </form>
                 <!-- Bottom of modal -->
                 <div class="px-7 pt-1 pb-7 flex justify-start items-center w-full">
-                    <button type="submit" disabled form="deleteForm" class="w-full inline-flex justify-center rounded-md border border-transparent 
-                    shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none 
+                    <button type="submit" form="deleteForm" class="w-full inline-flex justify-center rounded-md border border-transparent
+                    shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm">
                     Delete
                     </button>

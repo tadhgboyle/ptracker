@@ -131,10 +131,10 @@
                         <%= shift.site.name %>
                     </td>
                     <td>
-                        <button onclick="window.location = 'admin/approveShiftDelete/<%= shift.id %>'" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
+                        <button title="Approve" onclick="window.location = 'admin/approveShiftDelete/<%= shift.id %>'" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
                             ✅
                         </button>
-                        <button onclick="window.location = 'admin/declineShiftDelete/<%= shift.id %>'" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
+                        <button title="Decline" onclick="window.location = 'admin/declineShiftDelete/<%= shift.id %>'" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
                             ❌
                         </button>
                     </td>

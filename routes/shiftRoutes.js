@@ -27,6 +27,9 @@ router.get('/', async (req, res) => {
     const allShifts = [];
     const allHolidays = hd.getHolidays(date.getFullYear())
     for (const shift of await Shift.allForLoggedInUser(req.user.id)) {
+        if (shift.status !== 'NORMAL') {
+            continue;
+        }
         allShifts.push({
             id: shift.id,
             title: shift.type,
@@ -104,6 +107,29 @@ router.put(
         );
 
         req.session.success_message = `Shift updated successfully on ${req.body.date}!`;
+
+        res.redirect('/calendar');
+    }
+);
+
+router.delete(
+    '/delete/:id',
+    async (req, res) => {
+        const shift = await Shift.find(req.params.id);
+
+        if (shift.user.id !== req.user.id) {
+            req.session.error_message = 'This is not your shift!';
+            return res.redirect('/calendar');
+        }
+
+        await Shift.prisma.shift.update({
+            where: {id: parseInt(req.params.id)},
+            data: {
+                status: 'PENDING',
+            }
+        });
+
+        req.session.success_message = `Shift deletion requested!`;
 
         res.redirect('/calendar');
     }
