@@ -13,18 +13,19 @@ passport.use(new GoogleStrategy({
         callbackURL: GOOGLE_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
-        const checkUser = await prisma.user.findUnique({
-            where: {
-                googleId: profile.id,
-            },
-        });
-
-        if (!checkUser) {
-            await Email.send(
-                'PTracker - New user registered',
-                `Hi, a new user has signed up for PTracker. Please assign them to a section. Name: ${profile.displayName}`,
-            );
-        }
+        // TODO
+        // const checkUser = await prisma.user.findUnique({
+        //     where: {
+        //         googleId: profile.id,
+        //     },
+        // });
+        //
+        // if (!checkUser) {
+        //     await Email.send(
+        //         'PTracker - New user registered',
+        //         `Hi, a new user has signed up for PTracker. Please assign them to a section. Name: ${profile.displayName}`,
+        //     );
+        // }
 
         const user = await prisma.user.upsert({
             where: {

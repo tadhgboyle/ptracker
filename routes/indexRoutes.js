@@ -73,7 +73,7 @@ router.get('/calendar', ensureAuthenticated, (req, res) => {
     });
 });
 
-router.get('/section', isInstructor, async (req, res) => {
+router.get('/section', [ensureAuthenticated, isInstructor], async (req, res) => {
     const section = await Section.whereIsInstructor(req.user.id);
     if (!section) {
         req.session.error_message = 'You are not assigned to a section.';
@@ -88,7 +88,7 @@ router.get('/section', isInstructor, async (req, res) => {
     }
 });
 
-router.get('/admin', isAdmin, async (req, res) => {
+router.get('/admin', [ensureAuthenticated, isAdmin], async (req, res) => {
     res.render('admin/overview', {
         page: 'admin',
         users: await User.all(),

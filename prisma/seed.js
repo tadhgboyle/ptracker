@@ -69,12 +69,13 @@ async function main() {
 
     const shifts = [];
 
-    for (let i = 0; i <= 300; i++) {
+    for (let i = 1; i <= 500; i++) {
         shifts.push({
             userId: faker.random.arrayElement(users.map(u => u.id)),
             siteId: faker.random.arrayElement(sites.map(s => s.id)),
-            date: faker.date.past(),
+            date: faker.datatype.boolean() ? faker.date.recent(7) : faker.date.soon(7),
             type: faker.random.arrayElement(['DAY', 'EVENING', 'NIGHT']),
+            status: faker.random.arrayElement(['NORMAL', 'PENDING', 'DELETED']),
         });
     }
 
