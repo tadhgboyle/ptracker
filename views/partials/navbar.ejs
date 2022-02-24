@@ -43,16 +43,13 @@
                     <% } %>
             </div>
             <div class="flex items-center">
-                <div class="ml-10 flex space-x-1">
+                <div class="ml-10 flex space-x-2">
                     <% if (user.acceptedNda) { %>
-                        <!-- Dark Toggle -->
                         <div class="flex items-center justify-center">
                             <label for="darkMode" class="flex items-center cursor-pointer">
-                                <!-- label -->
                                 <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
                                     Dark Mode
                                 </div>
-                                <!-- toggle -->
                                 <div class="relative">
                                     <input type="checkbox" id="darkMode" class="sr-only">
                                     <!-- line -->
@@ -62,10 +59,10 @@
                             </label>
                         </div>
                     <% } %>
-                    <span class="px-3 py-2 text-blue-500 underline dark:text-white">
+                    <span class="py-2 text-blue-500 underline dark:text-white">
                         <%= user.name %>
                     </span>
-                    <div class="pr-2">
+                    <div>
                         <img class="h-8 rounded-full mt-1 shadow-sm" src="<%= user.picture %>" referrerPolicy="no-referrer" alt="">
                     </div>
                     <a href="/auth/logout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">

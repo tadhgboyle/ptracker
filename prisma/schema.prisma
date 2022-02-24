@@ -20,6 +20,7 @@ model shift {
   siteId Int
   date   DateTime
   type   shift_type
+  status shift_status
   site   site       @relation(fields: [siteId], references: [id], map: "Shift_siteId_fkey")
   user   user       @relation(fields: [userId], references: [id], map: "Shift_userId_fkey")
 
@@ -54,6 +55,12 @@ enum shift_type {
   NIGHT
   EVENING
   SICK
+}
+
+enum shift_status {
+  NORMAL
+  PENDING
+  DELETED
 }
 
 enum user_role {
