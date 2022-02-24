@@ -14,6 +14,15 @@ module.exports = class Email {
         },
     });
 
+    static async send(recipient, subject, content) {
+        await Email.transporter.sendMail({
+            from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
+            to: recipient,
+            subject: subject,
+            text: content,
+        });
+    }
+
     static async sendToAdmins(subject, content) {
         const adminEmails = [];
         const users = await User.all();

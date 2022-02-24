@@ -8,6 +8,7 @@ const Section = require("../models/section");
 const Role = require("../models/role");
 const Shift = require("../models/shift");
 const {ensureAuthenticated, isAdmin} = require("../middleware/checkAuth");
+const axios = require("axios");
 
 router.post(
     '/changeRole',
@@ -139,7 +140,7 @@ router.post(
 );
 
 router.get('/approveShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req, res) => {
-    const shift = Shift.find(req.params.id);
+    const shift = await Shift.find(req.params.id);
     if (!shift) {
         req.session.error_message = `Shift #${req.params.id} does not exist`;
         return res.redirect('/admin');
@@ -150,6 +151,11 @@ router.get('/approveShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req
         data: {
             status: 'DELETED',
         }
+    });
+
+    await axios.post(process.env.APP_URL + '/email/shiftDeletionApproved', {
+        sendTo: shift.user.email,
+        date: shift.date.toLocaleString(),
     });
 
     req.session.success_message = `Successfully deleted shift #${req.params.id}.`;
@@ -168,6 +174,11 @@ router.get('/declineShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req
         data: {
             status: 'NORMAL',
         }
+    });
+
+    await axios.post(process.env.APP_URL + '/email/shiftDeletionDeclined', {
+        sendTo: shift.user.email,
+        date: shift.date.toLocaleString(),
     });
 
     req.session.success_message = `Successfully declined shift deletion for shift #${req.params.id}.`;
