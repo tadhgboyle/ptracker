@@ -14,6 +14,7 @@ const date = new Date()
 const User = require('../models/user');
 const Section = require('../models/section');
 const Shift = require('../models/shift');
+const Site = require('../models/site')
 
 // Router
 const router = express.Router();
@@ -68,9 +69,10 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) => {
     });
 });
 
-router.get('/calendar', ensureAuthenticated, (req, res) => {
+router.get('/calendar', ensureAuthenticated, async (req, res) => {
     res.render('calendar/calendar', {
         page: 'calendar',
+        sites: await Site.all(),
     });
 });
 
@@ -98,6 +100,7 @@ router.get('/admin', [ensureAuthenticated, isAdmin], async (req, res) => {
         users: await User.all(),
         sections: await Section.all(),
         shifts: await Shift.allPending(),
+        sites: await Site.all(),
     });
 });
 
@@ -146,6 +149,23 @@ router.post('/update/:id', async (req, res) => {
     }
 
     res.redirect('/section')
+})
+
+
+router.get('/addSite', ensureAuthenticated, async (req, res) => {
+    res.render('admin/addSite', {
+        page: 'admin',
+    });
+})
+
+router.post('/addSite', ensureAuthenticated, async (req, res) => {
+    await Site.create(req.body)
+    res.redirect('/admin')
+})
+
+router.post('/admin/delete/:id', isInstructor, async (req, res) => {
+    await Site.delete(req.params.id)
+    res.redirect('/admin')
 })
 
 module.exports = router;

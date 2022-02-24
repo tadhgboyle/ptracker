@@ -41,9 +41,9 @@
                           m-0
                           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
                             <option disabled selected value="">Select a Site</option>
-                            <option value="1">RCH</option>
-                            <option value="2">SMH</option>
-                            <option value="3">RH</option>
+                            <% for (const site of sites) { %>
+                                <option value="<%= site.id%>"> <%= site.name %> </option>
+                            <% } %>
                         </select>
                     </div>
                     <div class="radio-container">
@@ -118,9 +118,9 @@
                           m-0
                           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
                             <option disabled selected value="">Select a Site</option>
-                            <option value="1">RCH</option>
-                            <option value="2">SMH</option>
-                            <option value="3">RH</option>
+                            <% for (const site of sites) { %>
+                                <option value="<%= site.id%>"> <%= site.name %> </option>
+                            <% } %>
                         </select>
                     </div>
                     <div class="radio-container">
