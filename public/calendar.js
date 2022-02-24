@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('deleteForm').action = `/shifts/delete/${info.event.id}?_method=DELETE`
       },
       events: {
-          url: URL + '/shifts',
+          url: '/shifts',
       }
   });
 

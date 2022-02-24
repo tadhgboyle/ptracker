@@ -11,6 +11,7 @@ module.exports = class Shift {
                 site: {connect: {id: parseInt(data.siteId)}},
                 date: new Date(data.date),
                 type: data.type,
+                status: 'NORMAL'
             }
         });
     }
