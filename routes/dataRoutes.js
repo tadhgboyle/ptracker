@@ -137,7 +137,7 @@ router.get("/resources", async (req, res) => {
 router.get("/events", async (req, res) => {
     const shiftDays = [];
     if (req.user.role === Role.STUDENT) {
-        for (const shift of req.user.shifts) {
+        for (const shift of req.user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
                 title: convertShiftType(shift.type, req.user.shifts, shift),
                 start: shift.date.toISOString().split("T")[0],
@@ -149,7 +149,7 @@ router.get("/events", async (req, res) => {
         // Users who are instructors or admins
         const allStudents = await User.all();
         for (let student of allStudents) {
-            for (let shift of student.shift) {
+            for (let shift of student.shift.filter(s => s.status !== 'DELETED')) {
                 if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
                     shiftDays.push({
                         title: convertShiftType(shift.type, student.shift, shift),

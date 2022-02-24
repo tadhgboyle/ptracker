@@ -13,7 +13,7 @@ const date = new Date()
 // User and Section classes
 const User = require('../models/user');
 const Section = require('../models/section');
-const Site = require('../models/site')
+const Shift = require('../models/shift');
 
 // Router
 const router = express.Router();
@@ -68,10 +68,9 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) => {
     });
 });
 
-router.get('/calendar', ensureAuthenticated, async (req, res) => {
+router.get('/calendar', ensureAuthenticated, (req, res) => {
     res.render('calendar/calendar', {
         page: 'calendar',
-        sites: await Site.all(),
     });
 });
 
@@ -79,7 +78,10 @@ router.get('/section', [ensureAuthenticated, isInstructor], async (req, res) => 
     const section = await Section.whereIsInstructor(req.user.id);
     if (!section) {
         req.session.error_message = 'You are not assigned to a section.';
-        res.redirect('/dashboard');
+        res.redirect(req.header('Referer') || '/dashboard');
+    } else if (section.id === 1) {
+        req.session.error_message = 'You are assigned to an invalid section. Please contact an administrator.';
+        res.redirect(req.header('Referer') || '/dashboard');
     } else {
         res.render('section/overview', {
             page: 'section',
@@ -95,7 +97,7 @@ router.get('/admin', [ensureAuthenticated, isAdmin], async (req, res) => {
         page: 'admin',
         users: await User.all(),
         sections: await Section.all(),
-        sites: await Site.all(),
+        shifts: await Shift.allPending(),
     });
 });
 
@@ -144,22 +146,6 @@ router.post('/update/:id', async (req, res) => {
     }
 
     res.redirect('/section')
-})
-
-router.get('/addSite', ensureAuthenticated, async (req, res) => {
-    res.render('admin/addSite', {
-        page: 'admin',
-    });
-})
-
-router.post('/addSite', ensureAuthenticated, async (req, res) => {
-    await Site.create(req.body)
-    res.redirect('/admin')
-})
-
-router.post('/admin/delete/:id', isInstructor, async (req, res) => {
-    await Site.delete(req.params.id)
-    res.redirect('/admin')
 })
 
 module.exports = router;

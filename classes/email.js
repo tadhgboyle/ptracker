@@ -14,18 +14,27 @@ module.exports = class Email {
         },
     });
 
-    static async send(subject, content) {
+    static async send(recipient, subject, content) {
+        await Email.transporter.sendMail({
+            from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
+            to: recipient,
+            subject: subject,
+            text: content,
+        });
+    }
+
+    static async sendToAdmins(subject, content) {
         const adminEmails = [];
         const users = await User.all();
 
         for (const user of users) {
-            if (user.role === Role.ADMIN) {
+            if (user.role === Role.ADMIN && user.emailNotifications) {
                 adminEmails.push(user.email);
             }
         }
 
         await Email.transporter.sendMail({
-            from: `PTracker Notifications ${process.env.EMAIL_FROM}`,
+            from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
             to: adminEmails.join(', '),
             subject: subject,
             text: content,

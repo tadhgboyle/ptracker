@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const User = require('../models/user');
-const Email = require('../classes/email');
+const axios = require("axios");
 
 const GOOGLE_CALLBACK_URL = process.env.APP_URL + '/auth/google/callback';
 
@@ -13,19 +13,18 @@ passport.use(new GoogleStrategy({
         callbackURL: GOOGLE_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
-        // TODO
-        // const checkUser = await prisma.user.findUnique({
-        //     where: {
-        //         googleId: profile.id,
-        //     },
-        // });
-        //
-        // if (!checkUser) {
-        //     await Email.send(
-        //         'PTracker - New user registered',
-        //         `Hi, a new user has signed up for PTracker. Please assign them to a section. Name: ${profile.displayName}`,
-        //     );
-        // }
+        const userExists = await prisma.user.findUnique({
+            where: {
+                googleId: profile.id,
+            },
+        });
+
+        if (!userExists) {
+            // send post request, so it can send emails in "background"
+            await axios.post(process.env.APP_URL + '/email/newUser', {
+                name: profile.displayName,
+            });
+        }
 
         const user = await prisma.user.upsert({
             where: {

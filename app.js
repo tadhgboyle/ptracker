@@ -18,6 +18,7 @@ const indexRouter = require('./routes/indexRoutes');
 const shiftRouter = require('./routes/shiftRoutes');
 const dataRouter = require('./routes/dataRoutes')
 const adminRouter = require('./routes/adminRoutes');
+const emailRouter = require('./routes/emailRoutes');
 const methodOverride = require('method-override')
 // Loggers and cors
 const logger = require('morgan');
@@ -29,7 +30,9 @@ require('./auth/passport');
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(logger('dev'));
+if (process.env.NODE_ENV !== 'test') {
+    app.use(logger('dev'));
+}
 
 app.use(ejsLayouts)
 app.use(express.json());
@@ -64,8 +67,9 @@ app.use(ndaChecker);
 app.use('/', indexRouter);
 app.use('/shifts', shiftRouter);
 app.use('/auth', authRouter);
-app.use('/data', dataRouter)
-app.use('/admin', adminRouter)
+app.use('/data', dataRouter);
+app.use('/admin', adminRouter);
+app.use('/email', emailRouter);
 
 app.use((req, res, next) => {
     next(createError(404));

@@ -14,5 +14,9 @@ url = url.substr(0, url.lastIndexOf(':'));
 
 server.listen(port);
 server.on('listening', () => {
-    console.log(`Express server running on ${url}:${port}`);
+    if (process.env.NODE_ENV !== 'test') {
+        console.log(`Express server running on ${url}:${port}`);
+    }
 });
+
+module.exports = server;

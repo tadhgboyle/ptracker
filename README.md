@@ -24,3 +24,6 @@
     - Start with `npm run dev` in a separate terminal window (they must be running at the same time)
 
 - Navigate to `http://localhost:3000`
+
+## Testing
+- You can test the app with `npm run test`

@@ -1,11 +1,12 @@
 {
-  "name": "backend",
-  "version": "0.0.0",
+  "name": "ptracker",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "tailwind": "npx tailwindcss -i ./public/style.css -o ./public/stylesheets/tailwind.css --watch"
+    "tailwind": "npx tailwindcss -i ./public/style.css -o ./public/stylesheets/tailwind.css --watch",
+    "test": "mocha tests"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -16,7 +17,6 @@
     "@prisma/client": "^3.8.1",
     "@tailwindcss/forms": "^0.4.0",
     "axios": "^0.25.0",
-    "bootstrap-datepicker": "^1.9.0",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
     "core-util-is": "^1.0.3",
@@ -28,9 +28,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.2",
     "express-validator": "^6.14.0",
-    "google-icon": "^1.0.1",
     "http-errors": "^2.0.0",
-    "js-datepicker": "^5.18.0",
     "method-override": "^3.0.0",
     "morgan": "~1.9.1",
     "nodemailer": "^6.7.2",
@@ -39,8 +37,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
+    "mocha": "^9.2.1",
     "postcss": "^8.4.6",
     "prisma": "^3.8.1",
+    "supertest": "^6.2.2",
     "tailwindcss": "^3.0.18"
   }
 }

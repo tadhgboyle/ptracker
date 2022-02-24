@@ -6,6 +6,9 @@ const {check, validationResult} = require("express-validator");
 const User = require("../models/user");
 const Section = require("../models/section");
 const Role = require("../models/role");
+const Shift = require("../models/shift");
+const {ensureAuthenticated, isAdmin} = require("../middleware/checkAuth");
+const axios = require("axios");
 
 router.post(
     '/changeRole',
@@ -135,5 +138,51 @@ router.post(
         res.redirect('/admin');
     }
 );
+
+router.get('/approveShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req, res) => {
+    const shift = await Shift.find(req.params.id);
+    if (!shift) {
+        req.session.error_message = `Shift #${req.params.id} does not exist`;
+        return res.redirect('/admin');
+    }
+
+    await Shift.prisma.shift.update({
+        where: {id: parseInt(req.params.id)},
+        data: {
+            status: 'DELETED',
+        }
+    });
+
+    await axios.post(process.env.APP_URL + '/email/shiftDeletionApproved', {
+        sendTo: shift.user.email,
+        date: shift.date.toLocaleString(),
+    });
+
+    req.session.success_message = `Successfully deleted shift #${req.params.id}.`;
+    res.redirect('/admin');
+});
+
+router.get('/declineShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req, res) => {
+    const shift = await Shift.find(req.params.id);
+    if (!shift) {
+        req.session.error_message = `Shift #${req.params.id} does not exist`;
+        return res.redirect('/admin');
+    }
+
+    await Shift.prisma.shift.update({
+        where: {id: parseInt(req.params.id)},
+        data: {
+            status: 'NORMAL',
+        }
+    });
+
+    await axios.post(process.env.APP_URL + '/email/shiftDeletionDeclined', {
+        sendTo: shift.user.email,
+        date: shift.date.toLocaleString(),
+    });
+
+    req.session.success_message = `Successfully declined shift deletion for shift #${req.params.id}.`;
+    res.redirect('/admin');
+});
 
 module.exports = router;
