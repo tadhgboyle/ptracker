@@ -16,7 +16,11 @@ module.exports = class Site {
     }
 
     static all = async () => {
-        return await Site.prisma.site.findMany();
+        return await Site.prisma.site.findMany({
+            include: {
+                shift: true,
+            }
+        });
     }
 
     static create = async (data) => {
@@ -28,19 +32,27 @@ module.exports = class Site {
     }
 
     static delete = async (id) => {
+        // Adds the shifts to pending for admin approval
         const findSite = await Site.find(id)
         if (findSite.shift !== 0) {
             for (const shift of findSite.shift) {
-                await Site.prisma.shift.delete({
+                await Site.prisma.shift.update({
                     where: {
                         id: parseInt(shift.id)
+                    },
+                    data: {
+                        status: 'DELETED'
                     }
                 })
             }
         };
-        return await Site.prisma.site.delete({
+
+        return await Site.prisma.site.update({
             where: {
                 id: parseInt(id)
+            },
+            data: {
+                status: 'DELETED',
             }
         });
     }

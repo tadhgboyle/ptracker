@@ -31,6 +31,7 @@ model shift {
 model site {
   id    Int     @id @default(autoincrement())
   name  String
+  status site_status @default(NORMAL)
   shift shift[]
 }
 
@@ -61,6 +62,11 @@ enum shift_status {
   NORMAL
   PENDING
   DELETED
+}
+
+enum site_status {
+ NORMAL
+ DELETED
 }
 
 enum user_role {

@@ -33,10 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('addDatePicker').value = info.dateStr
       },
       eventClick: function (info) {
-          document.getElementById('editDatePicker').value = info.event.start.toISOString().split('T')[0];
-          document.getElementById('editForm').action = `/shifts/${info.event.id}?_method=PUT`;
-          document.getElementById('deleteForm').action = `/shifts/delete/${info.event.id}?_method=DELETE`;
-          openModal('editShiftModal');
+          openModal('editShiftModal')
+          document.getElementById('editDatePicker').value = info.event.start.toISOString().split('T')[0]
+          document.getElementById('editDateValue').value = info.event.start.toISOString().split('T')[0]
+          document.getElementById('editForm').action = `/shifts/${info.event.id}?_method=PUT`
+          document.getElementById('deleteForm').action = `/shifts/delete/${info.event.id}?_method=DELETE`
       },
       events: {
           url: '/shifts',
