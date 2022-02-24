@@ -146,13 +146,6 @@
 
     <div class="shadow-xl p-6 rounded-md">
         <span class="text-2xl font-bold">
-            Shifts to delete 🚫
-        </span>
-        <!-- - List of shifts pending deletion -->
-    </div>
-
-    <div class="shadow-xl p-6 rounded-md">
-        <span class="text-2xl font-bold">
             Sites 🏢
         </span>
 
@@ -309,7 +302,6 @@
         document.getElementById(key).children[0].classList.remove('opacity-0');
         document.getElementById(key).children[0].classList.add('opacity-100')
         document.getElementById(form).setAttribute('action', action=`/admin/delete/${siteID}`)
-        // document.getElementById(button).setAttribute('form', action=`/admin/delete/${siteID}`)
     }
 
     function modalClose(key) {
