@@ -29,14 +29,9 @@
                             <a class="hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50" href="<%= "/update/" + student.id %>"> <%= student.name %> </a>
                         </td>
                         <td class="flex justify-center">
-                            <% if (sectionId === 1) { %>
-                                <i>Cannot remove students from Pending section</i>
-                            <% } else { %>
-                                <a class="bg-red-500 hover:bg-red-400 text-white text-center font-semibold py-1.5 px-4 hover:border-red-500 rounded"
-                                   href="<%= "/delete/" + student.id %>">
-                                    Remove
-                                </a>
-                            <% } %>
+                            <button title="Remove from section" onclick="window.location = '<%= "/delete/" + student.id %>'" class="flex justify-center bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
+                                ❌
+                            </button>
                         </td>
                     </tr>
                 <% } %>

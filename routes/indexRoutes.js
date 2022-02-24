@@ -79,6 +79,9 @@ router.get('/section', [ensureAuthenticated, isInstructor], async (req, res) => 
     if (!section) {
         req.session.error_message = 'You are not assigned to a section.';
         res.redirect(req.header('Referer') || '/dashboard');
+    } else if (section.id === 1) {
+        req.session.error_message = 'You are assigned to an invalid section. Please contact an administrator.';
+        res.redirect(req.header('Referer') || '/dashboard');
     } else {
         res.render('section/overview', {
             page: 'section',
