@@ -13,6 +13,7 @@ const date = new Date()
 // User and Section classes
 const User = require('../models/user');
 const Section = require('../models/section');
+const Shift = require('../models/shift');
 
 // Router
 const router = express.Router();
@@ -77,7 +78,7 @@ router.get('/section', [ensureAuthenticated, isInstructor], async (req, res) => 
     const section = await Section.whereIsInstructor(req.user.id);
     if (!section) {
         req.session.error_message = 'You are not assigned to a section.';
-        res.redirect('/dashboard');
+        res.redirect(req.header('Referer') || '/dashboard');
     } else {
         res.render('section/overview', {
             page: 'section',
@@ -93,6 +94,7 @@ router.get('/admin', [ensureAuthenticated, isAdmin], async (req, res) => {
         page: 'admin',
         users: await User.all(),
         sections: await Section.all(),
+        shifts: await Shift.allPending(),
     });
 });
 
