@@ -1,6 +1,8 @@
+const Role = require('../models/role');
+
 const ndaChecker = (req, res, next) => {
     if (req.user) {
-        if (req.user.section.id === 1) {
+        if (req.user.section.id === 1 && req.user.role === Role.STUDENT) {
             res.render('pendingSection', {
                 page: 'assign',
             });

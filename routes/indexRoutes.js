@@ -76,6 +76,8 @@ router.get('/calendar', ensureAuthenticated, (req, res) => {
 router.get('/section', isInstructor, async (req, res) => {
     res.render('section/overview', {
         page: 'section',
+        sectionName: req.user.section.name,
+        sectionId: req.user.section.id,
         students: await User.allInSection(req.user.section.id),
     });
 });

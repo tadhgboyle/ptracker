@@ -13,10 +13,12 @@
                                 🏡 Dashboard
                             </a>
 
-                            <a href="/calendar"
-                               class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
-                                🗓️ Calendar
-                            </a>
+                            <% if (user.isStudent()) { %>
+                                <a href="/calendar"
+                                   class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
+                                    🗓️ Calendar
+                                </a>
+                            <% } %>
 
                             <% if (user.isInstructor()) { %>
                                 <a href="/section"
@@ -59,9 +61,6 @@
                                 </div>
                             </label>
                         </div>
-                        <span class="bg-<%= user.notificationsColour() %>-100 px-3 py-2 rounded-md text-sm font-medium dark:text-black" title="Notifications">
-                            🚨 <%= user.notifications.length %>
-                        </span>
                     <% } %>
                     <span class="px-3 py-2 text-blue-500 underline dark:text-white">
                         <%= user.name %>

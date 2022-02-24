@@ -14,25 +14,15 @@ module.exports = class User {
         this.section = data.section;
         this.shifts = data.shift;
         this.role = data.role;
-        this.notifications = [];
         this.acceptedNda = data.acceptedNda;
     }
 
-    notificationsColour() {
-        const count = this.notifications.length;
-        if (count === 0) {
-            return 'gray';
-        } else if (count <= 3) {
-            return 'amber';
-        } else if (count <= 5) {
-            return 'orange';
-        } else {
-            return 'red';
-        }
+    isStudent() {
+        return this.role === Role.STUDENT;
     }
 
     isInstructor() {
-        return this.role === Role.INSTRUCTOR || this.role === Role.ADMIN;
+        return this.role === Role.INSTRUCTOR || this.isAdmin();
     }
 
     isAdmin() {
@@ -60,7 +50,10 @@ module.exports = class User {
 
     static allInSection = async (sectionId) => {
         return await User.prisma.user.findMany({
-            where: {sectionId: parseInt(sectionId)},
+            where: {
+                sectionId: parseInt(sectionId),
+                role: Role.STUDENT,
+            },
             include: {
                 section: true,
                 shift: true,
