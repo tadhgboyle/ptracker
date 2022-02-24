@@ -159,7 +159,11 @@ router.get('/addSite', ensureAuthenticated, async (req, res) => {
 })
 
 router.post('/addSite', ensureAuthenticated, async (req, res) => {
-    await Site.create(req.body)
+    if (req.body.site.length !== 0) {
+        await Site.create(req.body)
+    } else {
+        req.session.error_message = `You must input a valid site`;
+    }
     res.redirect('/admin')
 })
 
