@@ -163,7 +163,7 @@ router.get('/approveShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req
 });
 
 router.get('/declineShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req, res) => {
-    const shift = Shift.find(req.params.id);
+    const shift = await Shift.find(req.params.id);
     if (!shift) {
         req.session.error_message = `Shift #${req.params.id} does not exist`;
         return res.redirect('/admin');
