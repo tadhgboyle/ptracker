@@ -40,6 +40,30 @@ module.exports = class Shift {
         });
     }
 
+    static find = (id) => {
+        return Shift.prisma.shift.findUnique({
+            where: {
+                id: parseInt(id)
+            },
+            include: {
+                user: true,
+                site: true
+            }
+        });
+    }
+
+    static allPending = () => {
+        return Shift.prisma.shift.findMany({
+            where: {
+                status: "PENDING"
+            },
+            include: {
+                user: true,
+                site: true
+            }
+        });
+    }
+
     static allForLoggedInUser = (userId) => {
         return Shift.prisma.shift.findMany({
             where: {userId},

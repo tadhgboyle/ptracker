@@ -97,9 +97,51 @@
 
     <div class="shadow-xl p-6 rounded-md">
         <span class="text-2xl font-bold">
-            Shifts to delete 🚫
+            Shifts requesting deletion 🚫
         </span>
-        <!-- - List of shifts pending deletion -->
+
+        <table id="shift_delete_table" class="stripe">
+            <thead>
+                <tr>
+                    <th>
+                        Student
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Site
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% for (const shift of shifts) { %>
+                <tr>
+                    <td>
+                        <%= shift.user.name %>
+                    </td>
+                    <td>
+                        <%= shift.date.toDateString() %>
+                    </td>
+                    <td>
+                        <%= shift.site.name %>
+                    </td>
+                    <td>
+                        <button onclick="window.location = 'admin/approveShiftDelete/<%= shift.id %>'" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
+                            ✅
+                        </button>
+                        <button onclick="window.location = 'admin/declineShiftDelete/<%= shift.id %>'" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
+                            ❌
+                        </button>
+                    </td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
     </div>
 
     <div class="shadow-xl p-6 rounded-md">
@@ -199,6 +241,17 @@
                     searchable: false,
                     sortable: false,
                     targets: [1, 2]
+                },
+            ],
+        });
+
+        $('#shift_delete_table').DataTable({
+            lengthChange: false,
+            columnDefs: [
+                {
+                    searchable: false,
+                    sortable: false,
+                    targets: [2, 3]
                 },
             ],
         });
