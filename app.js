@@ -29,7 +29,9 @@ require('./auth/passport');
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(logger('dev'));
+if (process.env.NODE_ENV !== 'test') {
+    app.use(logger('dev'));
+}
 
 app.use(ejsLayouts)
 app.use(express.json());
