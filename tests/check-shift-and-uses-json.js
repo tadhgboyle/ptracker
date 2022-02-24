@@ -4,6 +4,7 @@ const Shift = require('../models/shift');
 const User = require('../models/user');
 
 process.env.NODE_ENV = 'test';
+process.env.DATABASE_URL = 'mysql://root@localhost:3306/nurse_joy_testing';
 
 function IsJsonString(str) {
     try {
