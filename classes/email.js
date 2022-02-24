@@ -28,7 +28,7 @@ module.exports = class Email {
         const users = await User.all();
 
         for (const user of users) {
-            if (user.role === Role.ADMIN) {
+            if (user.role === Role.ADMIN && user.emailNotifications) {
                 adminEmails.push(user.email);
             }
         }

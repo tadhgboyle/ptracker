@@ -11,6 +11,15 @@ router.post('/newUser', async (req, res) => {
     );
 });
 
+router.post('/shiftDeletionRequest', async (req, res) => {
+    res.sendStatus(200);
+
+    await Email.sendToAdmins(
+        'PTracker - A new shift deletion request has been made',
+        `Hi, a shift deletion request for ${req.body.name} on ${req.body.date} has been made. Please approve or decline this request.`,
+    );
+});
+
 router.post('/shiftDeletionApproved', async (req, res) => {
     res.sendStatus(200);
 

@@ -7,6 +7,7 @@ const Shift = require('../models/shift');
 // Holidays
 const date = new Date()
 const Holidays = require('date-holidays')
+const axios = require("axios");
 const hd = new Holidays('CA', 'BC')
 
 const router = express.Router();
@@ -127,6 +128,11 @@ router.delete(
             data: {
                 status: 'PENDING',
             }
+        });
+
+        await axios.post(process.env.APP_URL + '/email/shiftDeletionRequest', {
+            name: shift.user.name,
+            date: shift.date.toLocaleString(),
         });
 
         req.session.success_message = `Shift deletion requested!`;
