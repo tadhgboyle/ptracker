@@ -91,7 +91,6 @@ router.put(
     async (req, res) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-
             let err = '';
             for (const error of errors.array()) {
                 err += `invalid value for ${error.param}`
