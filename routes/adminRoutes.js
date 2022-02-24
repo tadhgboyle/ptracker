@@ -170,7 +170,7 @@ router.get('/declineShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req
         }
     });
 
-    req.session.success_message = `Successfully decline shift deletion for shift #${req.params.id}.`;
+    req.session.success_message = `Successfully declined shift deletion for shift #${req.params.id}.`;
     res.redirect('/admin');
 });
 

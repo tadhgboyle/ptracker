@@ -14,7 +14,7 @@ module.exports = class Email {
         },
     });
 
-    static async send(subject, content) {
+    static async sendToAdmins(subject, content) {
         const adminEmails = [];
         const users = await User.all();
 
@@ -25,7 +25,7 @@ module.exports = class Email {
         }
 
         await Email.transporter.sendMail({
-            from: `PTracker Notifications ${process.env.EMAIL_FROM}`,
+            from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
             to: adminEmails.join(', '),
             subject: subject,
             text: content,
