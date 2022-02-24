@@ -92,7 +92,7 @@ router.get('/update/:id', ensureAuthenticated, async (req, res) => {
     const studentId = parseInt(req.params.id)
     const findUser = await User.find(studentId)
     const allShifts = getShifts(findUser.shifts)
-    res.render('instructorUpdate/updateStudent', {
+    res.render('section/updateStudent', {
         page: 'section',
         student: findUser,
         shifts: allShifts,

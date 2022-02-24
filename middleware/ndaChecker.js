@@ -1,7 +1,7 @@
 const ndaChecker = (req, res, next) => {
     if (req.user) {
         if (req.user.section.id === 1) {
-            res.render('assignStudentToSection/assignStudent', {
+            res.render('pendingSection', {
                 page: 'assign',
             });
         }
