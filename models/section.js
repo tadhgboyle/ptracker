@@ -14,4 +14,10 @@ module.exports = class Section {
         return await Section.prisma.section.findMany();
     }
 
+    static whereIsInstructor = async (instructorId) => {
+        return await Section.prisma.section.findUnique({
+            where: {instructorId: parseInt(instructorId)},
+        });
+    }
+
 }

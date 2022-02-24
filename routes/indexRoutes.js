@@ -74,12 +74,18 @@ router.get('/calendar', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/section', isInstructor, async (req, res) => {
-    res.render('section/overview', {
-        page: 'section',
-        sectionName: req.user.section.name,
-        sectionId: req.user.section.id,
-        students: await User.allInSection(req.user.section.id),
-    });
+    const section = await Section.whereIsInstructor(req.user.id);
+    if (!section) {
+        req.session.error_message = 'You are not assigned to a section.';
+        res.redirect('/dashboard');
+    } else {
+        res.render('section/overview', {
+            page: 'section',
+            sectionName: section.name,
+            sectionId: section.id,
+            students: await User.allInSection(section.id),
+        });
+    }
 });
 
 router.get('/admin', isAdmin, async (req, res) => {
