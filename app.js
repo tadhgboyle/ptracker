@@ -12,6 +12,7 @@ const ejsLayouts = require('express-ejs-layouts');
 const passport = require('./auth/passport');
 const passUser = require('./middleware/passUser');
 const flashMessages = require('./middleware/flashMessages');
+const sectionChecker = require('./middleware/sectionChecker');
 const ndaChecker = require('./middleware/ndaChecker');
 const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/indexRoutes');
@@ -62,6 +63,7 @@ app.use(passport.session());
 app.use(passUser);
 
 app.use(flashMessages);
+app.use(sectionChecker);
 app.use(ndaChecker);
 
 app.use('/', indexRouter);

@@ -6,7 +6,7 @@
                     PTracker
                 </div>
                 <% if (user) { %>
-                    <% if (user.acceptedNda) { %>
+                    <% if (user.acceptedNda && user.section.id !== 1) { %>
                         <div class="ml-10 flex items-center space-x-4">
                             <a href="/dashboard"
                                class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'dashboard') { %> border <% } %>">
@@ -38,7 +38,7 @@
             </div>
             <div class="flex items-center">
                 <div class="ml-10 flex space-x-2">
-                    <% if (user.acceptedNda) { %>
+                    <% if (user.acceptedNda && user.section.id !== 1) { %>
                         <div class="flex items-center justify-center">
                             <label for="darkMode" class="flex items-center cursor-pointer">
                                 <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">

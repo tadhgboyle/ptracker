@@ -51,6 +51,12 @@ router.get('/nda', ensureAuthenticated, (req, res) => {
     });
 });
 
+router.get('/pendingSection', ensureAuthenticated, (req, res) => {
+    res.render('pendingSection', {
+        page: 'assign',
+    });
+});
+
 router.post('/nda', ensureAuthenticated, async (req, res) => {
     if (req.body.secret_nda_thing === 'yes-i-actually-used-the-button') {
         await User.update(req.user.id, {
