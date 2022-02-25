@@ -52,6 +52,11 @@ router.get('/nda', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/pendingSection', ensureAuthenticated, (req, res) => {
+    if (req.user.section.id !== 1) {
+        // if they get assigned a section and then reload the page
+        return res.redirect('/dashboard');
+    }
+
     res.render('pendingSection', {
         page: 'assign',
     });
