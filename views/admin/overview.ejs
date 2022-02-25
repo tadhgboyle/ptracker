@@ -153,7 +153,7 @@
             <a href="/addSite" class="bg-blue-500 hover:bg-blue-400 text-white text-center font-semibold py-1.5 px-4 hover:border-blue-500 rounded">Add Site</a>
         </div>
 
-        <table id="site_table" class="stripe dark:text-black">
+        <table id="site_table" class="stripe">
             <thead>
             <tr>
                 <th class="dark:text-white">
@@ -359,11 +359,11 @@
         $('#site_table').DataTable({
             lengthChange: false,
             paging: false,
+            searching: false,
             columnDefs: [
                 {
-                    searchable: false,
                     sortable: false,
-                    targets: [1, 2]
+                    targets: [1]
                 },
             ],
         });
