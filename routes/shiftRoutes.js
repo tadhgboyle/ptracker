@@ -94,7 +94,12 @@ router.delete(
             }
         });
 
-        await axios.post(process.env.APP_URL + '/email/shiftDeletionRequest', {
+        let URL = process.env.APP_URL;
+        if (URL.endsWith('/')) {
+            URL = URL.slice(0, -1);
+        }
+
+        await axios.post(URL + '/email/shiftDeletionRequest', {
             name: shift.user.name,
             date: shift.date.toLocaleString(),
         });

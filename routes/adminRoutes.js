@@ -153,7 +153,12 @@ router.get('/approveShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req
         }
     });
 
-    await axios.post(process.env.APP_URL + '/email/shiftDeletionApproved', {
+    let URL = process.env.APP_URL;
+    if (URL.endsWith('/')) {
+        URL = URL.slice(0, -1);
+    }
+
+    await axios.post(URL + '/email/shiftDeletionApproved', {
         sendTo: shift.user.email,
         date: shift.date.toLocaleString(),
     });
@@ -176,7 +181,12 @@ router.get('/declineShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req
         }
     });
 
-    await axios.post(process.env.APP_URL + '/email/shiftDeletionDeclined', {
+    let URL = process.env.APP_URL;
+    if (URL.endsWith('/')) {
+        URL = URL.slice(0, -1);
+    }
+
+    await axios.post(URL + '/email/shiftDeletionDeclined', {
         sendTo: shift.user.email,
         date: shift.date.toLocaleString(),
     });
