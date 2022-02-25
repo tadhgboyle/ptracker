@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
       },
       events: {
-          url: '/shifts',
+          url: '/data/allShifts',
       }
   });
 

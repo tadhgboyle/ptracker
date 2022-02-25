@@ -10,6 +10,8 @@ const date = new Date()
 // User and Role Classes
 const User = require('../models/user');
 const Role = require('../models/role');
+const Shift = require("../models/shift");
+const Holidays = require("date-holidays");
 
 // All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
 const countShifts = (shifts, shiftType) => {
@@ -75,7 +77,7 @@ const convertMonth = (monthNum) => {
     ][monthNum];
 }
 
-router.get("/resources", async (req, res) => {
+router.get("/dashboardStudentSites", async (req, res) => {
     const allUsersInSection = [];
     if (req.user.role === Role.STUDENT && req.user.shifts.length >= 1) {
         allUsersInSection.push({
@@ -86,7 +88,7 @@ router.get("/resources", async (req, res) => {
             nightshifts: countShifts(req.user.shifts, 'NIGHT'),
             eveningshifts: countShifts(req.user.shifts, 'EVENING'),
             totalshifts: countShifts(req.user.shifts, 'ALL')
-        })
+        });
     } else if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
         const allStudents = await User.all();
         for (let student of allStudents) {
@@ -99,15 +101,16 @@ router.get("/resources", async (req, res) => {
                     nightshifts: countShifts(student.shift, 'NIGHT'),
                     eveningshifts: countShifts(student.shift, 'EVENING'),
                     totalshifts: countShifts(student.shift, 'ALL')
-                })
+                });
             }
         }
     }
-    res.json(allUsersInSection)
+    res.json(allUsersInSection);
 })
 
-router.get("/events", async (req, res) => {
+router.get("/dashboardShifts", async (req, res) => {
     const shiftDays = [];
+
     if (req.user.role === Role.STUDENT) {
         for (const shift of req.user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
@@ -115,25 +118,51 @@ router.get("/events", async (req, res) => {
                 start: shift.date.toISOString().split("T")[0],
                 resourceId: req.user.id,
                 color: shiftColor(shift.type)
-            })
+            });
         }
-    } else {
-        // Users who are instructors or admins
-        const allStudents = await User.all();
-        for (let student of allStudents) {
-            for (let shift of student.shift.filter(s => s.status !== 'DELETED')) {
-                if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
-                    shiftDays.push({
-                        title: shift.type,
-                        start: shift.date.toISOString().split("T")[0],
-                        resourceId: student.id,
-                        color: shiftColor(shift.type)
-                    })
-                }
+        return res.json(shiftDays);
+    }
+
+    // Users who are instructors or admins
+    const allStudents = await User.all();
+    for (const student of allStudents) {
+        for (const shift of student.shift.filter(s => s.status !== 'DELETED')) {
+            if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
+                shiftDays.push({
+                    title: shift.type,
+                    start: shift.date.toISOString().split("T")[0],
+                    resourceId: student.id,
+                    color: shiftColor(shift.type)
+                });
             }
         }
     }
-    res.json(shiftDays)
-})
+    return res.json(shiftDays);
+});
+
+router.get('/allShifts', async (req, res) => {
+    const allShifts = [];
+    const hd = new Holidays('CA', 'BC');
+    const allHolidays = hd.getHolidays(date.getFullYear())
+    for (const shift of await Shift.allForLoggedInUser(req.user.id)) {
+        if (shift.status === 'DELETED') {
+            continue;
+        }
+        allShifts.push({
+            id: shift.id,
+            title: shift.type,
+            start: shift.date.toISOString().split('T')[0],
+            color: shiftColor(shift.type)
+        })
+    }
+    for (const holiday of allHolidays) {
+        allShifts.push({
+            title: holiday.name,
+            start: holiday.date.split(" ")[0],
+            color: '#577590'
+        })
+    }
+    res.json(allShifts);
+});
 
 module.exports = router;

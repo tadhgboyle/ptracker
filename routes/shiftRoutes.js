@@ -4,49 +4,9 @@ const express = require('express');
 const {check, validationResult} = require('express-validator')
 const Shift = require('../models/shift');
 
-// Holidays
-const date = new Date()
-const Holidays = require('date-holidays')
 const axios = require("axios");
-const hd = new Holidays('CA', 'BC')
 
 const router = express.Router();
-
-const shiftColor = (shift) => {
-    if (shift === 'NIGHT') {
-        return '#744468'
-    } else if (shift === 'EVENING') {
-        return '#016BB7'
-    } else if (shift === 'DAY') {
-        return '#ECA446'
-    } else if (shift === 'SICK') {
-        return '#D05353'
-    }
-}
-
-router.get('/', async (req, res) => {
-    const allShifts = [];
-    const allHolidays = hd.getHolidays(date.getFullYear())
-    for (const shift of await Shift.allForLoggedInUser(req.user.id)) {
-        if (shift.status !== 'NORMAL') {
-            continue;
-        }
-        allShifts.push({
-            id: shift.id,
-            title: shift.type,
-            start: shift.date.toISOString().split('T')[0],
-            color: shiftColor(shift.type)
-        })
-    }
-    for (const holiday of allHolidays) {
-        allShifts.push({
-            title: holiday.name,
-            start: holiday.date.split(" ")[0],
-            color: '#577590'
-        })
-    }
-    res.json(allShifts);
-});
 
 router.post(
     '/',
@@ -119,6 +79,11 @@ router.delete(
 
         if (shift.user.id !== req.user.id) {
             req.session.error_message = 'This is not your shift!';
+            return res.redirect('/calendar');
+        }
+
+        if (shift.status === 'PENDING') {
+            req.session.error_message = 'You have already requested deletion of this shift!';
             return res.redirect('/calendar');
         }
 
