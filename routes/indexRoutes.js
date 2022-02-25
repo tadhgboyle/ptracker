@@ -117,7 +117,6 @@ router.get('/update/:id', ensureAuthenticated, async (req, res) => {
 })
 
 router.post('/update/:id', async (req, res) => {
-    console.log(req.body)
     const studentId = parseInt(req.params.id)
     const findUser = await User.find(studentId)
     for (const num in req.body.shiftID) {
