@@ -118,7 +118,7 @@ router.get("/resources", async (req, res) => {
     } else if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
         const allStudents = await User.all();
         for (let student of allStudents) {
-            if (student.sectionId === req.user.section.id && student.shift.length >= 1 && student.id !== req.user.id) {
+            if (student.sectionId === req.user.section.id && student.shift.length >= 1 && student.id !== req.user.id && student.role === 'STUDENT') {
                 allUsersInSection.push({
                     id: student.id,
                     name: student.name,
