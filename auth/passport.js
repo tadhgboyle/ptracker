@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const User = require('../models/user');
 const axios = require("axios");
 
-const GOOGLE_CALLBACK_URL = process.env.APP_URL + '/auth/google/callback';
+const GOOGLE_CALLBACK_URL = process.env.APP_URL + 'auth/google/callback';
 
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
