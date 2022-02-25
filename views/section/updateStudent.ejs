@@ -14,6 +14,9 @@
         <th class="text-left w-40 border border-solid border-black border-collapse">
             Shift Type
         </th>
+        <th class="text-left w-40 border border-solid border-black border-collapse">
+            Site
+        </th>
     </tr>
 
     <form id="addForm" action="<%= "/update/" + student.id %>" method="POST">
@@ -63,6 +66,36 @@
                                  <option value="NIGHT">NIGHT</option>
                                  <option value="EVENING">EVENING</option>
                              <% } %>
+                        </select>
+                    </td>
+                    <td class="w-fit text-center border border-solid border-black border-collapse">
+                        <select value="<%= student.section.id %>" name="site" class="form-select appearance-none
+                          block
+                          w-full
+                          px-3
+                          py-1.5
+                          mb-3
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding bg-no-repeat
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          m-0
+                          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                            <% for (const site of sites) { %>
+                                <% if (student.shifts[num].siteId === site.id && site.status !== 'DELETED' && student.shifts[num].status !== 'DELETED') { %>
+                                    <option value="<%= site.id %>"> <%= site.name %> </option>
+                                <% } %>
+                            <% } %>
+
+                            <% for (const site of sites) { %>
+                                <% if (site.id !== student.shifts[num].siteId && site.status !== 'DELETED' && student.shifts[num].status !== 'DELETED') { %>
+                                        <option value="<%= site.id %>"> <%= site.name %> </option>
+                                <% } %>
+                            <% } %>
                         </select>
                     </td>
                 </tr>

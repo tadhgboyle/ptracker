@@ -5,7 +5,12 @@ const prisma = new PrismaClient();
 const User = require('../models/user');
 const axios = require("axios");
 
-const GOOGLE_CALLBACK_URL = process.env.APP_URL + '/auth/google/callback';
+let URL = process.env.APP_URL;
+if (URL.endsWith('/')) {
+    URL = URL.slice(0, -1);
+}
+
+const GOOGLE_CALLBACK_URL = URL + '/auth/google/callback';
 
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
@@ -20,8 +25,12 @@ passport.use(new GoogleStrategy({
         });
 
         if (!userExists) {
+            let URL = process.env.APP_URL;
+            if (URL.endsWith('/')) {
+                URL = URL.slice(0, -1);
+            }
             // send post request, so it can send emails in "background"
-            await axios.post(process.env.APP_URL + '/email/newUser', {
+            await axios.post(URL + '/email/newUser', {
                 name: profile.displayName,
             });
         }

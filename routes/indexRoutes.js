@@ -51,6 +51,17 @@ router.get('/nda', ensureAuthenticated, (req, res) => {
     });
 });
 
+router.get('/pendingSection', ensureAuthenticated, (req, res) => {
+    if (req.user.section.id !== 1) {
+        // if they get assigned a section and then reload the page
+        return res.redirect('/dashboard');
+    }
+
+    res.render('pendingSection', {
+        page: 'assign',
+    });
+});
+
 router.post('/nda', ensureAuthenticated, async (req, res) => {
     if (req.body.secret_nda_thing === 'yes-i-actually-used-the-button') {
         await User.update(req.user.id, {
@@ -112,6 +123,7 @@ router.get('/update/:id', ensureAuthenticated, async (req, res) => {
         page: 'section',
         student: findUser,
         shifts: allShifts,
+        sites: await Site.all(),
     });
 })
 
@@ -128,6 +140,7 @@ router.post('/update/:id', async (req, res) => {
                 data: {
                     date: new Date(req.body.date),
                     type: req.body.shiftType,
+                    siteId: parseInt(req.body.site),
                 }
             })
         } else {
@@ -139,6 +152,7 @@ router.post('/update/:id', async (req, res) => {
                 data: {
                     date: new Date(req.body.date[num]),
                     type: req.body.shiftType[num],
+                    siteId: parseInt(req.body.site[num]),
                 }
             })
         }
@@ -159,7 +173,11 @@ router.get('/addSite', ensureAuthenticated, async (req, res) => {
 })
 
 router.post('/addSite', ensureAuthenticated, async (req, res) => {
-    await Site.create(req.body)
+    if (req.body.site.length !== 0) {
+        await Site.create(req.body)
+    } else {
+        req.session.error_message = `You must input a valid site`;
+    }
     res.redirect('/admin')
 })
 

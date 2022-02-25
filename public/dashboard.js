@@ -40,10 +40,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         ],
         resources: {
-            url: '/data/resources'
+            url: '/data/dashboardStudentSites'
         },
         events: {
-            url: '/data/events'
+            url: '/data/dashboardShifts'
         },
     });
 

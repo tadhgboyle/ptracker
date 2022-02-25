@@ -1,6 +1,4 @@
 // This route page is mainly used to fetch data to the calendar in the dashboard page using JSON
-const {PrismaClient} = require("@prisma/client");
-const prisma = new PrismaClient();
 
 // Express and Rounter
 const express = require('express');
@@ -27,49 +25,38 @@ const countShifts = (shifts, shiftType) => {
         const splitDate = shift.date.toISOString().split('T')[0].split('-')
         const shiftMonth = new Date(splitDate[0],splitDate[1] - 1,splitDate[2])
         const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
-        if (shiftType === 'ALL' && shift.status !== 'DELETED') {
+        if (shiftType === 'ALL' && shift.status !== 'NORMAL') {
             if (monthYear === currentMonthYear) {
                 shiftCounter += 1
             }
-        } else if (monthYear === currentMonthYear && shift.type === shiftType && shift.status !== 'DELETED') {
+        } else if (monthYear === currentMonthYear && shift.type === shiftType && shift.status === 'NORMAL') {
             shiftCounter += 1
         }
     }
     return shiftCounter;
 }
 
-const findNameOfSite = async (siteId) => {
-    const findSite = await prisma.site.findUnique({
-        where: {
-            id: parseInt(siteId)
-        }
-    })
-    return findSite.name
-}
-
-const findMainSite = async (shifts) => {
+const findMainSite = (shifts) => {
     // Checks to see which site they are work at the most (basically checking what their main site is)
-    const numOfShifts = {};
-    let siteNum = null;
+    const RCH = [];
+    const SMH = [];
+    const RH = [];
     for (const shift of shifts) {
-        if (numOfShifts[shift.siteId] === undefined && shift.status !== 'DELETED') {
-            numOfShifts[shift.siteId] = 1
-        } else {
-            if (shift.status !== 'DELETED') {
-                numOfShifts[shift.siteId] += 1
-            }
+        if (shift.siteId === 1) {
+            RCH.push(shift)
+        } else if (shift.siteId === 2) {
+            SMH.push(shift)
+        } else if (shift.siteId === 3) {
+            RH.push(shift)
         }
     }
-    for (const [key, value] of Object.entries(numOfShifts)) {
-        if (siteNum === null) {
-            siteNum = [key, value]
-        } else {
-            if (value > siteNum[1]) {
-                siteNum = [key, value]
-            }
-        }
+    if (RCH.length > SMH.length && RCH.length > RH.length) {
+        return 'RCH'
+    } else if (SMH.length > RCH.length && SMH.length > RH.length) {
+        return 'SMH'
+    } else if (RH.length > RCH.length && RH.length > SMH.length) {
+        return 'RH'
     }
-    return await findNameOfSite(parseInt(siteNum[0]))
 }
 
 const shiftColor = (shift) => {
@@ -96,7 +83,7 @@ router.get("/dashboardStudentSites", async (req, res) => {
         allUsersInSection.push({
             id: req.user.id,
             name: req.user.name,
-            site: await findMainSite(req.user.shifts),
+            site: findMainSite(req.user.shifts),
             dayshifts: countShifts(req.user.shifts, 'DAY'),
             nightshifts: countShifts(req.user.shifts, 'NIGHT'),
             eveningshifts: countShifts(req.user.shifts, 'EVENING'),
@@ -109,7 +96,7 @@ router.get("/dashboardStudentSites", async (req, res) => {
                 allUsersInSection.push({
                     id: student.id,
                     name: student.name,
-                    site: await findMainSite(student.shift),
+                    site: findMainSite(student.shift),
                     dayshifts: countShifts(student.shift, 'DAY'),
                     nightshifts: countShifts(student.shift, 'NIGHT'),
                     eveningshifts: countShifts(student.shift, 'EVENING'),
