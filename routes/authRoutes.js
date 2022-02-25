@@ -8,7 +8,6 @@ const {forwardIfAuthenticated} = require('../middleware/checkAuth')
 const FAILURE_LOGIN_URL = process.env.APP_URL + '/auth/login/error';
 
 router.get('/logout', (req, res) => {
-    console.log('aaaa')
     req.logout();
     res.redirect('/auth/login');
 });
