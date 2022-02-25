@@ -112,10 +112,12 @@ router.get('/update/:id', ensureAuthenticated, async (req, res) => {
         page: 'section',
         student: findUser,
         shifts: allShifts,
+        sites: await Site.all(),
     });
 })
 
 router.post('/update/:id', async (req, res) => {
+    console.log(req.body)
     const studentId = parseInt(req.params.id)
     const findUser = await User.find(studentId)
     for (const num in req.body.shiftID) {
@@ -128,6 +130,7 @@ router.post('/update/:id', async (req, res) => {
                 data: {
                     date: new Date(req.body.date),
                     type: req.body.shiftType,
+                    siteId: parseInt(req.body.site),
                 }
             })
         } else {
@@ -139,6 +142,7 @@ router.post('/update/:id', async (req, res) => {
                 data: {
                     date: new Date(req.body.date[num]),
                     type: req.body.shiftType[num],
+                    siteId: parseInt(req.body.site[num]),
                 }
             })
         }
