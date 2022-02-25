@@ -57,34 +57,6 @@ const findMainSite = (shifts) => {
     }
 }
 
-const convertSiteId = (shift) => {
-    // Used by the function convertShiftType() to get the site name
-    if (shift.siteId === 1) {
-        return 'RCH';
-    } else if (shift.siteId === 2) {
-        return 'SMH';
-    } else if (shift.siteId === 3) {
-        return 'RH';
-    }
-}
-
-const convertShiftType = (type, allShifts, shift) => {
-    const site = findMainSite(allShifts)
-    if (allShifts.length === 0) {
-        return 0
-    } else {
-        if (type === 'NIGHT') {
-            return 'N'
-        } else if (type === 'EVENING') {
-            return 'E'
-        } else if (type === 'DAY') {
-            return 'D'
-        } else if (type === 'SICK') {
-            return 'S'
-        }
-    }
-}
-
 const shiftColor = (shift) => {
     if (shift === 'NIGHT') {
         return '#744468'
@@ -139,7 +111,7 @@ router.get("/events", async (req, res) => {
     if (req.user.role === Role.STUDENT) {
         for (const shift of req.user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
-                title: convertShiftType(shift.type, req.user.shifts, shift),
+                title: shift.type,
                 start: shift.date.toISOString().split("T")[0],
                 resourceId: req.user.id,
                 color: shiftColor(shift.type)
@@ -152,7 +124,7 @@ router.get("/events", async (req, res) => {
             for (let shift of student.shift.filter(s => s.status !== 'DELETED')) {
                 if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
                     shiftDays.push({
-                        title: convertShiftType(shift.type, student.shift, shift),
+                        title: shift.type,
                         start: shift.date.toISOString().split("T")[0],
                         resourceId: student.id,
                         color: shiftColor(shift.type)
