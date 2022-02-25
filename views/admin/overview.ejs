@@ -173,9 +173,8 @@
                         <%= site.name %>
                     </td>
                     <td class="flex">
-                        <button class="bg-red-500 hover:bg-red-400 text-white text-center font-semibold py-1.5 px-4 hover:border-red-500 rounded"
-                                onclick="deleteModal(<%= site.id %>)">
-                            Remove
+                        <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
+                            ❌
                         </button>
                     </td>
                 </tr>

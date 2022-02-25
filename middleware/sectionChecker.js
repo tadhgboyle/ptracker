@@ -1,6 +1,6 @@
 const sectionChecker = (req, res, next) => {
     if (req.user) {
-        if (req.path.includes('auth') || req.path.includes('pendingSection')) {
+        if (req.path.includes('auth') || req.path.includes('pendingSection') || req.path.includes('nda')) {
             return next();
         }
 
