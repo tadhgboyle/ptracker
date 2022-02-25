@@ -1,4 +1,6 @@
 // This route page is mainly used to fetch data to the calendar in the dashboard page using JSON
+const {PrismaClient} = require("@prisma/client");
+const prisma = new PrismaClient();
 
 // Express and Rounter
 const express = require('express');
@@ -10,6 +12,8 @@ const date = new Date()
 // User and Role Classes
 const User = require('../models/user');
 const Role = require('../models/role');
+const Shift = require("../models/shift");
+const Holidays = require("date-holidays");
 
 // All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
 const countShifts = (shifts, shiftType) => {
@@ -23,66 +27,49 @@ const countShifts = (shifts, shiftType) => {
         const splitDate = shift.date.toISOString().split('T')[0].split('-')
         const shiftMonth = new Date(splitDate[0],splitDate[1] - 1,splitDate[2])
         const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
-        if (shiftType === 'ALL' && shift.status !== 'NORMAL') {
+        if (shiftType === 'ALL' && shift.status !== 'DELETED') {
             if (monthYear === currentMonthYear) {
                 shiftCounter += 1
             }
-        } else if (monthYear === currentMonthYear && shift.type === shiftType && shift.status === 'NORMAL') {
+        } else if (monthYear === currentMonthYear && shift.type === shiftType && shift.status !== 'DELETED') {
             shiftCounter += 1
         }
     }
     return shiftCounter;
 }
 
-const findMainSite = (shifts) => {
+const findNameOfSite = async (siteId) => {
+    const findSite = await prisma.site.findUnique({
+        where: {
+            id: parseInt(siteId)
+        }
+    })
+    return findSite.name
+}
+
+const findMainSite = async (shifts) => {
     // Checks to see which site they are work at the most (basically checking what their main site is)
-    const RCH = [];
-    const SMH = [];
-    const RH = [];
+    const numOfShifts = {};
+    let siteNum = null;
     for (const shift of shifts) {
-        if (shift.siteId === 1) {
-            RCH.push(shift)
-        } else if (shift.siteId === 2) {
-            SMH.push(shift)
-        } else if (shift.siteId === 3) {
-            RH.push(shift)
+        if (numOfShifts[shift.siteId] === undefined && shift.status !== 'DELETED') {
+            numOfShifts[shift.siteId] = 1
+        } else {
+            if (shift.status !== 'DELETED') {
+                numOfShifts[shift.siteId] += 1
+            }
         }
     }
-    if (RCH.length > SMH.length && RCH.length > RH.length) {
-        return 'RCH'
-    } else if (SMH.length > RCH.length && SMH.length > RH.length) {
-        return 'SMH'
-    } else if (RH.length > RCH.length && RH.length > SMH.length) {
-        return 'RH'
-    }
-}
-
-const convertSiteId = (shift) => {
-    // Used by the function convertShiftType() to get the site name
-    if (shift.siteId === 1) {
-        return 'RCH';
-    } else if (shift.siteId === 2) {
-        return 'SMH';
-    } else if (shift.siteId === 3) {
-        return 'RH';
-    }
-}
-
-const convertShiftType = (type, allShifts, shift) => {
-    const site = findMainSite(allShifts)
-    if (allShifts.length === 0) {
-        return 0
-    } else {
-        if (type === 'NIGHT') {
-            return 'N'
-        } else if (type === 'EVENING') {
-            return 'E'
-        } else if (type === 'DAY') {
-            return 'D'
-        } else if (type === 'SICK') {
-            return 'S'
+    for (const [key, value] of Object.entries(numOfShifts)) {
+        if (siteNum === null) {
+            siteNum = [key, value]
+        } else {
+            if (value > siteNum[1]) {
+                siteNum = [key, value]
+            }
         }
     }
+    return await findNameOfSite(parseInt(siteNum[0]))
 }
 
 const shiftColor = (shift) => {
@@ -103,65 +90,92 @@ const convertMonth = (monthNum) => {
     ][monthNum];
 }
 
-router.get("/resources", async (req, res) => {
+router.get("/dashboardStudentSites", async (req, res) => {
     const allUsersInSection = [];
     if (req.user.role === Role.STUDENT && req.user.shifts.length >= 1) {
         allUsersInSection.push({
             id: req.user.id,
             name: req.user.name,
-            site: findMainSite(req.user.shifts),
+            site: await findMainSite(req.user.shifts),
             dayshifts: countShifts(req.user.shifts, 'DAY'),
             nightshifts: countShifts(req.user.shifts, 'NIGHT'),
             eveningshifts: countShifts(req.user.shifts, 'EVENING'),
             totalshifts: countShifts(req.user.shifts, 'ALL')
-        })
+        });
     } else if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
         const allStudents = await User.all();
         for (let student of allStudents) {
-            if (student.sectionId === req.user.section.id && student.shift.length >= 1 && student.id !== req.user.id) {
+            if (student.sectionId === req.user.section.id && student.shift.length >= 1 && student.id !== req.user.id && student.role === Role.STUDENT) {
                 allUsersInSection.push({
                     id: student.id,
                     name: student.name,
-                    site: findMainSite(student.shift),
+                    site: await findMainSite(student.shift),
                     dayshifts: countShifts(student.shift, 'DAY'),
                     nightshifts: countShifts(student.shift, 'NIGHT'),
                     eveningshifts: countShifts(student.shift, 'EVENING'),
                     totalshifts: countShifts(student.shift, 'ALL')
-                })
+                });
             }
         }
     }
-    res.json(allUsersInSection)
+    res.json(allUsersInSection);
 })
 
-router.get("/events", async (req, res) => {
+router.get("/dashboardShifts", async (req, res) => {
     const shiftDays = [];
+
     if (req.user.role === Role.STUDENT) {
         for (const shift of req.user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
-                title: convertShiftType(shift.type, req.user.shifts, shift),
+                title: shift.type,
                 start: shift.date.toISOString().split("T")[0],
                 resourceId: req.user.id,
                 color: shiftColor(shift.type)
-            })
+            });
         }
-    } else {
-        // Users who are instructors or admins
-        const allStudents = await User.all();
-        for (let student of allStudents) {
-            for (let shift of student.shift.filter(s => s.status !== 'DELETED')) {
-                if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
-                    shiftDays.push({
-                        title: convertShiftType(shift.type, student.shift, shift),
-                        start: shift.date.toISOString().split("T")[0],
-                        resourceId: student.id,
-                        color: shiftColor(shift.type)
-                    })
-                }
+        return res.json(shiftDays);
+    }
+
+    // Users who are instructors or admins
+    const allStudents = await User.all();
+    for (const student of allStudents) {
+        for (const shift of student.shift.filter(s => s.status !== 'DELETED')) {
+            if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
+                shiftDays.push({
+                    title: shift.type,
+                    start: shift.date.toISOString().split("T")[0],
+                    resourceId: student.id,
+                    color: shiftColor(shift.type)
+                });
             }
         }
     }
-    res.json(shiftDays)
-})
+    return res.json(shiftDays);
+});
+
+router.get('/allShifts', async (req, res) => {
+    const allShifts = [];
+    const hd = new Holidays('CA', 'BC');
+    const allHolidays = hd.getHolidays(date.getFullYear())
+    for (const shift of await Shift.allForLoggedInUser(req.user.id)) {
+        if (shift.status === 'DELETED') {
+            continue;
+        }
+        allShifts.push({
+            id: shift.id,
+            title: shift.type,
+            start: shift.date.toISOString().split('T')[0],
+            color: shiftColor(shift.type)
+        })
+    }
+    for (const holiday of allHolidays) {
+        allShifts.push({
+            title: holiday.name,
+            start: holiday.date.split(" ")[0],
+            color: '#577590'
+        })
+    }
+    res.json(allShifts);
+});
 
 module.exports = router;
