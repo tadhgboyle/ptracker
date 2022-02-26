@@ -27,7 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
       selectable: true,
       businessHours: true,
       dayMaxEvents: true,
-
+      nowIndicator: true,
+      customButtons: {
+          exportButton: {
+            text: 'Export to PDF',
+            click: function() {
+              alert('Export PDF clicked!');
+            }
+          }
+        },
+      headerToolbar: {
+          left: 'title',
+          right: 'exportButton today prev,next',
+      },
       dateClick: function (info) {
           openModal('addShiftModal')
           document.getElementById('addDatePicker').value = info.dateStr

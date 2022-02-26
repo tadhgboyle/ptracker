@@ -4,6 +4,20 @@ document.addEventListener('DOMContentLoaded', function () {
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         initialView: 'resourceTimelineMonth',
         aspectRatio: 1.5,
+        nowIndicator: true,
+        customButtons: {
+            exportButton: {
+              text: 'Export to PDF',
+              click: function() {
+                alert('Export PDF clicked!');
+              }
+            }
+          },
+        headerToolbar: {
+            left: 'title',
+            right: 'exportButton today prev,next',
+        },
+        slotLabelFormat:[{day: 'numeric'},{weekday: 'short'}],
         resourceAreaWidth: '35%',
         resourceAreaColumns: [
             {
@@ -14,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 group: true,
                 headerContent: 'Site',
                 field: 'site',
-                width: '90px'
+                width: '60px'
             },
             {
                 headerContent: 'Day',
@@ -30,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 headerContent: 'Evening',
                 field: 'eveningshifts',
-                width: '60px'
+                width: '70px'
 
             },
             {
