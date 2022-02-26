@@ -69,7 +69,6 @@ const findMainSite = async (shifts) => {
             }
         }
     }
-    console.log(siteNum[0])
     if (siteNum[0] === null) {
         return 'Unassigned'
     } else {
