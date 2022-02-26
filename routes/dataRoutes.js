@@ -52,6 +52,7 @@ const findMainSite = async (shifts) => {
     const numOfShifts = {};
     let siteNum = [];
     for (const shift of shifts) {
+        // console.log(Object.keys(numOfShifts).length)
         if (numOfShifts[shift.siteId] === undefined && shift.status !== 'DELETED') {
             numOfShifts[shift.siteId] = 1
         } else {
@@ -71,8 +72,12 @@ const findMainSite = async (shifts) => {
             }
         }
     }
-
-    return await findNameOfSite(parseInt(siteNum[0]))
+    if (siteNum.length !== 0) {
+        const site = await findNameOfSite(parseInt(siteNum[0]))
+        return site
+    } else {
+        return 'Unassigned'
+    }
 }
 
 const shiftColor = (shift) => {
@@ -96,10 +101,11 @@ const convertMonth = (monthNum) => {
 router.get("/dashboardStudentSites", async (req, res) => {
     const allUsersInSection = [];
     if (req.user.role === Role.STUDENT && req.user.shifts.length > 0) {
+        const mainSite = await findMainSite(req.user.shifts)
         allUsersInSection.push({
             id: req.user.id,
             name: req.user.name,
-            site: await findMainSite(req.user.shifts),
+            site: mainSite,
             dayshifts: countShifts(req.user.shifts, 'DAY'),
             nightshifts: countShifts(req.user.shifts, 'NIGHT'),
             eveningshifts: countShifts(req.user.shifts, 'EVENING'),
@@ -108,11 +114,12 @@ router.get("/dashboardStudentSites", async (req, res) => {
     } else if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
         const allStudents = await User.all();
         for (let student of allStudents) {
+            const mainSite = await findMainSite(student.shift)
             if (student.sectionId === req.user.section.id && student.shift.length > 0 && student.id !== req.user.id && student.role === Role.STUDENT) {
                 allUsersInSection.push({
                     id: student.id,
                     name: student.name,
-                    site: await findMainSite(student.shift),
+                    site: mainSite,
                     dayshifts: countShifts(student.shift, 'DAY'),
                     nightshifts: countShifts(student.shift, 'NIGHT'),
                     eveningshifts: countShifts(student.shift, 'EVENING'),
