@@ -69,7 +69,8 @@ const findMainSite = async (shifts) => {
             }
         }
     }
-    if (siteNum[0] === undefined) {
+    console.log(siteNum[0])
+    if (siteNum[0] === null) {
         return 'Unassigned'
     } else {
         const findSite = parseInt(siteNum[0])
