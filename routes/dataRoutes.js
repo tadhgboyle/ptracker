@@ -50,7 +50,7 @@ const findNameOfSite = async (siteId) => {
 const findMainSite = async (shifts) => {
     // Checks to see which site they are work at the most (basically checking what their main site is)
     const numOfShifts = {};
-    let siteNum = null;
+    let siteNum = [];
     for (const shift of shifts) {
         if (numOfShifts[shift.siteId] === undefined && shift.status !== 'DELETED') {
             numOfShifts[shift.siteId] = 1
@@ -61,21 +61,24 @@ const findMainSite = async (shifts) => {
         }
     }
     for (const [key, value] of Object.entries(numOfShifts)) {
-        if (siteNum === null) {
-            siteNum = [key, value]
+        if (siteNum.length === 0) {
+            siteNum.push(key)
+            siteNum.push(value)
         } else {
             if (value > siteNum[1]) {
-                siteNum = [key, value]
+                siteNum[0] = key
+                siteNum[1] = value
             }
         }
     }
-    if (siteNum[0] === null) {
-        return 'Unassigned'
-    } else {
-        const findSite = parseInt(siteNum[0])
-        const siteName = await findNameOfSite(findSite)
-        return siteName
-    }
+        // if (siteNum[0] === null) {
+        //     return 'Unassigned'
+        // } else {
+        //     const findSite = parseInt(siteNum[0])
+        //     const siteName = await findNameOfSite(findSite)
+        //     return siteName
+        // }
+    return await findNameOfSite(parseInt(siteNum[0]))
     }
 
 const shiftColor = (shift) => {
