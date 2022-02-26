@@ -69,7 +69,12 @@ const findMainSite = async (shifts) => {
             }
         }
     }
-    return await findNameOfSite(parseInt(siteNum[0]))
+    const siteName = await findNameOfSite(parseInt(siteNum[0]))
+    if (siteName === undefined) {
+        return 'Unassigned'
+    } else {
+        return siteName
+    }
 }
 
 const shiftColor = (shift) => {
