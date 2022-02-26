@@ -69,12 +69,9 @@ const findMainSite = async (shifts) => {
             }
         }
     }
-    const siteName = await findNameOfSite(parseInt(siteNum[0]))
-    if (siteName === undefined) {
-        return 'Unassigned'
-    } else {
-        return siteName
-    }
+    const findSite = parseInt(siteNum[0])
+    const siteName = await findNameOfSite(findSite)
+    return siteName
 }
 
 const shiftColor = (shift) => {
@@ -118,7 +115,7 @@ router.get("/dashboardStudentSites", async (req, res) => {
                     dayshifts: countShifts(student.shift, 'DAY'),
                     nightshifts: countShifts(student.shift, 'NIGHT'),
                     eveningshifts: countShifts(student.shift, 'EVENING'),
-                    totalshifts: countShifts(student.shift, 'ALL')
+                    totalshifts: countShifts(student.shift, 'ALL'),
                 });
             }
         }
