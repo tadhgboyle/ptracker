@@ -71,15 +71,9 @@ const findMainSite = async (shifts) => {
             }
         }
     }
-        // if (siteNum[0] === null) {
-        //     return 'Unassigned'
-        // } else {
-        //     const findSite = parseInt(siteNum[0])
-        //     const siteName = await findNameOfSite(findSite)
-        //     return siteName
-        // }
+
     return await findNameOfSite(parseInt(siteNum[0]))
-    }
+}
 
 const shiftColor = (shift) => {
     if (shift === 'NIGHT') {
