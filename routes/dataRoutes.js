@@ -98,7 +98,7 @@ const convertMonth = (monthNum) => {
 
 router.get("/dashboardStudentSites", async (req, res) => {
     const allUsersInSection = [];
-    if (req.user.role === Role.STUDENT && req.user.shifts.length >= 1) {
+    if (req.user.role === Role.STUDENT && req.user.shifts.length > 0) {
         allUsersInSection.push({
             id: req.user.id,
             name: req.user.name,
@@ -111,7 +111,7 @@ router.get("/dashboardStudentSites", async (req, res) => {
     } else if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
         const allStudents = await User.all();
         for (let student of allStudents) {
-            if (student.sectionId === req.user.section.id && student.shift.length >= 1 && student.id !== req.user.id && student.role === Role.STUDENT) {
+            if (student.sectionId === req.user.section.id && student.shift.length > 0 && student.id !== req.user.id && student.role === Role.STUDENT) {
                 allUsersInSection.push({
                     id: student.id,
                     name: student.name,
@@ -130,7 +130,7 @@ router.get("/dashboardStudentSites", async (req, res) => {
 router.get("/dashboardShifts", async (req, res) => {
     const shiftDays = [];
 
-    if (req.user.role === Role.STUDENT) {
+    if (req.user.role === Role.STUDENT && req.user.shifts.length > 0) {
         for (const shift of req.user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
                 title: shift.type,
@@ -146,7 +146,7 @@ router.get("/dashboardShifts", async (req, res) => {
     const allStudents = await User.all();
     for (const student of allStudents) {
         for (const shift of student.shift.filter(s => s.status !== 'DELETED')) {
-            if (student.sectionId === req.user.section.id && student.shift.length >= 1) {
+            if (student.sectionId === req.user.section.id && student.shift.length > 0) {
                 shiftDays.push({
                     title: shift.type,
                     start: shift.date.toISOString().split("T")[0],
