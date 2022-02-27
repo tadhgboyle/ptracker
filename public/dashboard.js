@@ -1,10 +1,28 @@
+window.jsPDF = window.jspdf.jsPDF;
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
+
     const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
         refetchResourcesOnNavigate: true,
         contentHeight: 'auto',
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         initialView: 'resourceTimelineMonth',
-        aspectRatio: 1.5,
+        nowIndicator: true,
+        customButtons: {
+            printButton: {
+              text: 'Print',
+              click: function() {
+                window.print();
+              }
+            }
+          },
+        headerToolbar: {
+            left: 'title',
+            right: 'printButton today prev,next',
+        },
+        slotLabelFormat:[{day: 'numeric'},{weekday: 'short'}],
         resourceAreaWidth: '35%',
         resourceAreaColumns: [
             {
@@ -15,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 group: true,
                 headerContent: 'Site',
                 field: 'site',
-                width: '90px'
+                width: '60px'
             },
             {
                 headerContent: 'Day',
@@ -31,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 headerContent: 'Evening',
                 field: 'eveningshifts',
-                width: '60px'
+                width: '70px'
 
             },
             {
@@ -47,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
             url: '/data/dashboardShifts'
         },
     });
-
     calendar.render();
 });
 

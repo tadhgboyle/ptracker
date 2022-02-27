@@ -1302,11 +1302,6 @@ select {
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
-.underline {
-  -webkit-text-decoration-line: underline;
-          text-decoration-line: underline;
-}
-
 .opacity-0 {
   opacity: 0;
 }
@@ -1356,6 +1351,24 @@ select {
 input:checked ~ .dot {
   transform: translateX(100%);
   background-color: #48bb78;
+}
+
+@page {
+  size: A4 landscape;
+
+  size: 420mm 210mm;
+}
+
+@media print {
+  .noprint {
+    visibility: hidden;
+  }
+
+  .container{
+    padding: 0 !important;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+  }
 }
 
 body {
@@ -1555,11 +1568,6 @@ header.masthead h1 {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
-}
-
 .dark .dark\:text-green-800 {
   --tw-text-opacity: 1;
   color: rgb(22 101 52 / var(--tw-text-opacity));
@@ -1568,6 +1576,11 @@ header.masthead h1 {
 .dark .dark\:text-red-800 {
   --tw-text-opacity: 1;
   color: rgb(153 27 27 / var(--tw-text-opacity));
+}
+
+.dark .dark\:text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 @media (min-width: 640px) {

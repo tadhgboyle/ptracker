@@ -27,7 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
       selectable: true,
       businessHours: true,
       dayMaxEvents: true,
-
+      nowIndicator: true,
+      customButtons: {
+          printButton: {
+            text: 'Print',
+            click: function() {
+              window.print();
+            }
+          }
+        },
+      headerToolbar: {
+          left: 'title',
+          right: 'printButton today prev,next',
+      },
       dateClick: function (info) {
           openModal('addShiftModal')
           document.getElementById('addDatePicker').value = info.dateStr
