@@ -29,16 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
       dayMaxEvents: true,
       nowIndicator: true,
       customButtons: {
-          exportButton: {
-            text: 'Export to PDF',
+          printButton: {
+            text: 'Print',
             click: function() {
-              alert('Export PDF clicked!');
+              window.print();
             }
           }
         },
       headerToolbar: {
           left: 'title',
-          right: 'exportButton today prev,next',
+          right: 'printButton today prev,next',
       },
       dateClick: function (info) {
           openModal('addShiftModal')

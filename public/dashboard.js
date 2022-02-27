@@ -1,4 +1,9 @@
+window.jsPDF = window.jspdf.jsPDF;
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
+
     const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
         contentHeight: 'auto',
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -6,16 +11,16 @@ document.addEventListener('DOMContentLoaded', function () {
         aspectRatio: 1.5,
         nowIndicator: true,
         customButtons: {
-            exportButton: {
-              text: 'Export to PDF',
+            printButton: {
+              text: 'Print',
               click: function() {
-                alert('Export PDF clicked!');
+                alert('Print clicked!');
               }
             }
           },
         headerToolbar: {
             left: 'title',
-            right: 'exportButton today prev,next',
+            right: 'printButton today prev,next',
         },
         slotLabelFormat:[{day: 'numeric'},{weekday: 'short'}],
         resourceAreaWidth: '35%',
@@ -60,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
             url: '/data/dashboardShifts'
         },
     });
-
     calendar.render();
 });
 
