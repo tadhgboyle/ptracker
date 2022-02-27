@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        refetchResourcesOnNavigate: true,
         contentHeight: 'auto',
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         initialView: 'resourceTimelineMonth',

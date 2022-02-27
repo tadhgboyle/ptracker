@@ -16,9 +16,13 @@ const Shift = require("../models/shift");
 const Holidays = require("date-holidays");
 
 // All the functions created to be used for the "Resources" and "Events" columns for fullcalendar.io
-const countShifts = (shifts, shiftType) => {
+const countShifts = (shifts, shiftType, calendarDate) => {
     let shiftCounter = 0;
-    const currentMonthYear = `${convertMonth(date.getMonth())} ${date.getFullYear()}`
+
+    // This gets the date from the calendar
+    const userDate = new Date(calendarDate[0],calendarDate[1] - 1,calendarDate[2])
+    const currentUserDate = `${convertMonth(userDate.getMonth())} ${userDate.getFullYear()}`
+
     if (shifts.length === 0) {
         return 0;
     }
@@ -28,10 +32,10 @@ const countShifts = (shifts, shiftType) => {
         const shiftMonth = new Date(splitDate[0],splitDate[1] - 1,splitDate[2])
         const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
         if (shiftType === 'ALL' && shift.status !== 'DELETED') {
-            if (monthYear === currentMonthYear) {
+            if (monthYear === currentUserDate) {
                 shiftCounter += 1
             }
-        } else if (monthYear === currentMonthYear && shift.type === shiftType && shift.status !== 'DELETED') {
+        } else if (monthYear === currentUserDate && shift.type === shiftType && shift.status !== 'DELETED') {
             shiftCounter += 1
         }
     }
@@ -100,16 +104,17 @@ const convertMonth = (monthNum) => {
 
 router.get("/dashboardStudentSites", async (req, res) => {
     const allUsersInSection = [];
+    const userCalendarDate = req.query.start.split('T')[0].split('-')
     if (req.user.role === Role.STUDENT && req.user.shifts.length > 0) {
         const mainSite = await findMainSite(req.user.shifts)
         allUsersInSection.push({
             id: req.user.id,
             name: req.user.name,
             site: mainSite,
-            dayshifts: countShifts(req.user.shifts, 'DAY'),
-            nightshifts: countShifts(req.user.shifts, 'NIGHT'),
-            eveningshifts: countShifts(req.user.shifts, 'EVENING'),
-            totalshifts: countShifts(req.user.shifts, 'ALL')
+            dayshifts: countShifts(req.user.shifts, 'DAY', userCalendarDate),
+            nightshifts: countShifts(req.user.shifts, 'NIGHT', userCalendarDate),
+            eveningshifts: countShifts(req.user.shifts, 'EVENING', userCalendarDate),
+            totalshifts: countShifts(req.user.shifts, 'ALL', userCalendarDate)
         });
     } else if (req.user.role === Role.INSTRUCTOR || req.user.role === Role.ADMIN) {
         const allStudents = await User.all();
@@ -120,10 +125,10 @@ router.get("/dashboardStudentSites", async (req, res) => {
                     id: student.id,
                     name: student.name,
                     site: mainSite,
-                    dayshifts: countShifts(student.shift, 'DAY'),
-                    nightshifts: countShifts(student.shift, 'NIGHT'),
-                    eveningshifts: countShifts(student.shift, 'EVENING'),
-                    totalshifts: countShifts(student.shift, 'ALL'),
+                    dayshifts: countShifts(student.shift, 'DAY', userCalendarDate),
+                    nightshifts: countShifts(student.shift, 'NIGHT', userCalendarDate),
+                    eveningshifts: countShifts(student.shift, 'EVENING', userCalendarDate),
+                    totalshifts: countShifts(student.shift, 'ALL', userCalendarDate),
                 });
             }
         }
