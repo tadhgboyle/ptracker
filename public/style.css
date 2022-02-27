@@ -10,7 +10,20 @@ input:checked ~ .dot {
     transform: translateX(100%);
     background-color: #48bb78;
 }
-
+@page {
+    size: A4 landscape;
+    size: 420mm 210mm;
+}
+@media print {
+    .noprint {
+       visibility: hidden;
+    }
+    .container{
+        padding: 0 !important;
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+    }
+ }
 body {
     font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

@@ -8,13 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
         contentHeight: 'auto',
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         initialView: 'resourceTimelineMonth',
-        aspectRatio: 1.5,
         nowIndicator: true,
         customButtons: {
             printButton: {
               text: 'Print',
               click: function() {
-                alert('Print clicked!');
+                window.print();
               }
             }
           },
