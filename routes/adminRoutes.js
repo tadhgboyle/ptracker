@@ -1,8 +1,10 @@
+// Express and Router
 const express = require('express');
-
 const router = express.Router();
 
+// Data Validation
 const {check, validationResult} = require("express-validator");
+
 // Models
 const User = require("../models/user");
 const Section = require("../models/section");
