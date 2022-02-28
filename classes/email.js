@@ -15,12 +15,16 @@ module.exports = class Email {
     });
 
     static async send(recipient, subject, content) {
-        await Email.transporter.sendMail({
-            from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
-            to: recipient,
-            subject: subject,
-            text: content,
-        });
+        try {
+            await Email.transporter.sendMail({
+                from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
+                to: recipient,
+                subject: subject,
+                text: content,
+            });
+        } catch (error) {
+            console.error(new Error(error));
+        }
     }
 
     static async sendToAdmins(subject, content) {
@@ -33,12 +37,16 @@ module.exports = class Email {
             }
         }
 
-        await Email.transporter.sendMail({
-            from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
-            to: adminEmails.join(', '),
-            subject: subject,
-            text: content,
-        });
+        try {
+            await Email.transporter.sendMail({
+                from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
+                to: adminEmails.join(', '),
+                subject: subject,
+                text: content,
+            });
+        } catch (error) {
+            console.error(new Error(error));
+        }
     }
 
 }
