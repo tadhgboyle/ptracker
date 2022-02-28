@@ -15,6 +15,7 @@ const User = require('../models/user');
 const Section = require('../models/section');
 const Shift = require('../models/shift');
 const Site = require('../models/site')
+const {isIn} = require("validator");
 
 // Router
 const router = express.Router();
@@ -105,16 +106,6 @@ router.get('/section', [ensureAuthenticated, isInstructor], async (req, res) => 
     }
 });
 
-router.get('/admin', [ensureAuthenticated, isAdmin], async (req, res) => {
-    res.render('admin/overview', {
-        page: 'admin',
-        users: await User.all(),
-        sections: await Section.all(),
-        shifts: await Shift.allPending(),
-        sites: await Site.all(),
-    });
-});
-
 router.get('/update/:id', ensureAuthenticated, async (req, res) => {
     const studentId = parseInt(req.params.id)
     const findUser = await User.find(studentId)
@@ -181,9 +172,28 @@ router.post('/addSite', ensureAuthenticated, async (req, res) => {
     res.redirect('/admin')
 })
 
-router.post('/admin/delete/:id', isInstructor, async (req, res) => {
-    await Site.delete(req.params.id)
-    res.redirect('/admin')
+router.post('/sectionDelete/:studentId', isInstructor, async (req, res) => {
+    await prisma.user.update({
+        where: {
+            id: parseInt(req.params.studentId)
+        },
+        data: {
+            sectionId: 1
+        }
+    })
+    res.redirect('/section')
+})
+
+router.post('/section/shiftDelete/:studentId/:shiftId', isInstructor, async (req, res) => {
+    await prisma.shift.update({
+        where: {
+            id: parseInt(req.params.shiftId)
+        },
+        data: {
+            status: 'DELETED',
+        }
+    });
+    res.redirect(`/update/${parseInt(req.params.studentId)}`)
 })
 
 module.exports = router;
