@@ -3,12 +3,28 @@ const express = require('express');
 const router = express.Router();
 
 const {check, validationResult} = require("express-validator");
+// Models
 const User = require("../models/user");
 const Section = require("../models/section");
 const Role = require("../models/role");
 const Shift = require("../models/shift");
-const {ensureAuthenticated, isAdmin} = require("../middleware/checkAuth");
+const Site = require("../models/site")
+
+// Authentication
+const {ensureAuthenticated, isAdmin, isInstructor} = require("../middleware/checkAuth");
+
+// Axios
 const axios = require("axios");
+
+router.get('/', [ensureAuthenticated, isAdmin], async (req, res) => {
+    res.render('admin/overview', {
+        page: 'admin',
+        users: await User.all(),
+        sections: await Section.all(),
+        shifts: await Shift.allPending(),
+        sites: await Site.all(),
+    });
+});
 
 router.post(
     '/changeRole',
@@ -194,5 +210,10 @@ router.get('/declineShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req
     req.session.success_message = `Successfully declined shift deletion for shift #${req.params.id}.`;
     res.redirect('/admin');
 });
+
+router.post('/siteDelete/:id', isInstructor, async (req, res) => {
+    await Site.delete(req.params.id)
+    res.redirect('/admin')
+})
 
 module.exports = router;
