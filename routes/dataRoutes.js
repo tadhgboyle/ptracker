@@ -80,7 +80,7 @@ const findMainSite = async (shifts) => {
         const site = await findNameOfSite(parseInt(siteNum[0]))
         return site
     } else {
-        return 'Unassigned'
+        return 'No Shifts'
     }
 }
 
