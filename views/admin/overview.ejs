@@ -201,7 +201,9 @@
         <span class="text-2xl font-bold">
             Sections 👥
         </span>
-
+        <div class="flex justify-end pt-2.5 pb-2.5">
+            <a href="/addSection" class="bg-blue-500 hover:bg-blue-400 text-white text-center font-semibold py-1.5 px-4 hover:border-blue-500 rounded">Add Section</a>
+        </div>
         <table id="section_table" class="stripe">
             <thead>
                 <tr>
@@ -306,7 +308,7 @@
 
 <script>
 
-    function openModal(key, form, button, siteID) {
+    function openModal(key) {
         document.getElementById(key).style.display = "block";
         document.getElementById(key).children[0].scrollTop = 0;
         document.getElementById(key).children[0].classList.remove('opacity-0');

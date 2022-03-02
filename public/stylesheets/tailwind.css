@@ -1202,6 +1202,10 @@ select {
   padding-bottom: 2rem;
 }
 
+.pb-2\.5 {
+  padding-bottom: 0.625rem;
+}
+
 .pt-7 {
   padding-top: 1.75rem;
 }
