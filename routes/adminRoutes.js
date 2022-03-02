@@ -216,6 +216,11 @@ router.get('/declineShiftDelete/:id', [ensureAuthenticated, isAdmin], async (req
 router.post('/siteDelete/:id', isInstructor, async (req, res) => {
     await Site.delete(req.params.id)
     res.redirect('/admin')
-})
+});
+
+router.post('/addSection', async (req, res) => {
+    await Section.create(req.body.sectionName, req.body.sectionInstructor)
+    res.redirect('/admin')
+});
 
 module.exports = router;
