@@ -1120,6 +1120,11 @@ select {
   padding-bottom: 2rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -1155,6 +1160,14 @@ select {
   padding-right: 0.5rem;
 }
 
+.pb-3 {
+  padding-bottom: 0.75rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -1179,12 +1192,12 @@ select {
   padding-bottom: 2rem;
 }
 
-.pt-7 {
-  padding-top: 1.75rem;
+.pb-2\.5 {
+  padding-bottom: 0.625rem;
 }
 
-.pb-3 {
-  padding-bottom: 0.75rem;
+.pt-7 {
+  padding-top: 1.75rem;
 }
 
 .pt-1 {
