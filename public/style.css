@@ -10,6 +10,11 @@ input:checked ~ .dot {
     transform: translateX(100%);
     background-color: #48bb78;
 }
+
+.container{
+    height: 92vh;
+}
+
 @page {
     size: A4 landscape;
     size: 420mm 210mm;
