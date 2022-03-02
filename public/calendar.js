@@ -20,8 +20,6 @@ function deleteModal() {
 }
 
 function populateEditModal(info){
-  console.log(info)
-
   document.getElementById('editDatePicker').value = info.event.start.toISOString().split('T')[0]
   document.getElementById('editDateValue').value = info.event.start.toISOString().split('T')[0]
   const shift = info.event.title.charAt(0).toUpperCase() + info.event.title.slice(1)

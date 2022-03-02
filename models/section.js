@@ -20,4 +20,12 @@ module.exports = class Section {
         });
     }
 
+    static create = async (sectionName, sectionInstructor) => {
+        await Section.prisma.section.create({
+            data: {
+                name: sectionName,
+                instructorId: parseInt(sectionInstructor),
+            }
+        });
+    }
 }
