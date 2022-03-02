@@ -107,6 +107,7 @@ router.get('/section', [ensureAuthenticated, isInstructor], async (req, res) => 
 });
 
 router.get('/update/:id', ensureAuthenticated, async (req, res) => {
+    // Grabs the student's shfits whenever an instructor clicks on a student's name in "Section" page
     const studentId = parseInt(req.params.id)
     const findUser = await User.find(studentId)
     const allShifts = getShifts(findUser.shifts)
@@ -119,6 +120,7 @@ router.get('/update/:id', ensureAuthenticated, async (req, res) => {
 })
 
 router.post('/update/:id', async (req, res) => {
+    // Updates the student's shfits whenever an instructor clicks on "Update Shifts" in "Section" page
     const studentId = parseInt(req.params.id)
     const findUser = await User.find(studentId)
     for (const num in req.body.shiftID) {
