@@ -15,6 +15,7 @@ module.exports = class User {
         this.shifts = data.shift;
         this.role = data.role;
         this.acceptedNda = data.acceptedNda;
+        this.emailNotif = data.emailNotifications;
     }
 
     isStudent() {

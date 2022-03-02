@@ -1,6 +1,37 @@
 const express = require('express');
-const Email = require("../classes/email");
 const router = express.Router();
+
+// Prisma
+const {PrismaClient} = require("@prisma/client");
+const prisma = new PrismaClient();
+
+// Classes
+const Email = require("../classes/email");
+const User = require("../models/user")
+
+router.post('/changeEmailStatus/:userId', async (req,res) => {
+    const user = await User.find(parseInt(req.params.userId))
+    if (user.emailNotif) {
+        await prisma.user.update({
+            where: {
+                id: parseInt(user.id)
+            },
+            data: {
+                emailNotifications: false,
+            }
+        })
+    } else {
+        await prisma.user.update({
+            where: {
+                id: parseInt(user.id)
+            },
+            data: {
+                emailNotifications: true,
+            }
+        })
+    }
+    res.redirect('/dashboard')
+})
 
 router.post('/newUser', async (req, res) => {
     res.sendStatus(200);

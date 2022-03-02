@@ -4,6 +4,9 @@ module.exports = {
     ],
     theme: {
         extend: {},
+        fontSize: {
+          'xs': '12px'
+        },
     },
     plugins: [require('@tailwindcss/forms')],
     darkMode: 'class',

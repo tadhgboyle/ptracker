@@ -37,6 +37,25 @@
             <div class="flex items-center">
                 <div class="ml-10 flex space-x-2">
                     <% if (user.acceptedNda && user.section.id !== 1) { %>
+                        <div class="flex items-center justify-center">
+                            <label for="emailNotif" class="flex items-center cursor-pointer">
+                                <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
+                                    Email Notifications
+                                </div>
+                                <div class="relative">
+                                    <form id="emailForm" action="<%= "/email/changeEmailStatus/" + user.id %>" method="POST">
+                                    <% if (user.emailNotif) { %>
+                                        <input onclick="changeNotif()" value="OFF" type="checkbox" id="emailNotif" class="sr-only" checked>
+                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-left text-white pl-0.5 py-2">OFF</p></div>
+                                    <% } else { %>
+                                        <input onclick="changeNotif()" value="ON" type="checkbox" id="emailNotif" class="sr-only">
+                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-right text-white pr-1.5 py-2">ON</p></div>
+                                    <% } %>
+                                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                    </form>
+                                </div>
+                            </label>
+                        </div>
                         <!-- <div class="flex items-center justify-center">
                             <label for="darkMode" class="flex items-center cursor-pointer">
                                 <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
@@ -66,3 +85,9 @@
         </div>
     </div>
 </nav>
+
+<script>
+    function changeNotif(userId) {
+        document.getElementById('emailForm').submit()
+    }
+</script>
