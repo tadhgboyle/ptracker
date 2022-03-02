@@ -142,7 +142,7 @@ router.get("/dashboardShifts", async (req, res) => {
     if (req.user.role === Role.STUDENT && req.user.shifts.length > 0) {
         for (const shift of req.user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
-                title: shift.type,
+                title: shift.type.toLowerCase(),
                 start: shift.date.toISOString().split("T")[0],
                 resourceId: req.user.id,
                 color: shiftColor(shift.type)
@@ -157,7 +157,7 @@ router.get("/dashboardShifts", async (req, res) => {
         for (const shift of student.shift.filter(s => s.status !== 'DELETED')) {
             if (student.sectionId === req.user.section.id && student.shift.length > 0) {
                 shiftDays.push({
-                    title: shift.type,
+                    title: shift.type.toLowerCase(),
                     start: shift.date.toISOString().split("T")[0],
                     resourceId: student.id,
                     color: shiftColor(shift.type)
@@ -178,7 +178,7 @@ router.get('/allShifts', async (req, res) => {
         }
         allShifts.push({
             id: shift.id,
-            title: shift.type,
+            title: shift.type.toLowerCase(),
             start: shift.date.toISOString().split('T')[0],
             color: shiftColor(shift.type)
         })
