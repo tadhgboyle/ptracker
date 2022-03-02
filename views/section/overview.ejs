@@ -13,6 +13,9 @@
                     Name
                 </th>
                 <th class="dark:text-white">
+                    Email
+                </th>
+                <th class="text-center dark:text-white">
                     Action
                 </th>
             </tr>
@@ -28,16 +31,19 @@
                         <td>
                             <a class="hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50" href="<%= "/update/" + student.id %>"> <%= student.name %> </a>
                         </td>
+                        <td>
+                            <%= student.email %>
+                        </td>
                         <td class="flex justify-center">
-<!--                            <form id="addForm" action="<%= "/sectionDelete/" + student.id %>" method="POST">-->
-                                <button type="button" title="Remove from section" onclick="deleteModal(<%= student.id %>)" class="flex justify-center bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                            <form id="addForm" action="<%= "/sectionDelete/" + student.id %>" method="POST">
+                                <button type="button" title="Remove from section" onclick="deleteModal(<%= student.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
                                     <svg 
                                     class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                                     </svg>
                                 </button>
-<!--                            </form>-->
+                            </form>
                         </td>
                     </tr>
                 <% } %>
