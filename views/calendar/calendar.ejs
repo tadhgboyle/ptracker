@@ -125,7 +125,7 @@
                             <option disabled selected value="">Select a Site</option>
                             <% for (const site of sites) { %>
                                 <% if (site.status !== 'DELETED') { %>
-                                    <option value="<%= site.id %>"> <%= site.name %> </option>
+                                    <option value="<%= site.id %>" id="site<%= site.id %>"> <%= site.name %> </option>
                                 <% } %>
                             <% } %>
                         </select>
@@ -133,11 +133,11 @@
                     <div class="radio-container pt-1 pl-1">
                         <% for (const shift of ["Day", "Evening", "Night"]) { %>
                             <div class="form-check">
-                                <input checked type="radio" name="type" id="addRadioDefault<%= shift %>"
+                                <input type="radio" name="type" id="editRadioDefault<%= shift %>"
                                        value="<%= shift.toUpperCase() %>"
                                        class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
                                 <label class="form-check-label inline-block text-gray-800 pl-1"
-                                       for="addRadioDefault<%= shift %>">
+                                       for="editRadioDefault<%= shift %>">
                                     <%= shift %>
                                 </label>
                             </div>
