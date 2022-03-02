@@ -1120,11 +1120,6 @@ select {
   padding: 1rem;
 }
 
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -1163,6 +1158,10 @@ select {
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.pt-8 {
+  padding-top: 2rem;
 }
 
 .pb-3 {
@@ -1368,6 +1367,10 @@ select {
 input:checked ~ .dot {
   transform: translateX(100%);
   background-color: #48bb78;
+}
+
+#container-app{
+  height: 92vh;
 }
 
 @page {
