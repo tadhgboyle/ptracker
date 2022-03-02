@@ -131,11 +131,18 @@
                         <%= shift.site.name %>
                     </td>
                     <td>
-                        <button title="Approve" onclick="window.location = 'admin/approveShiftDelete/<%= shift.id %>'" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
-                            ✅
+                        <button title="Approve" onclick="window.location = 'admin/approveShiftDelete/<%= shift.id %>'" class="bg-gray-50 hover:bg-blue-100  border py-1.5 px-4 rounded">
+                            <svg   class="ml-auto fill-current justify-self-end text-gray-500 w-5 h-5 cursor-pointer"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
                         </button>
-                        <button title="Decline" onclick="window.location = 'admin/declineShiftDelete/<%= shift.id %>'" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
-                            ❌
+                        <button title="Decline" onclick="window.location = 'admin/declineShiftDelete/<%= shift.id %>'" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                            <svg 
+                            class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+                            </svg>
                         </button>
                     </td>
                 </tr>
@@ -173,8 +180,12 @@
                         <%= site.name %>
                     </td>
                     <td class="flex">
-                        <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="bg-gray-200 hover:bg-gray-300 border py-1.5 px-4 rounded">
-                            ❌
+                        <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                            <svg 
+                            class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                           <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+                            </svg>
                         </button>
                     </td>
                 </tr>
@@ -278,7 +289,7 @@
                 <!-- Bottom of modal -->
                 <div class="px-7 pt-1 pb-7 flex justify-start items-center w-full">
                     <button id="deleteButton" form="deleteForm" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent
-                    shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none
+                    shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-400 focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm">
                         Delete
                     </button>
