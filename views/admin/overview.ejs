@@ -214,7 +214,7 @@
                         Instructor
                     </th>
                     <th>
-                        Action
+                        Delete
                     </th>
                 </tr>
             </thead>
@@ -347,10 +347,16 @@
                         ease-in-out
                         m-0
                         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                            <!-- Check if instructor is already in charge of a section -->
+                            <% const existingInstructors = []; %>
+                            <% for (const section of sections) { %>
+                                <% existingInstructors.push(section.instructorId); %>
+                            <% } %>
+
                             <% for (const section of sections) { %>
                                 <% if (section.id === 1) continue; %>
                                     <% for (const siteUser of users) { %>
-                                        <% if (siteUser.role === 'INSTRUCTOR' || siteUser.role === 'ADMIN') { %>
+                                        <% if ((siteUser.role === 'INSTRUCTOR' || siteUser.role === 'ADMIN') && !(existingInstructors.includes(siteUser.id))) { %>
                                             <option value="<%= siteUser.id %>" <% if (section.instructorId === siteUser.id) { %> selected <% } %>>
                                                 <%= siteUser.name %>
                                             </option>
