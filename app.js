@@ -5,10 +5,10 @@ const path = require('path') // used to make a dynamic route for the 'public' fo
 // Express server
 const express = require('express');
 const cookieSession = require('cookie-session');
-const session = require('express-session');
+// const session = require('express-session');
 const ejsLayouts = require('express-ejs-layouts');
 
-// middleware and routes
+// Middleware and routes
 const passport = require('./auth/passport');
 const passUser = require('./middleware/passUser');
 const flashMessages = require('./middleware/flashMessages');
@@ -21,6 +21,7 @@ const dataRouter = require('./routes/dataRoutes')
 const adminRouter = require('./routes/adminRoutes');
 const emailRouter = require('./routes/emailRoutes');
 const methodOverride = require('method-override')
+
 // Loggers and cors
 const logger = require('morgan');
 const cors = require('cors');
@@ -46,7 +47,7 @@ app.use(cookieSession({
 
 app.use(cors());
 
-app.use(session({
+app.use(cookieSession({
         secret: 'melody hensley is my spirit animal',
         resave: false,
         saveUninitialized: false,
