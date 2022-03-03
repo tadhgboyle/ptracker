@@ -74,7 +74,7 @@ async function dashboardShifts(req, res, user) {
     return res.json(shiftDays);
 }
 
-async function allShifts(req,res, user) {
+async function allShifts(req, res, user) {
     const allShifts = [];
     const hd = new Holidays('CA', 'BC');
     const allHolidays = hd.getHolidays(new Date().getFullYear())

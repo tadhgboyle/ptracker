@@ -1,6 +1,8 @@
+const Role = require('../../models/role');
+
 module.exports = class User {
 
-    constructor(id = null, name = null, role = null, shifts = null, emailNotif = null) {
+    constructor(id = 1, name = 'Ben Dover', role = Role.STUDENT, shifts = {}, emailNotif = false) {
         this.id = id;
         this.name = name;
         this.role = role;
