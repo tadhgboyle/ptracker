@@ -2,9 +2,9 @@
     <div class="max-w-7xl mx-auto">
         <div class="flex items-center h-16">
             <div class="flex flex-1 items-center">
-                <div class="flex-shrink-0">
+                <a href="/dashboard" class="flex-shrink-0 hover:no-underline ">
                     PTracker
-                </div>
+                </a>
                 <% if (user) { %>
                     <% if (user.acceptedNda && user.section.id !== 1) { %>
                         <div class="ml-10 flex items-center space-x-4">

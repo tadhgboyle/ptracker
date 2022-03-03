@@ -1322,6 +1322,11 @@ select {
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
+.no-underline {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -1529,6 +1534,11 @@ header.masthead h1 {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.hover\:no-underline:hover {
+  -webkit-text-decoration-line: none;
+          text-decoration-line: none;
 }
 
 .hover\:shadow-xl:hover {

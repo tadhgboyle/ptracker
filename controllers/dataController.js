@@ -62,7 +62,7 @@ async function dashboardShifts(req, res, user) {
         for (const shift of student.shift.filter(s => s.status !== 'DELETED')) {
             if (student.sectionId === user.section.id) {
                 shiftDays.push({
-                    title: `${shift.type[0]}x`,
+                    title: (shift.type === 'SICK' ? 'SICK' : `${shift.type[0]}x`),
                     start: shift.date.toISOString().split("T")[0],
                     resourceId: student.id,
                     color: shiftColor(shift.type)
