@@ -46,7 +46,7 @@ async function dashboardShifts(req, res, user) {
     if (user.role === Role.STUDENT) {
         for (const shift of user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
-                title: `${shift.type[0]}x`,
+                title: (shift.type === 'SICK' ? 'SICK' : `${shift.type[0]}x`),
                 start: shift.date.toISOString().split("T")[0],
                 resourceId: user.id,
                 color: shiftColor(shift.type)
@@ -74,7 +74,7 @@ async function dashboardShifts(req, res, user) {
     return res.json(shiftDays);
 }
 
-async function allShifts(req, res, user) {
+async function allShifts(req,res, user) {
     const allShifts = [];
     const hd = new Holidays('CA', 'BC');
     const allHolidays = hd.getHolidays(new Date().getFullYear())
@@ -84,18 +84,16 @@ async function allShifts(req, res, user) {
         }
         allShifts.push({
             id: shift.id,
-            title: `${shift.type[0]}x`,
+            title: (shift.type === 'SICK' ? 'SICK' : `${shift.type[0]}x`),
             start: shift.date.toISOString().split('T')[0],
-            color: shiftColor(shift.type),
-            userId: shift.userId,
+            color: shiftColor(shift.type)
         })
     }
     for (const holiday of allHolidays) {
         allShifts.push({
             title: holiday.name,
             start: holiday.date.split(" ")[0],
-            color: '#577590',
-            userId: 'holiday',
+            color: '#577590'
         })
     }
 
