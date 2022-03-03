@@ -32,7 +32,7 @@ describe('Test to check shifts on dashboard for the logged in user', () =>{
         await dataController.allShifts(req, res, user);
 
         for (const shift of res.getJson()) {
-            if (shift.userId !== user.id) {
+            if (shift.userId !== 'holiday' && shift.userId !== user.id) {
                 assert.fail('Shift does not belong to logged in user');
             }
         }
