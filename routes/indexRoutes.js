@@ -5,7 +5,7 @@ const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // Authentication
-const {ensureAuthenticated, isInstructor, isAdmin} = require('../middleware/checkAuth')
+const {ensureAuthenticated, isInstructor} = require('../middleware/checkAuth')
 
 // Date
 const date = new Date()
@@ -13,9 +13,7 @@ const date = new Date()
 // User and Section classes
 const User = require('../models/user');
 const Section = require('../models/section');
-const Shift = require('../models/shift');
 const Site = require('../models/site')
-const {isIn} = require("validator");
 
 // Router
 const router = express.Router();
