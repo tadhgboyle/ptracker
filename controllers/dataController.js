@@ -1,7 +1,7 @@
 const Role = require("../models/role");
 const User = require("../models/user");
 const Shift = require("../models/shift");
-const Holidays = require("date-holidays").default;
+const Holidays = require("date-holidays");
 
 const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 async function dashboardStudentSites(req, res, user, start) {
     const allUsersInSection = [];
     const userCalendarDate = start.split('T')[0].split('-')
-    if (user.role === Role.STUDENT && user.shifts.length > 0) {
+    if (user.role === Role.STUDENT) {
         const mainSite = await findMainSite(user.shifts)
         allUsersInSection.push({
             id: user.id,
@@ -24,7 +24,7 @@ async function dashboardStudentSites(req, res, user, start) {
         const allStudents = await User.all();
         for (let student of allStudents) {
             const mainSite = await findMainSite(student.shift)
-            if (student.sectionId === user.section.id && student.shift.length > 0 && student.id !== user.id && student.role === Role.STUDENT) {
+            if (student.sectionId === user.section.id && student.id !== user.id && student.role === Role.STUDENT) {
                 allUsersInSection.push({
                     id: student.id,
                     name: student.name,
@@ -43,10 +43,10 @@ async function dashboardStudentSites(req, res, user, start) {
 
 async function dashboardShifts(req, res, user) {
     const shiftDays = [];
-    if (user.role === Role.STUDENT && user.shifts.length > 0) {
+    if (user.role === Role.STUDENT) {
         for (const shift of user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
-                title: shift.type.toLowerCase(),
+                title: `${shift.type[0]}x`,
                 start: shift.date.toISOString().split("T")[0],
                 resourceId: user.id,
                 color: shiftColor(shift.type)
@@ -60,9 +60,9 @@ async function dashboardShifts(req, res, user) {
     const allStudents = await User.all();
     for (const student of allStudents) {
         for (const shift of student.shift.filter(s => s.status !== 'DELETED')) {
-            if (student.sectionId === user.section.id && student.shift.length > 0) {
+            if (student.sectionId === user.section.id) {
                 shiftDays.push({
-                    title: shift.type.toLowerCase(),
+                    title: `${shift.type[0]}x`,
                     start: shift.date.toISOString().split("T")[0],
                     resourceId: student.id,
                     color: shiftColor(shift.type)
@@ -84,7 +84,7 @@ async function allShifts(req,res, user) {
         }
         allShifts.push({
             id: shift.id,
-            title: shift.type.toLowerCase(),
+            title: `${shift.type[0]}x`,
             start: shift.date.toISOString().split('T')[0],
             color: shiftColor(shift.type)
         })
