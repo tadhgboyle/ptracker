@@ -37,6 +37,7 @@ async function dashboardStudentSites(req, res, user, start) {
             }
         }
     }
+
     return res.json(allUsersInSection);
 }
 
@@ -51,6 +52,7 @@ async function dashboardShifts(req, res, user) {
                 color: shiftColor(shift.type)
             });
         }
+
         return res.json(shiftDays);
     }
 
@@ -68,6 +70,7 @@ async function dashboardShifts(req, res, user) {
             }
         }
     }
+
     return res.json(shiftDays);
 }
 
@@ -93,6 +96,7 @@ async function allShifts(req,res, user) {
             color: '#577590'
         })
     }
+
     return res.json(allShifts);
 }
 
@@ -106,8 +110,8 @@ const countShifts = (shifts, shiftType, calendarDate) => {
     let shiftCounter = 0;
 
     // This gets the date from the calendar
-    const userDate = new Date(calendarDate[0],calendarDate[1] - 1,calendarDate[2])
-    const currentUserDate = `${convertMonth(userDate.getMonth())} ${userDate.getFullYear()}`
+    const userDate = new Date(calendarDate[0],calendarDate[1] - 1,calendarDate[2]);
+    const currentUserDate = `${convertMonth(userDate.getMonth())} ${userDate.getFullYear()}`;
 
     if (shifts.length === 0) {
         return 0;
@@ -119,12 +123,13 @@ const countShifts = (shifts, shiftType, calendarDate) => {
         const monthYear = `${convertMonth(shiftMonth.getMonth())} ${shiftMonth.getFullYear()}`
         if (shiftType === 'ALL' && shift.status !== 'DELETED') {
             if (monthYear === currentUserDate) {
-                shiftCounter += 1
+                shiftCounter += 1;
             }
         } else if (monthYear === currentUserDate && shift.type === shiftType && shift.status !== 'DELETED') {
-            shiftCounter += 1
+            shiftCounter += 1;
         }
     }
+
     return shiftCounter;
 }
 
@@ -134,7 +139,8 @@ const findNameOfSite = async (siteId) => {
             id: parseInt(siteId)
         }
     })
-    return findSite.name
+
+    return findSite.name;
 }
 
 const findMainSite = async (shifts) => {
@@ -144,29 +150,28 @@ const findMainSite = async (shifts) => {
     for (const shift of shifts) {
         // console.log(Object.keys(numOfShifts).length)
         if (numOfShifts[shift.siteId] === undefined && shift.status !== 'DELETED') {
-            numOfShifts[shift.siteId] = 1
+            numOfShifts[shift.siteId] = 1;
         } else {
             if (shift.status !== 'DELETED') {
-                numOfShifts[shift.siteId] += 1
+                numOfShifts[shift.siteId] += 1;
             }
         }
     }
     for (const [key, value] of Object.entries(numOfShifts)) {
         if (siteNum.length === 0) {
-            siteNum.push(key)
-            siteNum.push(value)
+            siteNum.push(key);
+            siteNum.push(value);
         } else {
             if (value > siteNum[1]) {
-                siteNum[0] = key
-                siteNum[1] = value
+                siteNum[0] = key;
+                siteNum[1] = value;
             }
         }
     }
     if (siteNum.length !== 0) {
-        const site = await findNameOfSite(parseInt(siteNum[0]))
-        return site
+        return await findNameOfSite(parseInt(siteNum[0]));
     } else {
-        return 'No Shifts'
+        return 'No Shifts';
     }
 }
 

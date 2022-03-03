@@ -27,7 +27,7 @@ async function update(req, res, shiftId, {userId, siteId, date, type}) {
 
     req.session.success_message = `Shift updated successfully on ${date}!`;
 
-    res.redirect('/calendar');
+    return res.redirect('/calendar');
 }
 
 async function del(req, res, shiftId, user) {
@@ -62,7 +62,7 @@ async function del(req, res, shiftId, user) {
 
     req.session.success_message = `Shift deletion requested!`;
 
-    res.redirect('/calendar');
+    return res.redirect('/calendar');
 }
 
 module.exports = {

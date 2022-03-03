@@ -20,7 +20,7 @@ async function changeRole(req, res, userId, newRole) {
 
     req.session.success_message = `Set role of user #${userId} to ${newRole}`;
 
-    res.redirect('/admin');
+    return res.redirect('/admin');
 }
 
 async function changeSection(req, res, userId, newSection) {
@@ -39,7 +39,7 @@ async function changeSection(req, res, userId, newSection) {
 
     req.session.success_message = `Set section of user #${userId} to ${section.name}`;
 
-    res.redirect('/admin');
+    return res.redirect('/admin');
 }
 
 async function changeSectionInstructor(req, res, sectionId, newInstructor) {
@@ -71,7 +71,7 @@ async function changeSectionInstructor(req, res, sectionId, newInstructor) {
 
     req.session.success_message = `Set instructor of section ${section.name} to #${newInstructor}`;
 
-    res.redirect('/admin');
+    return res.redirect('/admin');
 }
 
 async function approveShiftDelete(req, res, shiftId) {
@@ -99,7 +99,8 @@ async function approveShiftDelete(req, res, shiftId) {
     });
 
     req.session.success_message = `Successfully deleted shift #${shiftId}.`;
-    res.redirect('/admin');
+
+    return res.redirect('/admin');
 }
 
 async function declineShiftDelete(req, res, shiftId) {
@@ -127,7 +128,8 @@ async function declineShiftDelete(req, res, shiftId) {
     });
 
     req.session.success_message = `Successfully declined shift deletion for shift #${shiftId}.`;
-    res.redirect('/admin');
+
+    return res.redirect('/admin');
 }
 
 module.exports = {
