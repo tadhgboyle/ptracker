@@ -56,7 +56,6 @@ const findMainSite = async (shifts) => {
     const numOfShifts = {};
     let siteNum = [];
     for (const shift of shifts) {
-        // console.log(Object.keys(numOfShifts).length)
         if (numOfShifts[shift.siteId] === undefined && shift.status !== 'DELETED') {
             numOfShifts[shift.siteId] = 1
         } else {
@@ -105,7 +104,7 @@ const convertMonth = (monthNum) => {
 router.get("/dashboardStudentSites", async (req, res) => {
     const allUsersInSection = [];
     const userCalendarDate = req.query.start.split('T')[0].split('-')
-    if (req.user.role === Role.STUDENT && req.user.shifts.length > 0) {
+    if (req.user.role === Role.STUDENT) {
         const mainSite = await findMainSite(req.user.shifts)
         allUsersInSection.push({
             id: req.user.id,
@@ -120,7 +119,7 @@ router.get("/dashboardStudentSites", async (req, res) => {
         const allStudents = await User.all();
         for (let student of allStudents) {
             const mainSite = await findMainSite(student.shift)
-            if (student.sectionId === req.user.section.id && student.shift.length > 0 && student.id !== req.user.id && student.role === Role.STUDENT) {
+            if (student.sectionId === req.user.section.id && student.id !== req.user.id && student.role === Role.STUDENT) {
                 allUsersInSection.push({
                     id: student.id,
                     name: student.name,
@@ -139,10 +138,10 @@ router.get("/dashboardStudentSites", async (req, res) => {
 router.get("/dashboardShifts", async (req, res) => {
     const shiftDays = [];
 
-    if (req.user.role === Role.STUDENT && req.user.shifts.length > 0) {
+    if (req.user.role === Role.STUDENT) {
         for (const shift of req.user.shifts.filter(s => s.status !== 'DELETED')) {
             shiftDays.push({
-                title: shift.type.toLowerCase(),
+                title: `${shift.type[0]}x`,
                 start: shift.date.toISOString().split("T")[0],
                 resourceId: req.user.id,
                 color: shiftColor(shift.type)
@@ -155,9 +154,9 @@ router.get("/dashboardShifts", async (req, res) => {
     const allStudents = await User.all();
     for (const student of allStudents) {
         for (const shift of student.shift.filter(s => s.status !== 'DELETED')) {
-            if (student.sectionId === req.user.section.id && student.shift.length > 0) {
+            if (student.sectionId === req.user.section.id) {
                 shiftDays.push({
-                    title: shift.type.toLowerCase(),
+                    title: `${shift.type[0]}x`,
                     start: shift.date.toISOString().split("T")[0],
                     resourceId: student.id,
                     color: shiftColor(shift.type)
@@ -178,7 +177,7 @@ router.get('/allShifts', async (req, res) => {
         }
         allShifts.push({
             id: shift.id,
-            title: shift.type.toLowerCase(),
+            title: `${shift.type[0]}x`,
             start: shift.date.toISOString().split('T')[0],
             color: shiftColor(shift.type)
         })
