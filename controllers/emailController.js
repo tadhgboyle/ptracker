@@ -23,8 +23,7 @@ async function changeEmailStatus(req, res, userId) {
             }
         })
     }
-
-    return res.redirect('/dashboard')
+    res.redirect('back')
 }
 
 module.exports = {
