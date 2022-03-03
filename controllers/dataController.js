@@ -74,7 +74,7 @@ async function dashboardShifts(req, res, user) {
     return res.json(shiftDays);
 }
 
-async function allShifts(req,res, user) {
+async function allShifts(req, res, user) {
     const allShifts = [];
     const hd = new Holidays('CA', 'BC');
     const allHolidays = hd.getHolidays(new Date().getFullYear())
@@ -86,14 +86,16 @@ async function allShifts(req,res, user) {
             id: shift.id,
             title: `${shift.type[0]}x`,
             start: shift.date.toISOString().split('T')[0],
-            color: shiftColor(shift.type)
+            color: shiftColor(shift.type),
+            userId: shift.userId,
         })
     }
     for (const holiday of allHolidays) {
         allShifts.push({
             title: holiday.name,
             start: holiday.date.split(" ")[0],
-            color: '#577590'
+            color: '#577590',
+            userId: 'holiday',
         })
     }
 
