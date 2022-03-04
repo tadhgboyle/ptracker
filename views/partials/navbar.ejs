@@ -13,10 +13,12 @@
                                 🏡 Dashboard
                             </a>
 
+                            <% if (user.role === 'STUDENT') { %>
                                 <a href="/calendar"
                                    class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
                                     🗓️ Calendar
                                 </a>
+                                <% } %>
 
                             <% if (user.isInstructor()) { %>
                                 <a href="/section"
@@ -37,6 +39,7 @@
             <div class="flex items-center">
                 <div class="ml-10 flex space-x-2">
                     <% if (user.acceptedNda && user.section.id !== 1) { %>
+                    <%console.log(user)%>
                         <div class="flex items-center justify-center">
                             <label for="emailNotif" class="flex items-center cursor-pointer">
                                 <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
@@ -46,10 +49,10 @@
                                     <form id="emailForm" action="<%= "/email/changeEmailStatus/" + user.id %>" method="POST">
                                     <% if (user.emailNotif) { %>
                                         <input onclick="changeNotif()" value="OFF" type="checkbox" id="emailNotif" class="sr-only" checked>
-                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-left text-white pl-0.5 py-2">OFF</p></div>
+                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-left text-white pl-1 py-2">ON</p></div>
                                     <% } else { %>
                                         <input onclick="changeNotif()" value="ON" type="checkbox" id="emailNotif" class="sr-only">
-                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-right text-white pr-1.5 py-2">ON</p></div>
+                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-right text-white pl-2 py-2">OFF</p></div>
                                     <% } %>
                                     <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
                                     </form>
