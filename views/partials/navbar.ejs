@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto">
         <div class="flex items-center h-16">
             <div class="flex flex-1 items-center">
-                <a href="/dashboard" class="flex-shrink-0 hover:no-underline ">
+                <a href="/dashboard" class="flex-shrink-0 hover:no-underline font-bold">
                     PTracker
                 </a>
                 <% if (user) { %>
@@ -39,7 +39,6 @@
             <div class="flex items-center">
                 <div class="ml-10 flex space-x-2">
                     <% if (user.acceptedNda && user.section.id !== 1) { %>
-                    <%console.log(user)%>
                         <div class="flex items-center justify-center">
                             <label for="emailNotif" class="flex items-center cursor-pointer">
                                 <div class="ml-3 white:text-gray-700 dark:text-white font-medium px-2">
@@ -50,11 +49,12 @@
                                     <% if (user.emailNotif) { %>
                                         <input onclick="changeNotif()" value="OFF" type="checkbox" id="emailNotif" class="sr-only" checked>
                                         <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-left text-white pl-1 py-2">ON</p></div>
+                                        <div class="dot absolute left-1 top-1 bg-green-100 w-6 h-6 rounded-full transition"></div>
                                     <% } else { %>
                                         <input onclick="changeNotif()" value="ON" type="checkbox" id="emailNotif" class="sr-only">
-                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-right text-white pl-2 py-2">OFF</p></div>
+                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-right text-white pr-0.5 py-2">OFF</p></div>
+                                        <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
                                     <% } %>
-                                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
                                     </form>
                                 </div>
                             </label>

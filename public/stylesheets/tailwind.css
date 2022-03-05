@@ -1220,20 +1220,12 @@ select {
   padding-left: 0.25rem;
 }
 
-.pl-0\.5 {
-  padding-left: 0.125rem;
+.pr-0\.5 {
+  padding-right: 0.125rem;
 }
 
-.pl-0 {
-  padding-left: 0px;
-}
-
-.pr-1\.5 {
-  padding-right: 0.375rem;
-}
-
-.pr-1 {
-  padding-right: 0.25rem;
+.pr-0 {
+  padding-right: 0px;
 }
 
 .text-left {
@@ -1320,11 +1312,6 @@ select {
 .text-blue-500 {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
-}
-
-.no-underline {
-  -webkit-text-decoration-line: none;
-          text-decoration-line: none;
 }
 
 .opacity-0 {
