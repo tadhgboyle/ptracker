@@ -43,18 +43,26 @@
                           ease-in-out
                           m-0
                           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+<!--                        Checks to see if the user's shifts isn't empty-->
                             <% if (mainSite !== undefined) { %>
+
+<!--                            loops the sites until it finds their main site and selects it as their first choice-->
                                 <% for (const site of sites) { %>
                                     <% if (site.status !== 'DELETED' && site.name === mainSite) { %>
                                         <option value="<%= site.id %>"> <%= site.name %> </option>
                                     <% } %>
                                 <% } %>
+
+<!--                            loops the rest of the sites except their mainSite-->
                                 <% for (const site of sites) { %>
                                     <% if (site.status !== 'DELETED' && site.name !== mainSite) { %>
                                         <option value="<%= site.id %>"> <%= site.name %> </option>
                                     <% } %>
                                 <% } %>
+
                             <% } else { %>
+
+<!--                        forces the user to pick a site if they don't have any previous sites-->
                                 <option disabled selected value="">Select a Site</option>
                                 <% for (const site of sites) { %>
                                     <% if (site.status !== 'DELETED') { %>
