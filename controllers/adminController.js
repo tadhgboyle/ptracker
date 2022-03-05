@@ -1,3 +1,7 @@
+// Prisma
+const {PrismaClient} = require('@prisma/client');
+const prisma = new PrismaClient();
+
 const Shift = require("../models/shift");
 const axios = require("axios");
 
@@ -74,67 +78,47 @@ async function changeSectionInstructor(req, res, sectionId, newInstructor) {
     return res.redirect('/admin');
 }
 
-async function approveShiftDelete(req, res, shiftId) {
-    const shift = await Shift.find(shiftId);
-    if (!shift) {
-        req.session.error_message = `Shift #${shiftId} does not exist`;
+async function instructorDelete(req, res, userId) {
+    const user = await User.find(userId);
+    if (!user) {
+        req.session.error_message = `Instructor #${userId} does not exist`;
         return res.redirect('/admin');
     }
+    if (user.shifts.length >= 1) {
+        for (const shift of user.shifts) {
+            await prisma.shift.delete({
+                where: {
+                    id: parseInt(shift.id)
+                }
+            })
+        }
+    }
 
-    await Shift.prisma.shift.update({
-        where: {id: parseInt(shiftId)},
-        data: {
-            status: 'DELETED',
+    await prisma.user.delete({
+        where: {
+            id: parseInt(userId)
         }
     });
 
-    let URL = process.env.APP_URL;
-    if (URL.endsWith('/')) {
-        URL = URL.slice(0, -1);
-    }
+    // Email Stuff (let admins get confirmation that they have deleted a instructor from the database)
 
-    await axios.post(URL + '/email/shiftDeletionApproved', {
-        sendTo: shift.user.email,
-        date: shift.date.toLocaleString(),
-    });
-
-    req.session.success_message = `Successfully deleted shift #${shiftId}.`;
-
-    return res.redirect('/admin');
-}
-
-async function declineShiftDelete(req, res, shiftId) {
-    const shift = await Shift.find(shiftId);
-    if (!shift) {
-        req.session.error_message = `Shift #${shiftId} does not exist`;
-        return res.redirect('/admin');
-    }
-
-    await Shift.prisma.shift.update({
-        where: {id: parseInt(shiftId)},
-        data: {
-            status: 'NORMAL',
-        }
-    });
-
-    let URL = process.env.APP_URL;
-    if (URL.endsWith('/')) {
-        URL = URL.slice(0, -1);
-    }
-
-    await axios.post(URL + '/email/shiftDeletionDeclined', {
-        sendTo: shift.user.email,
-        date: shift.date.toLocaleString(),
-    });
-
-    req.session.success_message = `Successfully declined shift deletion for shift #${shiftId}.`;
+    // let URL = process.env.APP_URL;
+    // if (URL.endsWith('/')) {
+    //     URL = URL.slice(0, -1);
+    // }
+    //
+    // await axios.post(URL + '/email/shiftDeletionDeclined', {
+    //     sendTo: shift.user.email,
+    //     date: shift.date.toLocaleString(),
+    // });
+    //
+    // req.session.success_message = `Successfully declined shift deletion for shift #${shiftId}.`;
 
     return res.redirect('/admin');
 }
 
 module.exports = {
-    declineShiftDelete,
-    approveShiftDelete,
+    instructorDelete,
     changeSectionInstructor,
     changeSection,
     changeRole,

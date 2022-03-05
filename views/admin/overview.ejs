@@ -11,17 +11,17 @@
 
         <table id="user_table" class="stripe">
             <thead>
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Role
-                    </th>
-                    <th>
-                        Section
-                    </th>
-                </tr>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Role
+                </th>
+                <th>
+                    Section
+                </th>
+            </tr>
             </thead>
 
             <tbody>
@@ -97,55 +97,45 @@
 
     <div class="shadow-xl p-6 rounded-md">
         <span class="text-2xl font-bold">
-            Shifts requesting deletion 🚫
+            Instructors
         </span>
 
-        <table id="shift_delete_table" class="stripe">
+        <table id="instructor_table" class="stripe">
             <thead>
-                <tr>
-                    <th>
-                        Student
-                    </th>
-                    <th>
-                        Date
-                    </th>
-                    <th>
-                        Site
-                    </th>
-                    <th>
-                        Action
-                    </th>
-                </tr>
+            <tr>
+                <th>
+                    Instructor
+                </th>
+                <th>
+                    Site
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
             </thead>
 
             <tbody>
-            <% for (const shift of shifts) { %>
-                <tr>
-                    <td>
-                        <%= shift.user.name %>
-                    </td>
-                    <td>
-                        <%= shift.date.toDateString() %>
-                    </td>
-                    <td>
-                        <%= shift.site.name %>
-                    </td>
-                    <td>
-                        <button title="Approve" onclick="window.location = 'admin/approveShiftDelete/<%= shift.id %>'" class="bg-gray-50 hover:bg-blue-100  border py-1.5 px-4 rounded">
-                            <svg   class="ml-auto fill-current justify-self-end text-gray-500 w-5 h-5 cursor-pointer"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                        </button>
-                        <button title="Decline" onclick="window.location = 'admin/declineShiftDelete/<%= shift.id %>'" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
-                            <svg 
-                            class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-                            </svg>
-                        </button>
-                    </td>
-                </tr>
+            <% for (const user of users) { %>
+                <% if (user.role === 'INSTRUCTOR') { %>
+                        <tr>
+                            <td>
+                                <%= user.name %>
+                            </td>
+                            <td>
+                                <%= user.section.name %>
+                            </td>
+                            <td>
+                                <button title="Delete" id="instructorDeleteButton" onclick="deleteModalInstructor(<%= user.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                                    <svg
+                                            class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    <% } %>
             <% } %>
             </tbody>
         </table>
@@ -175,20 +165,20 @@
             <tbody>
             <% for (const site of sites) { %>
                 <% if (site.status !== 'DELETED') { %>
-                <tr>
-                    <td>
-                        <%= site.name %>
-                    </td>
-                    <td class="flex">
-                        <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
-                            <svg 
-                            class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                           <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-                            </svg>
-                        </button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <%= site.name %>
+                        </td>
+                        <td class="flex">
+                            <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                                <svg
+                                        class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
                 <% } %>
             <% } %>
             </tbody>
@@ -206,17 +196,17 @@
         </div>
         <table id="section_table" class="stripe">
             <thead>
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Instructor
-                    </th>
-                    <th>
-                        Delete
-                    </th>
-                </tr>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Instructor
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
             </thead>
 
             <tbody>
@@ -262,6 +252,49 @@
         </table>
     </div>
 </div>
+
+<dialog id="instructorDelete" class="bg-transparent z-1 relative w-screen h-screen">
+    <div class="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full bg-gray-900 bg-opacity-50 z-50 transition-opacity duration-200 opacity-0">
+        <div class="bg-white rounded-lg w-fit relative">
+            <div class="flex flex-col items-start">
+                <!-- Top of modal -->
+                <div class="px-7 pt-7 flex flex-row items-center w-full">
+                    <!-- Title -->
+                    <div class="text-gray-900 font-bold text-lg">Delete Instructor Confirmation
+                    </div>
+                    <!-- X button -->
+                    <svg onclick="modalClose('instructorDelete')"
+                         class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+                    </svg>
+                </div>
+                <div class="px-7 pb-3 flex justify-start items-center w-full">
+                    <p class="whitespace-pre-line text-gray-500">
+                        Are you sure you want to delete this Instructor?
+                        They will permanently be removed from Ptracker
+                    </p>
+                </div>
+                <!-- Beginning of Form content -->
+                <form id="deleteInstructor">
+                </form>
+                <!-- Bottom of modal -->
+                <div class="px-7 pt-1 pb-7 flex justify-start items-center w-full">
+                    <button id="deleteButton" form="deleteInstructor" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent
+                    shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-400 focus:outline-none
+                    focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm">
+                        Delete
+                    </button>
+                    <button type="button" onclick="modalClose('instructorDelete')" class=" w-full inline-flex justify-center rounded-md border border-gray-300
+                    shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none
+                    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</dialog>
 
 <dialog id="deleteSite" class="bg-transparent z-1 relative w-screen h-screen">
     <div class="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full bg-gray-900 bg-opacity-50 z-50 transition-opacity duration-200 opacity-0">
@@ -355,14 +388,14 @@
 
                             <% for (const section of sections) { %>
                                 <% if (section.id === 1) continue; %>
-                                    <% for (const siteUser of users) { %>
-                                        <% if ((siteUser.role === 'INSTRUCTOR' || siteUser.role === 'ADMIN') && !(existingInstructors.includes(siteUser.id))) { %>
-                                            <option value="<%= siteUser.id %>" <% if (section.instructorId === siteUser.id) { %> selected <% } %>>
-                                                <%= siteUser.name %>
-                                            </option>
-                                        <% } %>
+                                <% for (const siteUser of users) { %>
+                                    <% if ((siteUser.role === 'INSTRUCTOR' || siteUser.role === 'ADMIN') && !(existingInstructors.includes(siteUser.id))) { %>
+                                        <option value="<%= siteUser.id %>" <% if (section.instructorId === siteUser.id) { %> selected <% } %>>
+                                            <%= siteUser.name %>
+                                        </option>
                                     <% } %>
                                 <% } %>
+                            <% } %>
                         </select>
                     </div>
                 </form>
@@ -381,15 +414,13 @@
 </dialog>
 
 <script>
-
     function openModal(key) {
         document.getElementById(key).style.display = "block";
         document.getElementById(key).children[0].scrollTop = 0;
         document.getElementById(key).children[0].classList.remove('opacity-0');
         document.getElementById(key).children[0].classList.add('opacity-100')
-        
-    }
 
+    }
     function modalClose(key) {
         document.getElementById(key).children[0].classList.remove('opacity-100');
         document.getElementById(key).children[0].classList.add('opacity-0');
@@ -398,21 +429,21 @@
             document.body.removeAttribute('style');
         }, 100);
     }
-
     function deleteModal(siteID) {
         openModal('deleteSite')
         document.getElementById('deleteForm').setAttribute('action', action=`/admin/siteDelete/${siteID}`)
     }
-
+    function deleteModalInstructor(instructorID) {
+        openModal('instructorDelete')
+        document.getElementById('deleteInstructor').setAttribute('action', action=`/admin/instructorDelete/${instructorID}`)
+    }
     function addSectionModal() {
         openModal('addSectionModal')
     }
-
     submit = (select) => {
         const form = select.form;
         form.submit();
     }
-
     $(document).ready(() => {
         $('#user_table').DataTable({
             lengthChange: false,
@@ -424,7 +455,6 @@
                 },
             ],
         });
-
         $('#section_table').DataTable({
             lengthChange: false,
             paging: false,
@@ -436,18 +466,16 @@
                 },
             ],
         });
-
-        $('#shift_delete_table').DataTable({
+        $('#instructor_table').DataTable({
             lengthChange: false,
             columnDefs: [
                 {
                     searchable: false,
                     sortable: false,
-                    targets: [2, 3]
+                    targets: [1]
                 },
             ],
         });
-
         $('#site_table').DataTable({
             lengthChange: false,
             paging: false,
@@ -459,6 +487,5 @@
                 },
             ],
         });
-
     });
 </script>

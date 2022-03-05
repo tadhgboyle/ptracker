@@ -41,6 +41,48 @@ const convertMonth = (monthNum) => {
     ][monthNum];
 }
 
+const findNameOfSite = async (siteId) => {
+    const findSite = await prisma.site.findUnique({
+        where: {
+            id: parseInt(siteId)
+        }
+    })
+
+    return findSite.name;
+}
+
+const findMainSite = async (shifts) => {
+    // Checks to see which site they are work at the most (basically checking what their main site is)
+    const numOfShifts = {};
+    let siteNum = [];
+    for (const shift of shifts) {
+        // console.log(Object.keys(numOfShifts).length)
+        if (numOfShifts[shift.siteId] === undefined && shift.status !== 'DELETED') {
+            numOfShifts[shift.siteId] = 1;
+        } else {
+            if (shift.status !== 'DELETED') {
+                numOfShifts[shift.siteId] += 1;
+            }
+        }
+    }
+    for (const [key, value] of Object.entries(numOfShifts)) {
+        if (siteNum.length === 0) {
+            siteNum.push(key);
+            siteNum.push(value);
+        } else {
+            if (value > siteNum[1]) {
+                siteNum[0] = key;
+                siteNum[1] = value;
+            }
+        }
+    }
+    if (siteNum.length !== 0) {
+        return await findNameOfSite(parseInt(siteNum[0]));
+    } else {
+        return undefined;
+    }
+}
+
 router.get('/nda', ensureAuthenticated, (req, res) => {
     req.session.error_message = 'You must accept the NDA to continue.';
     req.session.error_perm = true;
@@ -83,6 +125,7 @@ router.get('/calendar', ensureAuthenticated, async (req, res) => {
     res.render('calendar/calendar', {
         page: 'calendar',
         sites: await Site.all(),
+        mainSite: await findMainSite(req.user.shifts),
     });
 });
 
