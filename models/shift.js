@@ -51,18 +51,6 @@ module.exports = class Shift {
         });
     }
 
-    static allPending = async () => {
-        return await Shift.prisma.shift.findMany({
-            where: {
-                status: "PENDING"
-            },
-            include: {
-                user: true,
-                site: true
-            }
-        });
-    }
-
     static allForLoggedInUser = async (userId) => {
         return await Shift.prisma.shift.findMany({
             where: {userId},

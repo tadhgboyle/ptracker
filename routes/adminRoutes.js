@@ -17,7 +17,6 @@ router.get('/', [ensureAuthenticated, isAdmin], async (req, res) => {
         page: 'admin',
         users: await User.all(),
         sections: await Section.all(),
-        shifts: await Shift.allPending(),
         sites: await Site.all(),
     });
 });
@@ -84,24 +83,14 @@ router.post(
     }
 );
 
-// router.get(
-//     '/approveShiftDelete/:id',
-//     [
-//         ensureAuthenticated,
-//         isAdmin
-//     ],
-//     async (req, res) => {
-//         return adminController.approveShiftDelete(req, res, req.params.id);
-// });
-
 router.get(
-    '/instructorDelete/:id',
+    '/userDelete/:id',
     [
         ensureAuthenticated,
         isAdmin
     ],
     async (req, res) => {
-        return adminController.instructorDelete(req, res, req.params.id);
+        return adminController.userDelete(req, res, req.params.id);
 });
 
 router.post('/siteDelete/:id', isInstructor, async (req, res) => {

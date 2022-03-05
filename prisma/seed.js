@@ -75,7 +75,7 @@ async function main() {
             siteId: faker.random.arrayElement(sites.map(s => s.id)),
             date: faker.datatype.boolean() ? faker.date.recent(7) : faker.date.soon(7),
             type: faker.random.arrayElement(['DAY', 'EVENING', 'NIGHT']),
-            status: faker.random.arrayElement(['NORMAL', 'PENDING', 'DELETED']),
+            status: faker.random.arrayElement(['NORMAL', 'DELETED']),
         });
     }
 

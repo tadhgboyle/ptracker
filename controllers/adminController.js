@@ -88,12 +88,13 @@ async function changeSectionInstructor(req, res, sectionId, newInstructor) {
     return res.redirect('/admin');
 }
 
-async function instructorDelete(req, res, userId) {
+async function userDelete(req, res, userId) {
     const user = await User.find(userId);
     if (!user) {
         req.session.error_message = `Instructor #${userId} does not exist`;
         return res.redirect('/admin');
     }
+
     if (user.shifts.length >= 1) {
         for (const shift of user.shifts) {
             await prisma.shift.delete({
@@ -115,7 +116,7 @@ async function instructorDelete(req, res, userId) {
         URL = URL.slice(0, -1);
     }
 
-    await axios.post(URL + '/email/instructorDeclined', {
+    await axios.post(URL + '/email/instructorDeleted', {
         name: user.name,
     });
 
@@ -125,7 +126,7 @@ async function instructorDelete(req, res, userId) {
 }
 
 module.exports = {
-    instructorDelete,
+    userDelete,
     changeSectionInstructor,
     changeSection,
     changeRole,
