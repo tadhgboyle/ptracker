@@ -60,7 +60,6 @@ enum shift_type {
 
 enum shift_status {
   NORMAL
-  PENDING
   DELETED
 }
 

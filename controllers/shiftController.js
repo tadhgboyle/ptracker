@@ -1,5 +1,11 @@
-const axios = require('axios');
 const Shift = require("../models/shift");
+const User = require("../models/user");
+const axios = require("axios");
+
+let URL = process.env.APP_URL;
+if (URL.endsWith('/')) {
+    URL = URL.slice(0, -1);
+}
 
 async function create(req, res, {userId, siteId, date, type}) {
     await Shift.create({
@@ -7,6 +13,15 @@ async function create(req, res, {userId, siteId, date, type}) {
         siteId,
         date,
         type,
+    });
+
+    const user = await User.find(parseInt(userId));
+
+    await axios.post(URL + '/email/shiftCreated', {
+        sectionId: user.section.id,
+        studentName: user.name,
+        shiftType: type,
+        shiftDate: date,
     });
 
     req.session.success_message = `Shift created successfully on ${date}!`;
@@ -27,6 +42,15 @@ async function update(req, res, shiftId, {userId, siteId, date, type}) {
 
     req.session.success_message = `Shift updated successfully on ${date}!`;
 
+    const user = await User.find(parseInt(userId));
+
+    await axios.post(URL + '/email/shiftUpdated', {
+        sectionId: user.section.id,
+        studentName: user.name,
+        shiftType: type,
+        shiftDate: date.toLocaleString(),
+    });
+
     return res.redirect('/calendar');
 }
 
@@ -38,29 +62,25 @@ async function del(req, res, shiftId, user) {
         return res.redirect('/calendar');
     }
 
-    if (shift.status === 'PENDING') {
-        req.session.error_message = 'You have already requested deletion of this shift!';
+    if (shift.status === 'DELETED') {
+        req.session.error_message = 'You have already deleted this shift!';
         return res.redirect('/calendar');
     }
 
     await Shift.prisma.shift.update({
         where: {id: parseInt(shiftId)},
         data: {
-            status: 'PENDING',
+            status: 'DELETED',
         }
     });
 
-    let URL = process.env.APP_URL;
-    if (URL.endsWith('/')) {
-        URL = URL.slice(0, -1);
-    }
-
-    await axios.post(URL + '/email/shiftDeletionRequest', {
-        name: shift.user.name,
-        date: shift.date.toLocaleString(),
+    await axios.post(URL + '/email/shiftDeleted', {
+        sectionId: user.section.id,
+        studentName: user.name,
+        shiftDate: shift.date.toLocaleString(),
     });
 
-    req.session.success_message = `Shift deletion requested!`;
+    req.session.success_message = `Shift deleted!`;
 
     return res.redirect('/calendar');
 }

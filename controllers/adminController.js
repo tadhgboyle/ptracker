@@ -1,8 +1,6 @@
-// Prisma
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const Shift = require("../models/shift");
 const axios = require("axios");
 
 const Role = require("../models/role");
@@ -39,6 +37,18 @@ async function changeSection(req, res, userId, newSection) {
         data: {
             section: {connect: {id: section.id}}
         }
+    });
+
+    let URL = process.env.APP_URL;
+    if (URL.endsWith('/')) {
+        URL = URL.slice(0, -1);
+    }
+
+    const user = await User.find(parseInt(userId));
+
+    await axios.post(URL + '/email/userAssignedSection', {
+        sendTo: user.email,
+        sectionName: section.name,
     });
 
     req.session.success_message = `Set section of user #${userId} to ${section.name}`;
@@ -100,19 +110,16 @@ async function instructorDelete(req, res, userId) {
         }
     });
 
-    // Email Stuff (let admins get confirmation that they have deleted a instructor from the database)
+    let URL = process.env.APP_URL;
+    if (URL.endsWith('/')) {
+        URL = URL.slice(0, -1);
+    }
 
-    // let URL = process.env.APP_URL;
-    // if (URL.endsWith('/')) {
-    //     URL = URL.slice(0, -1);
-    // }
-    //
-    // await axios.post(URL + '/email/shiftDeletionDeclined', {
-    //     sendTo: shift.user.email,
-    //     date: shift.date.toLocaleString(),
-    // });
-    //
-    // req.session.success_message = `Successfully declined shift deletion for shift #${shiftId}.`;
+    await axios.post(URL + '/email/instructorDeclined', {
+        name: user.name,
+    });
+
+    req.session.success_message = `Successfully deleted ${user.name}.`;
 
     return res.redirect('/admin');
 }

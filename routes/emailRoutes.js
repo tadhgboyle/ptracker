@@ -18,32 +18,42 @@ router.post('/newUser', async (req, res) => {
     );
 });
 
-router.post('/shiftDeletionRequest', async (req, res) => {
+router.post('/userAssignedSection', async (req, res) => {
+    res.sendStatus(200);
+
+    await Email.send(
+        req.body.sendTo,
+        'PTracker - Welcome',
+        `Hi, you have been assigned the: ${req.body.sectionName} section.`,
+    );
+});
+
+router.post('/instructorDeleted', async (req, res) => {
     res.sendStatus(200);
 
     await Email.sendToAdmins(
-        'PTracker - A new shift deletion request has been made',
-        `Hi, a shift deletion request for ${req.body.name} on ${req.body.date} has been made. Please approve or decline this request.`,
+        'PTracker - Instructor deleted',
+        `Hi, the instructor named ${req.body.name} has been deleted from the application.`,
     );
 });
 
-router.post('/shiftDeletionApproved', async (req, res) => {
+router.post('/shiftCreated', async (req, res) => {
     res.sendStatus(200);
 
-    await Email.send(
-        req.body.sendTo,
-        'PTracker - Your shift deletion request has been approved',
-        `Hi, your shift deletion request for ${req.body.date} has been approved.`,
+    await Email.sendToSectionInstructor(
+        req.body.sectionId,
+        'PTracker - Student shift created',
+        `Hi, ${req.body.studentName} has created a ${req.body.shiftType} shift on ${req.body.shiftDate}.`,
     );
 });
 
-router.post('/shiftDeletionDeclined', async (req, res) => {
+router.post('/shiftUpdated', async (req, res) => {
     res.sendStatus(200);
 
-    await Email.send(
-        req.body.sendTo,
-        'PTracker - Your shift deletion request has been declined',
-        `Hi, your shift deletion request for ${req.body.date} has been declined.`,
+    await Email.sendToSectionInstructor(
+        req.body.sectionId,
+        'PTracker - Student shift updated',
+        `Hi, ${req.body.studentName} has modified their shift on ${req.body.shiftDate}.`,
     );
 });
 

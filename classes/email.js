@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const User = require('../models/user');
 const Role = require('../models/role');
+const Section = require('../models/section');
 
 module.exports = class Email {
 
@@ -41,6 +42,22 @@ module.exports = class Email {
             await Email.transporter.sendMail({
                 from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
                 to: adminEmails.join(', '),
+                subject: subject,
+                text: content,
+            });
+        } catch (error) {
+            console.error(new Error(error));
+        }
+    }
+
+    static async sendToSectionInstructor(sectionId, subject, content) {
+        const section = await Section.find(parseInt(sectionId));
+        const instructor = await User.find(section.instructorId);
+
+        try {
+            await Email.transporter.sendMail({
+                from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
+                to: instructor.email,
                 subject: subject,
                 text: content,
             });
