@@ -8,18 +8,22 @@ const cookieSession = require('cookie-session');
 // const session = require('express-session');
 const ejsLayouts = require('express-ejs-layouts');
 
-// Middleware and routes
+// Middleware
 const passport = require('./auth/passport');
 const passUser = require('./middleware/passUser');
 const flashMessages = require('./middleware/flashMessages');
 const sectionChecker = require('./middleware/sectionChecker');
 const ndaChecker = require('./middleware/ndaChecker');
+
+// Routes
 const authRouter = require('./routes/authRoutes');
 const indexRouter = require('./routes/indexRoutes');
 const shiftRouter = require('./routes/shiftRoutes');
 const dataRouter = require('./routes/dataRoutes')
 const adminRouter = require('./routes/adminRoutes');
 const emailRouter = require('./routes/emailRoutes');
+
+// Method Override
 const methodOverride = require('method-override')
 
 // Loggers and cors

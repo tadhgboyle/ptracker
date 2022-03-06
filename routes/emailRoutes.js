@@ -57,4 +57,14 @@ router.post('/shiftUpdated', async (req, res) => {
     );
 });
 
+router.post('/shiftDeleted', async (req, res) => {
+    res.sendStatus(200);
+
+    await Email.sendToSectionInstructor(
+        req.body.sectionId,
+        'PTracker - Student shift deleted',
+        `Hi, ${req.body.studentName} has deleted a shift on ${req.body.shiftDate}.`,
+    );
+});
+
 module.exports = router;
