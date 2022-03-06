@@ -156,17 +156,6 @@ async function resetPtracker(req, res) {
         })
     }
 
-    // for (const section of allSection) {
-    //     if (section.id !== 1) {
-    //         console.log(section.id)
-    //         await prisma.section.delete({
-    //             where: {
-    //                 id: parseInt(section.id)
-    //             }
-    //         })
-    //     }
-    // }
-
     for (const user of allUsers) {
         if (user.role === 'STUDENT' && user.id !== req.user.id) {
             await prisma.user.delete({
