@@ -131,6 +131,10 @@ async function userDelete(req, res, userId) {
 }
 
 async function resetPtracker(req, res) {
+    if (req.body.confirmation !== 'yesIWasSubmittedViaTheForm') {
+        return res.redirect('/admin');
+    }
+
     const allShifts = await Shift.all()
     const allSites = await Site.all()
     const allSection = await Section.all()

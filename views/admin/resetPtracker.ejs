@@ -28,11 +28,12 @@
                 <div class="px-7 pb-3 flex justify-start items-center w-full">
                     <p class="whitespace-pre-line text-gray-500">
                         Are you sure you want to proceed with resetting Ptracker?
-                        Note: This will permanently remove everything, except for the instrcutors and sections.
+                        Note: This will permanently remove everything, except for the instructors and sections.
                     </p>
                 </div>
                 <!-- Beginning of Form content -->
                 <form id="deleteData" action="/admin/deletePtrackerData" method="POST">
+                    <input type="hidden" name="confirmation" value="yesIWasSubmittedViaTheForm">
                 </form>
                 <!-- Bottom of modal -->
                 <div class="px-7 pt-1 pb-7 flex justify-start items-center w-full">
