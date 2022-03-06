@@ -1,11 +1,16 @@
+// Prisma
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
+// Axios
 const axios = require("axios");
 
+// Models
 const Role = require("../models/role");
 const Section = require("../models/section");
 const User = require("../models/user");
+const Site = require("../models/site")
+const Shift = require("../models/shift")
 
 async function changeRole(req, res, userId, newRole) {
     if (newRole === Role.STUDENT) {
@@ -125,9 +130,59 @@ async function userDelete(req, res, userId) {
     return res.redirect('/admin');
 }
 
+async function resetPtracker(req, res) {
+    const allShifts = await Shift.all()
+    const allSites = await Site.all()
+    const allSection = await Section.all()
+    const allUsers = await User.all()
+
+    for (const shift of allShifts) {
+        await prisma.shift.delete({
+            where: {
+                id: parseInt(shift.id)
+            }
+        })
+    }
+
+    for (const site of allSites) {
+        await prisma.site.delete({
+            where: {
+                id: parseInt(site.id)
+            }
+        })
+    }
+
+    // for (const section of allSection) {
+    //     if (section.id !== 1) {
+    //         console.log(section.id)
+    //         await prisma.section.delete({
+    //             where: {
+    //                 id: parseInt(section.id)
+    //             }
+    //         })
+    //     }
+    // }
+
+    for (const user of allUsers) {
+        if (user.role === 'STUDENT' && user.id !== req.user.id) {
+            await prisma.user.delete({
+                where: {
+                    id: parseInt(user.id)
+                }
+            })
+        }
+    }
+
+    req.session.success_message = 'Ptracker has been reset'
+
+    res.redirect('/admin')
+
+}
+
 module.exports = {
     userDelete,
     changeSectionInstructor,
     changeSection,
     changeRole,
+    resetPtracker,
 }

@@ -21,6 +21,16 @@ router.get('/', [ensureAuthenticated, isAdmin], async (req, res) => {
     });
 });
 
+router.get('/resetPtracker', [ensureAuthenticated, isAdmin], (req, res) => {
+    res.render('admin/resetPtracker', {
+        page: 'admin'
+    })
+})
+
+router.post('/deletePtrackerData', [ensureAuthenticated, isAdmin], async(req, res) => {
+    return adminController.resetPtracker(req, res)
+})
+
 router.post(
     '/changeRole',
     [
