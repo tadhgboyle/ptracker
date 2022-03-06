@@ -31,7 +31,7 @@
             <% for (const siteUser of users) { %>
                 <% if (siteUser.id === user.id) continue; %>
                 <tr>
-                    <% if (siteUser.sectionId === 1) { %>
+                    <% if (siteUser.sectionId === 1 && siteUser.role === 'STUDENT') { %>
                         <td>
                             <p class="bg-red-300">
                                 <%= siteUser.name %>
