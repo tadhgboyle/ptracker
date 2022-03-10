@@ -29,19 +29,10 @@ module.exports = class Email {
     }
 
     static async sendToAdmins(subject, content) {
-        const adminEmails = [];
-        const users = await User.all();
-
-        for (const user of users) {
-            if (user.role === Role.ADMIN && user.emailNotifications) {
-                adminEmails.push(user.email);
-            }
-        }
-
         try {
             await Email.transporter.sendMail({
                 from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
-                to: adminEmails.join(', '),
+                to: Email.getAdminRecipients().join(', '),
                 subject: subject,
                 text: content,
             });
@@ -51,13 +42,16 @@ module.exports = class Email {
     }
 
     static async sendToSectionInstructor(sectionId, subject, content) {
-        const section = await Section.find(parseInt(sectionId));
-        const instructor = await User.find(section.instructorId);
+        const instructorEmail = Email.getSectionInstructorRecipient(sectionId);
+
+        if (!instructorEmail) {
+            return;
+        }
 
         try {
             await Email.transporter.sendMail({
                 from: `PTracker Notifications ${process.env.EMAIL_USERNAME}`,
-                to: instructor.email,
+                to: instructorEmail,
                 subject: subject,
                 text: content,
             });
@@ -66,4 +60,27 @@ module.exports = class Email {
         }
     }
 
+    static async getAdminRecipients() {
+        const adminEmails = [];
+        const users = await User.all();
+
+        for (const user of users) {
+            if (user.role === Role.ADMIN && user.emailNotifications) {
+                adminEmails.push(user.email);
+            }
+        }
+
+        return adminEmails;
+    }
+
+    static async getSectionInstructorRecipient(sectionId) {
+        const section = await Section.find(parseInt(sectionId));
+        const instructor = await User.find(section.instructorId);
+
+        if (!instructor.emailNotifications) {
+            return null;
+        }
+
+        return instructor.email;
+    }
 }
