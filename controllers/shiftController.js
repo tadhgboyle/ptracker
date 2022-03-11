@@ -17,12 +17,14 @@ async function create(req, res, {userId, siteId, date, type}) {
 
     const user = await User.find(parseInt(userId));
 
-    await axios.post(URL + '/email/shiftCreated', {
-        sectionId: user.section.id,
-        studentName: user.name,
-        shiftType: type,
-        shiftDate: date,
-    });
+    if (process.env.NODE_ENV !== 'test') {
+        await axios.post(URL + '/email/shiftCreated', {
+            sectionId: user.section.id,
+            studentName: user.name,
+            shiftType: type,
+            shiftDate: date,
+        });
+    }
 
     req.session.success_message = `Shift created successfully on ${date}!`;
 
