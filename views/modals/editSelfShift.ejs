@@ -1,0 +1,82 @@
+<dialog id="editShiftModal" class="bg-transparent z-1 relative w-screen h-screen">
+    <div class="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full bg-gray-900 bg-opacity-50 z-50 transition-opacity duration-200 opacity-0">
+        <div class="bg-white rounded-lg w-fit relative">
+            <div class="flex flex-col items-start">
+                <!-- Top of modal -->
+                <div class="p-7 flex flex-row items-center w-full">
+                    <!-- Title -->
+                    <div class="text-gray-900 font-bold text-lg">Edit a Shift
+                    </div>
+                    <!-- X button -->
+                    <svg onclick="modalClose('editShiftModal')"
+                         class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+                    </svg>
+                </div>
+
+                <!-- Beginning of Form content -->
+                <form id="editForm" action="/shifts" method="POST" class="px-7 overflow-x-hidden overflow-y-auto w-full"
+                      style="max-height: 40vh;">
+                    <div class="date-container flex flex-col pb-4 text-gray-400">
+                        <label class="text-gray-800" for="editDatePicker">Shift date:</label>
+                        <input type="hidden" name="date" id="editDateValue" value="2022-01-01">
+                        <input disabled type="date" id="editDatePicker" class="text-gray-400" value="2022-01-01">
+                    </div>
+                    <div class="site-container">
+                        <select required name="siteId" class="form-select appearance-none
+                          block
+                          w-full
+                          px-3
+                          py-1.5
+                          mb-3
+                          text-base
+                          font-normal
+                          text-gray-700
+                          bg-white bg-clip-padding bg-no-repeat
+                          border border-solid border-gray-300
+                          rounded
+                          transition
+                          ease-in-out
+                          m-0
+                          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                            <option disabled selected value="">Select a Site</option>
+                            <% for (const site of sites) { %>
+                                <% if (site.status !== 'DELETED') { %>
+                                    <option value="<%= site.id %>" id="site<%= site.id %>"> <%= site.name %> </option>
+                                <% } %>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="radio-container pt-1 pl-1">
+                        <% for (const shift of ["Day", "Evening", "Night"]) { %>
+                            <div class="form-check">
+                                <input type="radio" name="type" id="editRadioDefault<%= shift %>"
+                                       value="<%= shift.toUpperCase() %>"
+                                       class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 checked:bg-blue-700 checked:border-blue-700 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
+                                <label class="form-check-label inline-block text-gray-800 pl-1"
+                                       for="editRadioDefault<%= shift %>">
+                                    <%= shift %>
+                                </label>
+                            </div>
+                        <% } %>
+                    </div>
+                    <input type="hidden" name="userId" value="<%= user.id %>">
+                </form>
+                <!-- Bottom of modal -->
+                <div class="px-7 py-7 flex justify-start items-center w-full">
+                    <input type="submit" form="editForm" value="Save Changes"
+                           class="save-button bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded mr-3">
+                    <button type="button" onclick="deleteModal()"
+                            class="hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 mr-3 border border-blue-500  hover:border-transparent focus:outline-none rounded">
+                        Delete Shift
+                    </button>
+                    <button type="button" onclick="modalClose('editShiftModal')"
+                            class=" hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-blue-500  hover:border-transparent focus:outline-none rounded">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</dialog>

@@ -5,6 +5,7 @@ const dataController = require('../controllers/dataController');
 const Request = require('./classes/fakeRequest');
 const Response = require('./classes/fakeResponse');
 const User = require('./classes/fakeUser');
+const Role = require("../models/role");
 
 process.env.NODE_ENV = 'test';
 process.env.DATABASE_URL = 'mysql://root@localhost:3306/nurse_joy_testing';
@@ -48,6 +49,33 @@ describe('Test to check shifts on dashboard for the logged in user', () =>{
         for (const shift of res.getJson()) {
             if (shift.status === 'DELETED') {
                 assert.fail('Shift is marked as DELETED');
+            }
+        }
+    });
+
+    it('shifts/holidays sent to dashboard have correct colours', async () => {
+        const user = new User(1, 'Chris Chan', Role.INSTRUCTOR);
+        const req = new Request();
+        const res = new Response();
+
+        await dataController.allShifts(req, res, user);
+
+        for(const shift in res.json){
+            if (shift.userId === 'holiday') {
+                assert.equal(shift.color, '#577590')
+            } else {
+                if (shift.title === 'Nx') {
+                    assert.equal(shift.color,'#744468')
+                }
+                if (shift.title === 'Dx') {
+                    assert.equal(shift.color,'#ECA446')
+                }
+                if (shift.title === 'Sx') {
+                    assert.equal(shift.color,'#D05353')
+                }
+                if (shift.title === 'Ex') {
+                    assert.equal(shift.color,'#016BB7')
+                }
             }
         }
     });

@@ -15,22 +15,13 @@
 
         <table id="user_table" class="stripe">
             <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Role
-                </th>
-                <th>
-                    Section
-                </th>
-                <th>
-                    Delete
-                </th>
-            </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Section</th>
+                    <th>Delete</th>
+                </tr>
             </thead>
-
             <tbody>
             <% for (const siteUser of users) { %>
                 <% if (siteUser.id === user.id) continue; %>
@@ -53,7 +44,7 @@
                                   block
                                   w-full
                                   py-1.5
-                                  mb-3
+                                  mb-1.5
                                   text-base
                                   font-normal
                                   text-gray-700
@@ -84,7 +75,7 @@
                                       block
                                       w-full
                                       py-1.5
-                                      mb-3
+                                      mb-1.5
                                       text-base
                                       font-normal
                                       text-gray-700
@@ -177,10 +168,10 @@
         <table id="site_table" class="stripe">
             <thead>
             <tr>
-                <th class="dark:text-white">
+                <th>
                     Site Name
                 </th>
-                <th class="dark:text-white">
+                <th>
                     Delete
                 </th>
             </tr>
@@ -247,7 +238,8 @@
                                   block
                                   w-full
                                   py-1.5
-                                  mb-3
+                                  mb-2
+                                  mt-2
                                   text-base
                                   font-normal
                                   text-gray-700
@@ -269,6 +261,13 @@
                         </form>
                     </td>
                     <td>
+                        <button title="Delete" id="sectionDeleteButton" onclick="deleteSectionModal(<%= section.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                            <svg
+                                    class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+                            </svg>
+                        </button>
                     </td>
                 </tr>
             <% } %>
@@ -317,208 +316,15 @@
     </div>
 </dialog>
 
-<dialog id="deleteUser" class="bg-transparent z-1 relative w-screen h-screen">
-    <div class="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full bg-gray-900 bg-opacity-50 z-50 transition-opacity duration-200 opacity-0">
-        <div class="bg-white rounded-lg w-fit relative">
-            <div class="flex flex-col items-start">
-                <!-- Top of modal -->
-                <div class="px-7 pt-7 flex flex-row items-center w-full">
-                    <!-- Title -->
-                    <div class="text-gray-900 font-bold text-lg">Delete User Confirmation
-                    </div>
-                    <!-- X button -->
-                    <svg onclick="modalClose('deleteUser')"
-                         class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer"
-                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-                    </svg>
-                </div>
-                <div class="px-7 pb-3 flex justify-start items-center w-full">
-                    <p class="whitespace-pre-line text-gray-500">
-                        Are you sure you want to delete this User?
-                        They will permanently be removed from Ptracker
-                    </p>
-                </div>
-                <!-- Beginning of Form content -->
-                <form id="userDelete">
-                </form>
-                <!-- Bottom of modal -->
-                <div class="px-7 pt-1 pb-7 flex justify-start items-center w-full">
-                    <button id="deleteButton" form="userDelete" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent
-                    shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-400 focus:outline-none
-                    focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm">
-                        Delete
-                    </button>
-                    <button type="button" onclick="modalClose('deleteUser')" class=" w-full inline-flex justify-center rounded-md border border-gray-300
-                    shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none
-                    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</dialog>
+<%- include("../modals/deleteStudent") %>
 
-<dialog id="instructorDelete" class="bg-transparent z-1 relative w-screen h-screen">
-    <div class="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full bg-gray-900 bg-opacity-50 z-50 transition-opacity duration-200 opacity-0">
-        <div class="bg-white rounded-lg w-fit relative">
-            <div class="flex flex-col items-start">
-                <!-- Top of modal -->
-                <div class="px-7 pt-7 flex flex-row items-center w-full">
-                    <!-- Title -->
-                    <div class="text-gray-900 font-bold text-lg">Delete Instructor Confirmation
-                    </div>
-                    <!-- X button -->
-                    <svg onclick="modalClose('instructorDelete')"
-                         class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer"
-                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-                    </svg>
-                </div>
-                <div class="px-7 pb-3 flex justify-start items-center w-full">
-                    <p class="whitespace-pre-line text-gray-500">
-                        Are you sure you want to delete this Instructor?
-                        They will permanently be removed from Ptracker
-                    </p>
-                </div>
-                <!-- Beginning of Form content -->
-                <form id="deleteInstructor">
-                </form>
-                <!-- Bottom of modal -->
-                <div class="px-7 pt-1 pb-7 flex justify-start items-center w-full">
-                    <button id="deleteButton" form="deleteInstructor" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent
-                    shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-400 focus:outline-none
-                    focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm">
-                        Delete
-                    </button>
-                    <button type="button" onclick="modalClose('instructorDelete')" class=" w-full inline-flex justify-center rounded-md border border-gray-300
-                    shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none
-                    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</dialog>
+<%- include("../modals/deleteInstructor") %>
 
-<dialog id="deleteSite" class="bg-transparent z-1 relative w-screen h-screen">
-    <div class="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full bg-gray-900 bg-opacity-50 z-50 transition-opacity duration-200 opacity-0">
-        <div class="bg-white rounded-lg w-fit relative">
-            <div class="flex flex-col items-start">
-                <!-- Top of modal -->
-                <div class="px-7 pt-7 flex flex-row items-center w-full">
-                    <!-- Title -->
-                    <div class="text-gray-900 font-bold text-lg">Delete Site Confirmation
-                    </div>
-                    <!-- X button -->
-                    <svg onclick="modalClose('deleteSite')"
-                         class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer"
-                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-                    </svg>
-                </div>
-                <div class="px-7 pb-3 flex justify-start items-center w-full">
-                    <p class="whitespace-pre-line text-gray-500">
-                        Are you sure you want to delete this site?
-                        All the shifts associated with this site will be removed
-                    </p>
-                </div>
-                <!-- Beginning of Form content -->
-                <form id="deleteForm" method="POST">
-                </form>
-                <!-- Bottom of modal -->
-                <div class="px-7 pt-1 pb-7 flex justify-start items-center w-full">
-                    <button id="deleteButton" form="deleteForm" type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent
-                    shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-400 focus:outline-none
-                    focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm">
-                        Delete
-                    </button>
-                    <button type="button" onclick="modalClose('deleteSite')" class=" w-full inline-flex justify-center rounded-md border border-gray-300
-                    shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none
-                    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</dialog>
+<%- include("../modals/deleteSite") %>
 
+<%- include("../modals/addSection") %>
 
-<dialog id="addSectionModal" class="bg-transparent z-1 relative w-screen h-screen">
-    <div class="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full bg-gray-900 bg-opacity-50 z-50 transition-opacity duration-200 opacity-0">
-        <div class="bg-white rounded-lg w-fit relative">
-            <div class="flex flex-col items-start">
-                <!-- Top of modal -->
-                <div class="p-7 flex flex-row items-center w-full">
-                    <!-- Title -->
-                    <div class="text-gray-900 font-bold text-lg">Add a Section</div>
-                    <!-- X button -->
-                    <svg onclick="modalClose('addSectionModal')"
-                         class="ml-auto fill-current justify-self-end text-gray-700 w-5 h-5 cursor-pointer"
-                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-                    </svg>
-                </div>
-
-                <!-- Beginning of Form content -->
-                <form id="addSectionForm" action="admin/addSection" method="POST" class="px-7 overflow-x-hidden overflow-y-auto"
-                      style="max-height: 40vh;">
-                    <div class="flex flex-col">
-                        <label class="text-gray-800" for="sectionName">Section Name:</label>
-                        <input class="rounded" type="text" id="sectionName" name="sectionName" value="">
-                    </div>
-                    <div class="flex flex-col">
-                        <label class="text-gray-800 pt-3" for="sectionInstructor">Section Instructor:</label>
-                        <select required name="sectionInstructor" id="sectionInstructor"  class="form-select appearance-none
-                        block
-                        w-full
-                        py-1.5
-                        mb-3
-                        text-base
-                        font-normal
-                        text-gray-700
-                        bg-white bg-clip-padding bg-no-repeat
-                        border border-solid border-gray-300
-                        rounded
-                        transition
-                        ease-in-out
-                        m-0
-                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                            <!-- Check if instructor is already in charge of a section -->
-                            <% const existingInstructors = []; %>
-                            <% for (const section of sections) { %>
-                                <% existingInstructors.push(section.instructorId); %>
-                            <% } %>
-
-                            <% for (const section of sections) { %>
-                                <% if (section.id === 1) continue; %>
-                                <% for (const siteUser of users) { %>
-                                    <% if ((siteUser.role === 'INSTRUCTOR' || siteUser.role === 'ADMIN') && !(existingInstructors.includes(siteUser.id))) { %>
-                                        <option value="<%= siteUser.id %>" <% if (section.instructorId === siteUser.id) { %> selected <% } %>>
-                                            <%= siteUser.name %>
-                                        </option>
-                                    <% } %>
-                                <% } %>
-                            <% } %>
-                        </select>
-                    </div>
-                </form>
-                <!-- Bottom of modal -->
-                <div class="px-7 pb-7 pt-2.5 flex justify-start items-center w-full">
-                    <input type="submit" form="addSectionForm" value="Add Section"
-                           class="save-button bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded mr-3">
-                    <button type="button" onclick="modalClose('addSectionModal')"
-                            class=" hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent focus:outline-none rounded">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</dialog>
+<%- include("../modals/deleteSection") %>
 
 <script>
 
@@ -556,6 +362,11 @@
 
     function addSectionModal() {
         openModal('addSectionModal')
+    }
+
+    function deleteSectionModal(sectionID){
+        openModal('sectionDeleteModal')
+        document.getElementById('deleteSection').setAttribute('action', action=`/admin/deleteSection/${sectionID}?_method=DELETE`)
     }
 
     submit = (select) => {

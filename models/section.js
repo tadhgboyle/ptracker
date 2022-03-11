@@ -1,7 +1,9 @@
 const {PrismaClient} = require("@prisma/client");
+const User = require("../models/user");
+const { update } = require("./shift");
 
 module.exports = class Section {
-
+    
     static prisma = new PrismaClient();
 
     static find = async (id) => {
@@ -28,4 +30,22 @@ module.exports = class Section {
             }
         });
     }
+
+    static delete = async (sectionId) => {
+
+    // Update all Students to be PENDING sectionId (1)
+        const updateUsers = await User.prisma.user.updateMany({
+            where: {
+                sectionId: parseInt(sectionId),
+                role: "STUDENT"
+            },
+            data: {
+                sectionId: 1
+            }
+        })
+        // 
+        return updateUsers
+    }
+    
+    // TODO: Deal with INSTRUCTOR users and delete Section 
 }
