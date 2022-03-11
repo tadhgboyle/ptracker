@@ -4,7 +4,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: mysql://root@127.0.0.1:3309/nurse_joy_testing
+      DATABASE_URL: mysql://root@127.0.0.1:3306/nurse_joy_testing
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
