@@ -797,6 +797,10 @@ select {
   margin-bottom: -0px;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -901,6 +905,14 @@ select {
 
 .w-52 {
   width: 13rem;
+}
+
+.w-16 {
+  width: 4rem;
+}
+
+.w-7 {
+  width: 1.75rem;
 }
 
 .max-w-7xl {
@@ -1254,6 +1266,18 @@ select {
 
 .pr-0 {
   padding-right: 0px;
+}
+
+.pr-1 {
+  padding-right: 0.25rem;
+}
+
+.pr-1\.5 {
+  padding-right: 0.375rem;
+}
+
+.pl-1\.5 {
+  padding-left: 0.375rem;
 }
 
 .text-left {

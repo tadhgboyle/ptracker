@@ -48,12 +48,12 @@
                                     <form id="emailForm" action="<%= "/email/changeEmailStatus/" + user.id %>" method="POST">
                                     <% if (user.emailNotif) { %>
                                         <input onclick="changeNotif()" value="OFF" type="checkbox" id="emailNotif" class="sr-only" checked>
-                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-left text-white pl-1 py-2">ON</p></div>
-                                        <div class="dot absolute left-1 top-1 bg-green-100 w-6 h-6 rounded-full transition"></div>
+                                        <div class="block bg-gray-600 w-16 h-8 rounded-full mr-3"><p class="text-xs	text-left text-white pl-1.5 py-2">ON</p></div>
+                                        <div class="dot absolute left-1 top-1 bg-green-100 w-7 h-6 rounded-full transition"></div>
                                     <% } else { %>
                                         <input onclick="changeNotif()" value="ON" type="checkbox" id="emailNotif" class="sr-only">
-                                        <div class="block bg-gray-600 w-14 h-8 rounded-full mr-3"><p class="text-xs	text-right text-white pr-0.5 py-2">OFF</p></div>
-                                        <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                        <div class="block bg-gray-600 w-16 h-8 rounded-full mr-3"><p class="text-xs	text-right text-white pr-1.5 py-2">OFF</p></div>
+                                        <div class="dot absolute left-1 top-1 bg-white w-7 h-6 rounded-full transition"></div>
                                     <% } %>
                                     </form>
                                 </div>
