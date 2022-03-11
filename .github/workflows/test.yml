@@ -28,5 +28,6 @@ jobs:
       - run: sed -ie 's/mysql/postgresql/g' prisma/schema.prisma
       - run: npm install
       # Create the database
+      - run: npx prisma generate
       - run: npx prisma migrate deploy
       - run: npm run test
