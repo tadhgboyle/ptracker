@@ -26,6 +26,7 @@ jobs:
           node-version: '17.x'
       - run: rm -rf prisma/migrations
       - run: sed -ie 's/mysql/postgresql/g' prisma/schema.prisma
+      - run: npm install
       # Create the database
       - run: npx prisma migrate deploy
       - run: npm run test
