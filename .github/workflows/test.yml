@@ -3,6 +3,8 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: "mysql://root:password@127.0.0.1:32574/nurse_joy_testing"
     services:
       mysql:
         image: mysql:5.7
