@@ -10,7 +10,7 @@ const Role = require("../models/role");
 process.env.NODE_ENV = 'test';
 process.env.DATABASE_URL = process.env.DATABASE_URL_TESTING;
 
-describe('Test to check shifts on dashboard for the logged in user', () =>{
+describe('Test to shifts on dashboard for the logged in student', () =>{
 
     beforeEach(() => {
         exec('npx prisma migrate reset --force');

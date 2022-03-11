@@ -49,7 +49,7 @@ async function dashboardShifts(req, res, user) {
                 title: (shift.type === 'SICK' ? 'SICK' : `${shift.type[0]}x`),
                 start: shift.date.toISOString().split("T")[0],
                 resourceId: user.id,
-                color: shiftColor(shift.type)
+                color: shiftColor(shift.type),
             });
         }
 
@@ -65,7 +65,7 @@ async function dashboardShifts(req, res, user) {
                     title: (shift.type === 'SICK' ? 'SICK' : `${shift.type[0]}x`),
                     start: shift.date.toISOString().split("T")[0],
                     resourceId: student.id,
-                    color: shiftColor(shift.type)
+                    color: shiftColor(shift.type),
                 });
             }
         }
