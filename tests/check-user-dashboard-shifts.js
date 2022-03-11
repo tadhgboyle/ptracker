@@ -8,21 +8,12 @@ const User = require('./classes/fakeUser');
 const Role = require("../models/role");
 
 process.env.NODE_ENV = 'test';
-process.env.DATABASE_URL = 'mysql://root@localhost:3306/nurse_joy_testing';
+process.env.DATABASE_URL = process.env.DATABASE_URL_TESTING;
 
 describe('Test to check shifts on dashboard for the logged in user', () =>{
 
-    let server;
-
     beforeEach(() => {
         exec('npx prisma migrate reset --force');
-
-        delete require.cache[require.resolve('../bin/www')];
-        server = require('../bin/www');
-    });
-
-    afterEach((done) => {
-        server.close(done);
     });
 
     it('shifts sent to dashboard belong to logged in user', async () => {

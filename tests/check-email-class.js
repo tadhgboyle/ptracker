@@ -7,21 +7,12 @@ const Role = require("../models/role");
 const Section = require("../models/section");
 
 process.env.NODE_ENV = 'test';
-process.env.DATABASE_URL = 'mysql://root@localhost:3306/nurse_joy_testing';
+process.env.DATABASE_URL = process.env.DATABASE_URL_TESTING;
 
 describe('Test email functionality', () =>{
 
-    let server;
-
     beforeEach(() => {
         exec('npx prisma migrate reset --force');
-
-        delete require.cache[require.resolve('../bin/www')];
-        server = require('../bin/www');
-    });
-
-    afterEach((done) => {
-        server.close(done);
     });
 
     it('sendToAdmins method only sends to administrators who have email notifications on', async () => {

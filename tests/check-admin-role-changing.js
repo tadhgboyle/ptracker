@@ -10,21 +10,12 @@ const Role = require('../models/role');
 const Section = require('../models/section');
 
 process.env.NODE_ENV = 'test';
-process.env.DATABASE_URL = 'mysql://root@localhost:3306/nurse_joy_testing';
+process.env.DATABASE_URL = process.env.DATABASE_URL_TESTING;
 
 describe('Test the roleChange function', () =>{
 
-    let server;
-
     beforeEach(() => {
         exec('npx prisma migrate reset --force');
-
-        delete require.cache[require.resolve('../bin/www')];
-        server = require('../bin/www');
-    });
-
-    afterEach((done) => {
-        server.close(done);
     });
 
     it('does not let instructor or admin who is assigned a section be demoted', async () => {

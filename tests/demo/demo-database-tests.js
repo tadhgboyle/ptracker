@@ -4,21 +4,12 @@ const Shift = require('../models/shift');
 const User = require('../models/user');
 
 process.env.NODE_ENV = 'test';
-process.env.DATABASE_URL = 'mysql://root@localhost:3306/nurse_joy_testing';
+process.env.DATABASE_URL = process.env.DATABASE_URL_TESTING;
 
 describe('Demo Database tests', () => {
 
-    let server;
-
     beforeEach(() => {
         exec('npx prisma migrate reset --force');
-
-        delete require.cache[require.resolve('../bin/www')];
-        server = require('../bin/www');
-    });
-
-    afterEach((done) => {
-        server.close(done);
     });
 
     it('seeds the database with 100 users', async () => {
