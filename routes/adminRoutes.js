@@ -113,4 +113,10 @@ router.post('/addSection', async (req, res) => {
     res.redirect('/admin');
 });
 
+
+router.delete('/deleteSection/:id', async (req, res) => {
+    await Section.delete(req.params.id);
+    res.redirect('/admin');
+});
+
 module.exports = router;
