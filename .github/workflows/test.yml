@@ -11,8 +11,6 @@ jobs:
         ports:
           - 32574:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    env:
-      DATABASE_URL: mysql://root:password@127.0.0.1:32574/nurse_joy_testing
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -23,3 +21,5 @@ jobs:
       - run: npx prisma generate
       - run: npx prisma migrate deploy
       - run: npm run test
+        env:
+          DATABASE_URL: mysql://root:password@127.0.0.1:32574/nurse_joy_testing
