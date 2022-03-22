@@ -405,6 +405,12 @@
                     targets: [1]
                 },
             ],
+            "createdRow": function( row, data, dataIndex ) {
+                if(data[1] === "Pending Users Section"){
+                    $(row).addClass("pending")
+                }
+
+            }  
         });
         $('#site_table').DataTable({
             lengthChange: false,
