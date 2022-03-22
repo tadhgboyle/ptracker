@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-#user_table tbody tr:hover {
+#user_table tbody tr:hover, 
+#instructor_table tbody tr:hover, 
+#site_table tbody tr:hover,
+#section_table tbody tr:hover  {
   background-color: rgba(188, 232, 241, 0.3);
 }
 
@@ -15,9 +18,12 @@
 }
 
 .highlighted{
-    background: rgba(188, 232, 241, 0.3);
+    background: rgba(188, 232, 241, 0.3 ) !important;
 }
 
+.highlighted{
+    background: rgba(241, 197, 188, 0.3 ) !important;
+}
 input:checked ~ .dot {
     transform: translateX(100%);
     background-color: #48bb78;
