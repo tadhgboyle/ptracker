@@ -120,6 +120,8 @@ router.delete('/deleteSection/:id/:length', async (req, res) => {
         res.redirect('/admin');
     }
     else {
+        // Do not allow deletion of sections if there is only 1 section left, otherwise you will not be able to access admin features
+        // Note that we check if sectionsLength is > 2 because the default "Pending Users Section" counts as one. 
         req.session.error_message = 'Failed to delete section: At least 1 section must be active.'
         res.redirect('/admin');
     }

@@ -359,11 +359,9 @@
     }
 
     function deleteSectionModal(sectionID, sectionsLength){
-        // Do not allow deletion of sections if there is only 1 section left, otherwise you will not be able to access admin features
-        // Note that we check if sectionsLength is > 2 because the default "Pending Users Section" counts as one. 
-            openModal('sectionDeleteModal');
-            console.log(sectionsLength);
-            document.getElementById('deleteSection').setAttribute('action', action=`/admin/deleteSection/${sectionID}/${sectionsLength}?_method=DELETE`);
+        openModal('sectionDeleteModal');
+        console.log(sectionsLength);
+        document.getElementById('deleteSection').setAttribute('action', action=`/admin/deleteSection/${sectionID}/${sectionsLength}?_method=DELETE`);
     }
 
     submit = (select) => {
