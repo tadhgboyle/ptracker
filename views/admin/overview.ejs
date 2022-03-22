@@ -261,7 +261,7 @@
                         </form>
                     </td>
                     <td>
-                        <button title="Delete" id="sectionDeleteButton" onclick="deleteSectionModal(<%= section.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                        <button title="Delete" id="sectionDeleteButton" onclick="deleteSectionModal(<%= section.id %>, <%= sections.length %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
                             <svg
                                     class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
@@ -364,9 +364,12 @@
         openModal('addSectionModal')
     }
 
-    function deleteSectionModal(sectionID){
-        openModal('sectionDeleteModal')
-        document.getElementById('deleteSection').setAttribute('action', action=`/admin/deleteSection/${sectionID}?_method=DELETE`)
+    function deleteSectionModal(sectionID, sectionsLength){
+        // Do not allow deletion of sections if there is only 1 section left, otherwise you will not be able to access admin features
+        // Note that we check if sectionsLength is > 2 because the default "Pending Users Section" counts as one. 
+            openModal('sectionDeleteModal');
+            console.log(sectionsLength);
+            document.getElementById('deleteSection').setAttribute('action', action=`/admin/deleteSection/${sectionID}/${sectionLength}?_method=DELETE`);
     }
 
     submit = (select) => {
