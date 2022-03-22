@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function containsEvent(dateStr){
         for(const event of calendar.getEvents()){
-            if(event.startStr === dateStr)
+            
+            if(event.startStr === dateStr && event.extendedProps.userId !== "holiday")
                 return true
         }
         return false
