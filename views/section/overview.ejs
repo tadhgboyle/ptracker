@@ -6,7 +6,7 @@
 </div>
 
 <div class="w-1/2 m-auto ">
-    <table id="user_table" class="stripe">
+    <table id="user_table" class="stripe hover">
         <thead>
             <tr>
                 <th>
@@ -29,7 +29,7 @@
                 <% if (student.id !== user.id) { %>
                     <tr>
                         <td>
-                            <a class="hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50" href="<%= "/update/" + student.id %>"> <%= student.name %> </a>
+                            <a class="focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50" href="<%= "/update/" + student.id %>"> <%= student.name %> </a>
                         </td>
                         <td>
                             <%= student.email %>
@@ -66,6 +66,13 @@
                 },
             ],
         });
+        // $('#user_table tbody')
+        // .on( 'mouseenter', 'td', function () {
+        //     var colIdx = table.cell(this).index().column;
+ 
+        //     $( table.cells().nodes() ).removeClass( 'highlighted' );
+        //     $( table.column( colIdx ).nodes() ).addClass( 'highlighted' );
+        // } );
     });
 
     function openModal(key, form, button, studentID, shiftID) {

@@ -1413,6 +1413,10 @@ select {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+#user_table tbody tr:hover {
+  background-color: rgba(188, 232, 241, 0.3);
+}
+
 .deleteForm {
   display: inline-block
 }
