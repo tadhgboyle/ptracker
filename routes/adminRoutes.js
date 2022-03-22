@@ -115,8 +115,14 @@ router.post('/addSection', async (req, res) => {
 
 
 router.delete('/deleteSection/:id/:length', async (req, res) => {
-    await Section.delete(req.params.id);
-    res.redirect('/admin');
+    if (req.params.length > 2) {
+        await Section.delete(req.params.id);
+        res.redirect('/admin');
+    }
+    else {
+        req.session.error_message = 'Failed to delete section: At least 1 section must be active.'
+        res.redirect('/admin');
+    }
 });
 
 module.exports = router;

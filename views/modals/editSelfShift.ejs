@@ -40,7 +40,7 @@
                           ease-in-out
                           m-0
                           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                            <option disabled selected value="">Select a Site</option>
+                            <option disabled value="">Select a Site</option>
                             <% for (const site of sites) { %>
                                 <% if (site.status !== 'DELETED') { %>
                                     <option value="<%= site.id %>" id="site<%= site.id %>"> <%= site.name %> </option>

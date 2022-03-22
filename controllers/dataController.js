@@ -87,7 +87,8 @@ async function allShifts(req, res, user) {
             title: (shift.type === 'SICK' ? 'SICK' : `${shift.type[0]}x`),
             start: shift.date.toISOString().split('T')[0],
             color: shiftColor(shift.type),
-            userId: shift.userId
+            userId: shift.userId,
+            site: shift.site,
         })
     }
     for (const holiday of allHolidays) {

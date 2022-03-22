@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 headerContent: 'Evening',
                 field: 'eveningshifts',
-                width: '70px'
+                width: '60px'
 
             },
             {
@@ -64,7 +64,22 @@ document.addEventListener('DOMContentLoaded', function () {
         events: {
             url: '/data/dashboardShifts'
         },
+        resourceLabelDidMount: (info) => {
+            info.el.addEventListener("click", () => { 
+                toggleHighlight(info)
+             });
+         },
+         selectable: true,
     });
+
+    const toggleHighlight = (info) =>{
+        info.el.classList.toggle('highlighted')
+        let sibling = info.el.nextSibling
+        while(sibling){
+            sibling.classList.toggle('highlighted')
+            sibling = sibling.nextSibling
+        }
+    }
     calendar.render();
 });
 

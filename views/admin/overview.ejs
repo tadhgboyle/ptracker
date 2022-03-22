@@ -13,7 +13,7 @@
             Users 👤
         </span>
 
-        <table id="user_table" class="stripe">
+        <table id="user_table" class="stripe hover">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -25,18 +25,12 @@
             <tbody>
             <% for (const siteUser of users) { %>
                 <% if (siteUser.id === user.id) continue; %>
+                <% if (siteUser.sectionId === 1 && siteUser.role === 'STUDENT') { %> 
+                <%}%>
                 <tr>
-                    <% if (siteUser.sectionId === 1 && siteUser.role === 'STUDENT') { %>
-                        <td>
-                            <p class="bg-red-300">
-                                <%= siteUser.name %>
-                            </p>
-                        </td>
-                    <% } else {  %>
-                        <td>
-                            <%= siteUser.name %>
-                        </td>
-                    <% } %>
+                    <td>
+                        <%= siteUser.name %>
+                    </td>
                     <td>
                         <form action="admin/changeRole" method="post">
                             <input type="hidden" value="<%= siteUser.id %>" name="userId">
@@ -96,9 +90,9 @@
                         <% } %>
                     </td>
                     <td>
-                        <button title="Delete" id="userDeleteButton" onclick="deleteModalUser(<%= siteUser.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                        <button title="Delete" id="userDeleteButton" onclick="deleteModalUser(<%= siteUser.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                             <svg
-                                    class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                    class="ml-auto fill-current justify-self-end w-5 h-5 cursor-pointer"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                 <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                             </svg>
@@ -115,7 +109,7 @@
             Instructors
         </span>
 
-        <table id="instructor_table" class="stripe">
+        <table id="instructor_table" class="stripe hover">
             <thead>
             <tr>
                 <th>
@@ -141,9 +135,9 @@
                                 <%= user.section.name %>
                             </td>
                             <td>
-                                <button title="Delete" id="instructorDeleteButton" onclick="deleteModalInstructor(<%= user.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                                <button title="Delete" id="instructorDeleteButton" onclick="deleteModalInstructor(<%= user.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                                     <svg
-                                            class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                            class="ml-auto fill-current justify-self-endw-5 h-5 cursor-pointer"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                         <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                                     </svg>
@@ -165,7 +159,7 @@
             <a href="/addSite" class="bg-blue-500 hover:bg-blue-400 text-white text-center font-semibold py-1.5 px-4 hover:border-blue-500 rounded">Add Site</a>
         </div>
 
-        <table id="site_table" class="stripe">
+        <table id="site_table" class="stripe hover">
             <thead>
             <tr>
                 <th>
@@ -185,9 +179,9 @@
                             <%= site.name %>
                         </td>
                         <td class="flex">
-                            <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                            <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                                 <svg
-                                        class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                        class="ml-auto fill-current justify-self-end w-5 h-5 cursor-pointer"
                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                     <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                                 </svg>
@@ -209,7 +203,7 @@
         <div class="flex justify-end pt-2.5 pb-2.5">
             <button onclick="addSectionModal()" class="bg-blue-500 hover:bg-blue-400 text-white text-center font-semibold py-1.5 px-4 hover:border-blue-500 rounded">Add Section</button>
         </div>
-        <table id="section_table" class="stripe">
+        <table id="section_table" class="stripe hover">
             <thead>
             <tr>
                 <th>
@@ -261,9 +255,9 @@
                         </form>
                     </td>
                     <td>
-                        <button title="Delete" id="sectionDeleteButton" onclick="deleteSectionModal(<%= section.id %>, <%= sections.length %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                        <button title="Delete" id="sectionDeleteButton" onclick="deleteSectionModal(<%= section.id %>, <%= sections.length %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                             <svg
-                                    class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                    class="ml-auto fill-current justify-self-end w-5 h-5 cursor-pointer"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                 <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                             </svg>
@@ -369,7 +363,7 @@
         // Note that we check if sectionsLength is > 2 because the default "Pending Users Section" counts as one. 
             openModal('sectionDeleteModal');
             console.log(sectionsLength);
-            document.getElementById('deleteSection').setAttribute('action', action=`/admin/deleteSection/${sectionID}/${sectionLength}?_method=DELETE`);
+            document.getElementById('deleteSection').setAttribute('action', action=`/admin/deleteSection/${sectionID}/${sectionsLength}?_method=DELETE`);
     }
 
     submit = (select) => {
@@ -386,6 +380,12 @@
                     targets: [1, 2]
                 },
             ],
+            "createdRow": function( row, data, dataIndex ) {
+                let selector = row.children.item(2).querySelector('select')
+                if(selector && selector.value == 1){
+                    $(row).addClass("pending")
+                }
+            }  
         });
         $('#section_table').DataTable({
             lengthChange: false,
@@ -399,6 +399,7 @@
             ],
         });
         $('#instructor_table').DataTable({
+            pageLength: 12,
             lengthChange: false,
             columnDefs: [
                 {
@@ -407,6 +408,12 @@
                     targets: [1]
                 },
             ],
+            "createdRow": function( row, data, dataIndex ) {
+                if(data[1] === "Pending Users Section"){
+                    $(row).addClass("pending")
+                }
+
+            }  
         });
         $('#site_table').DataTable({
             lengthChange: false,

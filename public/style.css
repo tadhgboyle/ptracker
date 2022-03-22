@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+#user_table tbody tr:hover, 
+#instructor_table tbody tr:hover, 
+#site_table tbody tr:hover,
+#section_table tbody tr:hover  {
+  background-color: rgba(188, 232, 241, 0.3);
+}
+
 .deleteForm {
     display: inline-block
 }
@@ -10,11 +17,24 @@
     text-transform: capitalize;
 }
 
+.highlighted{
+    background: rgba(188, 232, 241, 0.3 ) !important;
+}
 
-
+.pending{
+    background: rgba(255, 170, 170, 0.3 ) !important;
+}
 input:checked ~ .dot {
     transform: translateX(100%);
     background-color: #48bb78;
+}
+
+#deleteStudentForm button:hover,
+#sectionDeleteButton:hover,
+.flex button:hover,
+#userDeleteButton:hover,
+#instructorDeleteButton:hover{
+    color:white !important;
 }
 
 #container-app{
