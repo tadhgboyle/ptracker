@@ -19,14 +19,24 @@ function deleteModal() {
     openModal('deleteShiftModal')
 }
 
-// function populateEditModal(info){
-//     document.getElementById('editDatePicker').value = info.event.start.toISOString().split('T')[0]
-//     document.getElementById('editDateValue').value = info.event.start.toISOString().split('T')[0]
-//     const shift = info.event.title.charAt(0).toUpperCase() + info.event.title.slice(1)
-//     document.getElementById('editRadioDefault'+shift).checked = true;
-//     document.getElementById('editForm').action = `/shifts/${info.event.id}?_method=PUT`
-//     document.getElementById('deleteForm').action = `/shifts/delete/${info.event.id}?_method=DELETE`
-// }
+function populateEditModal(info){
+    document.getElementById('editDatePicker').value = info.event.start.toISOString().split('T')[0]
+    document.getElementById('editDateValue').value = info.event.start.toISOString().split('T')[0]
+    let shift = info.event.title.charAt(0).toUpperCase() + info.event.title.slice(1)
+    switch(shift) {
+        case "Nx":
+          shift = "Night"
+          break;
+        case "Ex":
+          shift = "Evening"
+          break;
+        default:
+          shift = "Day"
+      }
+    document.getElementById('editRadioDefault'+shift).checked = true;
+    document.getElementById('editForm').action = `/shifts/${info.event.id}?_method=PUT`
+    document.getElementById('deleteForm').action = `/shifts/delete/${info.event.id}?_method=DELETE`
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
@@ -57,11 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         eventClick: function (info) {
             if (info.event._def.ui.backgroundColor !== '#577590') {
                 openModal('editShiftModal')
-                // populateEditModal(info)
-                document.getElementById('editDatePicker').value = info.event.start.toISOString().split('T')[0]
-                document.getElementById('editDateValue').value = info.event.start.toISOString().split('T')[0]
-                document.getElementById('editForm').action = `/shifts/${info.event.id}?_method=PUT`
-                document.getElementById('deleteForm').action = `/shifts/delete/${info.event.id}?_method=DELETE`
+                populateEditModal(info)
             }
         },
         events: {
