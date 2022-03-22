@@ -90,9 +90,9 @@
                         <% } %>
                     </td>
                     <td>
-                        <button title="Delete" id="userDeleteButton" onclick="deleteModalUser(<%= siteUser.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                        <button title="Delete" id="userDeleteButton" onclick="deleteModalUser(<%= siteUser.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                             <svg
-                                    class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                    class="ml-auto fill-current justify-self-end w-5 h-5 cursor-pointer"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                 <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                             </svg>
@@ -135,9 +135,9 @@
                                 <%= user.section.name %>
                             </td>
                             <td>
-                                <button title="Delete" id="instructorDeleteButton" onclick="deleteModalInstructor(<%= user.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                                <button title="Delete" id="instructorDeleteButton" onclick="deleteModalInstructor(<%= user.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                                     <svg
-                                            class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                            class="ml-auto fill-current justify-self-endw-5 h-5 cursor-pointer"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                         <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                                     </svg>
@@ -179,9 +179,9 @@
                             <%= site.name %>
                         </td>
                         <td class="flex">
-                            <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                            <button title="Delete" onclick="deleteModal(<%= site.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                                 <svg
-                                        class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                        class="ml-auto fill-current justify-self-end w-5 h-5 cursor-pointer"
                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                     <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                                 </svg>
@@ -255,9 +255,9 @@
                         </form>
                     </td>
                     <td>
-                        <button title="Delete" id="sectionDeleteButton" onclick="deleteSectionModal(<%= section.id %>)" class="bg-red-500 hover:bg-red-400 border py-1.5 px-4 rounded">
+                        <button title="Delete" id="sectionDeleteButton" onclick="deleteSectionModal(<%= section.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                             <svg
-                                    class="ml-auto fill-current justify-self-end text-white w-5 h-5 cursor-pointer"
+                                    class="ml-auto fill-current justify-self-end w-5 h-5 cursor-pointer"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
                                 <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
                             </svg>
@@ -380,8 +380,7 @@
             "createdRow": function( row, data, dataIndex ) {
                 let selector = row.children.item(2).querySelector('select')
                 if(selector && selector.value == 1){
-                    console.log($(row))
-                    $(row).addClass("highlighted")
+                    $(row).addClass("pending")
                 }
             }  
         });
