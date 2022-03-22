@@ -10,7 +10,9 @@
     text-transform: capitalize;
 }
 
-
+.highlighted{
+    background: rgba(188, 232, 241, 0.3);
+}
 
 input:checked ~ .dot {
     transform: translateX(100%);
