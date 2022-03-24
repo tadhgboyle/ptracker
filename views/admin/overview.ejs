@@ -25,7 +25,7 @@
             <tbody>
             <% for (const siteUser of users) { %>
                 <% if (siteUser.id === user.id) continue; %>
-                <% if (siteUser.sectionId === 1 && siteUser.role === 'STUDENT') { %> 
+                <% if (siteUser.sectionId === 1 && siteUser.role === 'STUDENT') { %>
                 <%}%>
                 <tr>
                     <td>
@@ -116,7 +116,7 @@
                     Instructor
                 </th>
                 <th>
-                    Site
+                    Section
                 </th>
                 <th>
                     Delete
@@ -383,7 +383,7 @@
                 if(selector && selector.value == 1){
                     $(row).addClass("pending")
                 }
-            }  
+            }
         });
         $('#section_table').DataTable({
             lengthChange: false,
@@ -411,7 +411,7 @@
                     $(row).addClass("pending")
                 }
 
-            }  
+            }
         });
         $('#site_table').DataTable({
             lengthChange: false,
