@@ -19,6 +19,7 @@ model shift {
   userId Int
   siteId Int
   date   DateTime
+  preceptor String?
   type   shift_type
   status shift_status @default(NORMAL)
   site   site         @relation(fields: [siteId], references: [id], map: "Shift_siteId_fkey")
