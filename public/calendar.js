@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fixedWeekCount: false,
         selectable: true,
         businessHours: true,
-        // height: '100%',
+        height: '100%',
         dayMaxEvents: true,
         nowIndicator: true,
         customButtons: {

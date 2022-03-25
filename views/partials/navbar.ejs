@@ -1,5 +1,5 @@
 <nav class="border-b noprint">
-    <div class="max-w-7xl mx-auto">
+    <div class="container mx-auto">
         <div class="flex items-center h-16">
             <div class="flex flex-1 items-center">
                 <a href="/dashboard" class="flex-shrink-0 hover:no-underline font-bold">
@@ -9,26 +9,26 @@
                     <% if (user.acceptedNda && (user.section.id !== 1 || user.role === 'ADMIN')) { %>
                         <div class="ml-10 flex items-center space-x-4">
                             <a href="/dashboard"
-                               class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'dashboard') { %> border <% } %>">
+                               class="hover:shadow-md px-3 py-2 text-sm rounded-md font-medium <% if (page === 'dashboard') { %> border bg-blue-50 <% } %>">
                                 🏡 Dashboard
                             </a>
 
                             <% if (user.role === 'STUDENT') { %>
                                 <a href="/calendar"
-                                   class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'calendar') { %> border <% } %>">
+                                   class="hover:shadow-md px-3 py-2 text-sm rounded-md font-medium <% if (page === 'calendar') { %> border bg-blue-50 <% } %>">
                                     🗓️ Calendar
                                 </a>
                                 <% } %>
 
                             <% if (user.isInstructor()) { %>
                                 <a href="/section"
-                                   class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'section') { %> border <% } %>">
+                                   class="hover:shadow-md px-3 py-2 text-sm rounded-md font-medium <% if (page === 'section') { %> border bg-blue-50 <% } %>">
                                     👥 Section
                                 </a>
 
                                 <% if (user.isAdmin()) { %>
                                     <a href="/admin"
-                                       class="hover:shadow-xl px-3 py-2 rounded-md text-sm font-medium <% if (page === 'admin') { %> border <% } %>">
+                                       class="hover:shadow-md px-3 py-2 text-sm rounded-md font-medium <% if (page === 'admin') { %> border bg-blue-50 <% } %>">
                                         👮 Adminland
                                     </a>
                                 <% } %>
@@ -36,8 +36,8 @@
                         </div>
                     <% } %>
             </div>
-            <div class="flex items-center">
-                <div class="ml-10 flex space-x-2">
+            <div class="">
+                <div class="flex items-center space-x-2 ml-10 ">
                     <% if (user.acceptedNda && (user.section.id !== 1 || user.role === 'ADMIN')) { %>
                         <div class="flex items-center justify-center">
                             <label for="emailNotif" class="flex items-center cursor-pointer -mb-0.5">
@@ -60,13 +60,20 @@
                             </label>
                         </div>
                     <% } %>
-                    <span class="py-2">
+                    <span class=" text-gray-700 font-medium">
                         <%= user.name %>
                     </span>
                     <div>
                         <img class="h-8 rounded-full mt-1 shadow-sm" src="<%= user.picture %>" referrerPolicy="no-referrer" alt="">
                     </div>
-                    <a href="/auth/logout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+
+                    <a href="/auth/logout" id="logoutButton" class="inline-flex items-center text-white py-2 px-4 rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="fill-current w-4 h-4 mr-2" version="1.1" x="0px" y="0px" viewBox="0 0 384.971 384.971" style="enable-background:new 0 0 384.971 384.971;" xml:space="preserve">
+                            <g id="Sign_Out">
+                                <path d="M180.455,360.91H24.061V24.061h156.394c6.641,0,12.03-5.39,12.03-12.03s-5.39-12.03-12.03-12.03H12.03    C5.39,0.001,0,5.39,0,12.031V372.94c0,6.641,5.39,12.03,12.03,12.03h168.424c6.641,0,12.03-5.39,12.03-12.03    C192.485,366.299,187.095,360.91,180.455,360.91z"/>
+                                <path d="M381.481,184.088l-83.009-84.2c-4.704-4.752-12.319-4.74-17.011,0c-4.704,4.74-4.704,12.439,0,17.179l62.558,63.46H96.279    c-6.641,0-12.03,5.438-12.03,12.151c0,6.713,5.39,12.151,12.03,12.151h247.74l-62.558,63.46c-4.704,4.752-4.704,12.439,0,17.179    c4.704,4.752,12.319,4.752,17.011,0l82.997-84.2C386.113,196.588,386.161,188.756,381.481,184.088z"/>
+                            </g>
+                        </svg>
                         Logout
                     </a>
                 </div>

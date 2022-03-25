@@ -29,6 +29,20 @@ input:checked ~ .dot {
     background-color: #48bb78;
 }
 
+#logoutButton{
+    background-color: #2C3E50;
+    font-weight: 400;
+}
+
+#logoutButton:hover{
+    background-color: #1e2b37;
+    text-decoration: none;
+}
+
+#logoutButton:focus{
+    box-shadow: 0 0 0 0.2rem rgba(76, 91, 106, 0.5);
+}
+
 #deleteStudentForm button:hover,
 #sectionDeleteButton:hover,
 .flex button:hover,
@@ -38,7 +52,7 @@ input:checked ~ .dot {
 }
 
 #container-app{
-    height: 92vh;
+    height: 84vh;
 }
 
 @page {
