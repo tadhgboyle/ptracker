@@ -4,7 +4,7 @@ const sectionChecker = (req, res, next) => {
             return next();
         }
 
-        if (req.user.section.id === 1) {
+        if (req.user.section.id === 1 && req.user.role !== 'ADMIN') {
             return res.redirect('/pendingSection');
         }
     }
