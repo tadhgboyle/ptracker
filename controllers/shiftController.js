@@ -7,12 +7,13 @@ if (URL.endsWith('/')) {
     URL = URL.slice(0, -1);
 }
 
-async function create(req, res, {userId, siteId, date, type}) {
+async function create(req, res, {userId, siteId, date, type, preceptor}) {
     await Shift.create({
         userId,
         siteId,
         date,
         type,
+        preceptor
     });
 
     const user = await User.find(parseInt(userId));
@@ -31,7 +32,7 @@ async function create(req, res, {userId, siteId, date, type}) {
     return res.redirect('/calendar');
 }
 
-async function update(req, res, shiftId, {userId, siteId, date, type}) {
+async function update(req, res, shiftId, {userId, siteId, date, type, preceptor}) {
     await Shift.update(
         shiftId,
         {
@@ -39,6 +40,7 @@ async function update(req, res, shiftId, {userId, siteId, date, type}) {
             siteId,
             date,
             type,
+            preceptor
         }
     );
 

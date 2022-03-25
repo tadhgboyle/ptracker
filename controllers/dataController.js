@@ -89,6 +89,7 @@ async function allShifts(req, res, user) {
             color: shiftColor(shift.type),
             userId: shift.userId,
             site: shift.site,
+            preceptor: shift.preceptor
         })
     }
     for (const holiday of allHolidays) {

@@ -33,8 +33,9 @@ function populateEditModal(info){
         default:
           shift = "Day"
       }
-    document.getElementById('site'+info.event.extendedProps.site.id).selected = true;
-    document.getElementById('editRadioDefault'+shift).checked = true;
+    document.getElementById('site'+info.event.extendedProps.site.id).selected = true
+    document.getElementById('editRadioDefault'+shift).checked = true
+    document.getElementById('edit-preceptorField').value = info.event.extendedProps.preceptor
     document.getElementById('editForm').action = `/shifts/${info.event.id}?_method=PUT`
     document.getElementById('deleteForm').action = `/shifts/delete/${info.event.id}?_method=DELETE`
 }

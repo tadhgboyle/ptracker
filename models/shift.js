@@ -12,6 +12,7 @@ module.exports = class Shift {
                 date: new Date(data.date),
                 type: data.type,
                 status: 'NORMAL',
+                preceptor: data.preceptor
             }
         });
     }
@@ -25,7 +26,8 @@ module.exports = class Shift {
                 userId: parseInt(data.userId),
                 siteId: parseInt(data.siteId),
                 date: new Date(data.date),
-                type: data.type
+                type: data.type,
+                preceptor: data.preceptor
             }
         })
     }

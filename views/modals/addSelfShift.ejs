@@ -18,7 +18,7 @@
                 <form id="addForm" action="/shifts" method="POST" class="px-7 overflow-x-hidden overflow-y-auto"
                       style="max-height: 40vh;">
                     <div class="date-container flex flex-col pb-4 ">
-                        <label class="text-gray-800" for="addDatePicker">Shift date:</label>
+                        <label class="text-gray-800" for="addDatePicker">Shift date</label>
                         <input type="date" id="addDatePicker" name="date" value="2022-01-01">
                     </div>
                     <div class="site-container">
@@ -67,7 +67,38 @@
                             <% } %>
                         </select>
                     </div>
-                    <div class="radio-container pl-1">
+                    <div class="flex justify-center">
+                        <div class="mb-3 xl:w-96">
+                          <label for="preceptorField" class="form-label inline-block mb-2 text-gray-700">
+                              Preceptor - Optional
+                            </label>
+                          <input
+                            type="text"
+                            class="
+                              form-control
+                              block
+                              w-full
+                              px-3
+                              py-1.5
+                              text-base
+                              font-normal
+                              text-gray-700
+                              bg-white bg-clip-padding
+                              border border-solid border-gray-300
+                              rounded
+                              transition
+                              ease-in-out
+                              m-0
+                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+                            "
+                            name="preceptor"
+                            id="preceptorField"
+                            placeholder="Your Preceptor's Initials"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    <div class="radio-container pl-1 pt-3">
                         <% for (const shift of ["Day", "Evening", "Night"]) { %>
                             <div class="form-check">
                                 <input checked type="radio" name="type" id="addRadioDefault<%= shift %>"
@@ -80,6 +111,7 @@
                             </div>
                         <% } %>
                     </div>
+                    
                     <input type="hidden" name="userId" value="<%= user.id %>">
                 </form>
                 <!-- Bottom of modal -->
@@ -87,7 +119,7 @@
                     <input type="submit" form="addForm" value="Add Shift"
                            class="save-button bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded mr-3">
                     <button type="button" onclick="modalClose('addShiftModal')"
-                            class=" hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent focus:outline-none rounded">
+                            class=" hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent focus:outline-none rounded">
                         Cancel
                     </button>
                 </div>
