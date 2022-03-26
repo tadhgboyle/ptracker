@@ -82,9 +82,10 @@ async function allShifts(req, res, user) {
         if (shift.status === 'DELETED') {
             continue;
         }
+        let preceptor = shift.preceptor ? ` - ${shift.preceptor}` : ""
         allShifts.push({
             id: shift.id,
-            title: (shift.type === 'SICK' ? 'SICK' : `${shift.type[0]}x`),
+            title: (shift.type === 'SICK' ? 'SICK' : `${shift.type[0]}x`)+ preceptor ,
             start: shift.date.toISOString().split('T')[0],
             color: shiftColor(shift.type),
             userId: shift.userId,
