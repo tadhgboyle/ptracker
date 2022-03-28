@@ -126,7 +126,7 @@
 
             <tbody>
             <% for (const user of users) { %>
-                <% if (user.role === 'INSTRUCTOR') { %>
+                <% if (user.role !== 'STUDENT') { %>
                         <tr>
                             <td>
                                 <%= user.name %>
