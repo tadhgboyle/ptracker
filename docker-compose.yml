@@ -1,0 +1,21 @@
+---
+version: '3'
+services: 
+  mysqldb:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Password
+    ports:
+      - '33061:3306'
+    volumes:
+      - issp_db_data:/var/lib/mysql
+  app:
+    depends_on:
+     - mysqldb
+    build: .
+    ports:
+      - '3001:3000'
+
+volumes:
+  issp_db_data:
