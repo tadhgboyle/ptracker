@@ -176,7 +176,7 @@ const findMainSite = async (shifts) => {
     if (siteNum.length !== 0) {
         return await findNameOfSite(parseInt(siteNum[0]));
     } else {
-        return 'No Shifts';
+        return 'No \nShifts';
     }
 }
 

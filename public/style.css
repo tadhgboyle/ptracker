@@ -60,15 +60,22 @@ input:checked ~ .dot {
     size: 420mm 210mm;
 }
 @media print {
+
     .noprint {
        visibility: hidden;
+       display: none !important;
     }
     .container{
-        padding: 0 !important;
-        margin-left: 20px !important;
-        margin-right: 20px !important;
+        margin-left: 15px !important;
+        margin-right: 15px !important;
+        padding-top: 0px !important;
     }
  }
+
+ #calendar > div.fc-view-harness.fc-view-harness-passive > div > table > thead > tr > th:nth-child(3) > div > div > div > table > tbody > tr:nth-child(2){
+     font-size: 13px;
+ }
+ 
 body {
     font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

@@ -10,11 +10,13 @@ document.addEventListener('DOMContentLoaded', function () {
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         initialView: 'resourceTimelineMonth',
         nowIndicator: true,
+        slotMinWidth: 30,
         customButtons: {
             printButton: {
               text: 'Print',
               click: function() {
                 window.print();
+                document.margin='none';
               }
             }
           },
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 headerContent: 'Student Name',
                 field: 'name',
+                width: '190px'
             },
             {
                 group: true,
@@ -38,24 +41,24 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 headerContent: 'Day',
                 field: 'dayshifts',
-                width: '60px'
+                width: '55px'
             },
             {
                 headerContent: 'Night',
                 field: 'nightshifts',
-                width: '60px'
+                width: '55px'
 
             },
             {
                 headerContent: 'Evening',
                 field: 'eveningshifts',
-                width: '60px'
+                width: '65px'
 
             },
             {
-                headerContent: 'Total Shifts',
+                headerContent: 'Total',
                 field: 'totalshifts',
-                width: '95px'
+                width: '50px'
             }
         ],
         resources: {
