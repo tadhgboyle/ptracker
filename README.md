@@ -1,5 +1,8 @@
 # PTracker
 
+## :whale: Docker
+- `docker-compose up --build`
+
 ## Developing
 
 - You need MySQL installed and running on your machine

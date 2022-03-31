@@ -1,8 +1,8 @@
 ---
 version: '3'
-services: 
-  mysqldb:
-    image: mysql:5.7
+services:
+  db:
+    image: mariadb:10.5.8
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Password
@@ -12,7 +12,7 @@ services:
       - issp_db_data:/var/lib/mysql
   app:
     depends_on:
-     - mysqldb
+      - db
     build: .
     ports:
       - '3001:3000'
