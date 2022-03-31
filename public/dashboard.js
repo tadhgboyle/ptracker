@@ -36,17 +36,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 group: true,
                 headerContent: 'Site',
                 field: 'site',
-                width: '60px'
+                width: '65px'
             },
             {
                 headerContent: 'Day',
                 field: 'dayshifts',
-                width: '55px'
+                width: '54px'
             },
             {
                 headerContent: 'Night',
                 field: 'nightshifts',
-                width: '55px'
+                width: '54px'
 
             },
             {
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 headerContent: 'Total',
                 field: 'totalshifts',
-                width: '50px'
+                width: '48px'
             }
         ],
         resources: {
