@@ -22,12 +22,12 @@ function deleteModal() {
 function populateEditModal(info){
     document.getElementById('editDatePicker').value = info.event.start.toISOString().split('T')[0]
     document.getElementById('editDateValue').value = info.event.start.toISOString().split('T')[0]
-    let shift = info.event.title.charAt(0).toUpperCase() + info.event.title.slice(1)
+    let shift = info.event.title.charAt(0).toUpperCase()
     switch(shift) {
-        case "Nx":
+        case "N":
           shift = "Night"
           break;
-        case "Ex":
+        case "E":
           shift = "Evening"
           break;
         default:
