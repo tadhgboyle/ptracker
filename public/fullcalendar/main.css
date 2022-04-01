@@ -1771,6 +1771,10 @@ A VERTICAL event
     color: #000 !important;
 }
 
+.fc-media-print .fc-timeline-event{
+    position: absolute;
+}
+
 .fc-media-print .fc-timegrid-event {
     margin: 0.5em 0;
 }

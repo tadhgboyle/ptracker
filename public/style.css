@@ -55,10 +55,6 @@ input:checked ~ .dot {
     height: 84vh;
 }
 
-@page {
-    size: A4 landscape;
-    size: 420mm 210mm;
-}
 @media print {
     .noprint {
        visibility: hidden;
