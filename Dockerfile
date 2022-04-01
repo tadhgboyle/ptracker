@@ -1,13 +1,13 @@
 FROM node:latest
 
-RUN mkdir home/ptracker
-COPY . home/ptracker
+RUN useradd -m -d /app ptracker
+COPY --chown=ptracker . /app
 
-WORKDIR /home/ptracker
+WORKDIR /app
+USER ptracker
 
 RUN npm install
-RUN npm i -g nodemon
+RUN npm i nodemon
 
 EXPOSE 3000
-CMD [ "./wait-for-it.sh", "mysqldb:3306", "--", "npx","prisma","migrate","reset", "--force", "--", "npm", "run","dev"]
-CMD [ "npm", "run","dev"]
+CMD ["/bin/bash", "start.sh"]
