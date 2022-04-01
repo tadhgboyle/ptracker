@@ -5,17 +5,22 @@ services:
     image: mariadb:10.5.8
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: Password
-    ports:
-      - '33061:3306'
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_USER: ptracker
+      MYSQL_PASSWORD: omgverysecret
+      MYSQL_DATABASE: nurse_joy
     volumes:
       - issp_db_data:/var/lib/mysql
   app:
     depends_on:
       - db
     build: .
+    environment:
+      DATABASE_URL: mysql://ptracker:omgsosecret@db:3306/nurse_joy
+      DATABASE_URL_TESTING: "mysql://ptracker:omgsosecret@db:3306/nurse_joy_testing"
+      APP_URL: http://localhost:8000/
     ports:
-      - '3001:3000'
+      - '8000:3000'
 
 volumes:
   issp_db_data:
