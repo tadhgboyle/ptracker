@@ -1756,7 +1756,7 @@ A VERTICAL event
 .fc-media-print .fc-timeline-slots,
 .fc-media-print .fc-non-business,
 .fc-media-print .fc-bg-event {
-    display: none;
+    display: block;
 }
 
 .fc-media-print .fc-toolbar button,

@@ -60,7 +60,6 @@ input:checked ~ .dot {
     size: 420mm 210mm;
 }
 @media print {
-
     .noprint {
        visibility: hidden;
        display: none !important;
