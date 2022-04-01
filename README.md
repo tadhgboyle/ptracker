@@ -29,4 +29,5 @@
 - Navigate to `http://localhost:3000`
 
 ## Testing
+- run "npm i mocha"
 - You can test the app with `npm run test`
