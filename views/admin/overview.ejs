@@ -126,7 +126,7 @@
 
             <tbody>
             <% for (const instructor of users) { %>
-                <% if (instructor.role !== 'STUDENT' && instructor.id != user.id) { %>
+                <% if (instructor.role !== 'STUDENT' && instructor.id !== user.id) { %>
                         <tr>
                             <td>
                                 <%= instructor.name %>
