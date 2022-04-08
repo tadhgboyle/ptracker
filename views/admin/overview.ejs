@@ -125,17 +125,17 @@
             </thead>
 
             <tbody>
-            <% for (const user of users) { %>
-                <% if (user.role !== 'STUDENT') { %>
+            <% for (const instructor of users) { %>
+                <% if (instructor.role !== 'STUDENT' && instructor.id != user.id) { %>
                         <tr>
                             <td>
-                                <%= user.name %>
+                                <%= instructor.name %>
                             </td>
                             <td>
-                                <%= user.section.name %>
+                                <%= instructor.section.name %>
                             </td>
                             <td>
-                                <button title="Delete" id="instructorDeleteButton" onclick="deleteModalInstructor(<%= user.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
+                                <button title="Delete" id="instructorDeleteButton" onclick="deleteModalInstructor(<%= instructor.id %>)" class="border hover:bg-red-500 text-red-500 font-semibold  focus:outline-none py-1.5 px-4 rounded">
                                     <svg
                                             class="ml-auto fill-current justify-self-endw-5 h-5 cursor-pointer"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
